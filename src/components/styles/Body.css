@@ -1,0 +1,106 @@
+.body-container {
+	width: 100%;
+	margin: auto;
+	overflow: hidden;
+}
+
+/* Homepage */
+.homepage {
+	justify-content: center;
+	background-image: url("https://i.redd.it/hv48gqvpjd561.jpg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	color: antiquewhite;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	min-height: 90vh;
+}
+
+#homepage-greet {
+	font-size: 86px;
+}
+#homepage-greetd {
+	font-size: 32px;
+}
+#homepage-btn {
+	margin: 16px 32px;
+}
+#homepage-start:hover {
+	color: #ff971d;
+}
+
+@media screen and (max-width: 960px) {
+	#homepage-greet {
+		font-size: 72px;
+	}
+
+	#homepage-greetd {
+		font-size: 28px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#homepage-greet {
+		font-size: 48px;
+	}
+
+	#homepage-greetd {
+		font-size: 16px;
+	}
+}
+/* /Homepage */
+
+/* UserID */
+.userid {
+	justify-content: center;
+	background-image: url("https://external-preview.redd.it/V_Zdztdng29q8g9Hk54TFx3aN0ajD3gO5fMWiHDVW0k.jpg?auto=webp&s=c17943e3a72c1e65396335fded43566cc838ba21");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	color: antiquewhite;
+
+	min-height: 90vh;
+}
+
+#userid-title {
+	font-size: 64px;
+	margin: 64px auto 0px auto;
+}
+
+#body-bgoverlay {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.753);
+}
+
+/* Survey */
+.survey {
+	height: 100%;
+	justify-content: center;
+	background-image: url("https://i.redd.it/drg5ulh4xj661.png");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	color: antiquewhite;
+}
+
+#survey-bgoverlay {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.753);
+}
