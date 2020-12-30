@@ -1,0 +1,24 @@
+{
+    "editor.useTabStops": false,
+    "editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"eslint.debug": true,
+	"eslint.run": "onSave",
+	"eslint.alwaysShowStatus": true,
+	"editor.formatOnSave": true,
+	"emmet.triggerExpansionOnTab": true,
+	"emmet.excludeLanguages": [
+
+		"markdown"
+	],
+	"emmet.syntaxProfiles": {
+		"javascript": "js" 
+	},
+	"emmet.includeLanguages": {
+		"javascript": "html",
+	},
+	"files.associations": {
+		"*.js": "javascriptreact"
+	  }
+
+}
