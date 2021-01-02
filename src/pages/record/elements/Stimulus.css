@@ -1,0 +1,32 @@
+.stimulus-container {
+	padding: 32px 16px;
+	margin: 8px;
+	min-width: 20em;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgba(250, 235, 215, 0.2);
+
+	border-radius: 0.5em;
+}
+
+.stimulus-text {
+	font-size: 1.2em;
+}
+
+.stimulus-img {
+	height: 128px;
+	width: 128px;
+	margin: 48px 0px;
+
+	background-image: url("./icon_256.png");
+	background-position: center;
+	background-size: cover;
+}
+
+.stimulus-con {
+	width: 100%;
+}

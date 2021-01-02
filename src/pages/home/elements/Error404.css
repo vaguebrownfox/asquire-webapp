@@ -1,0 +1,21 @@
+.error-page {
+	justify-content: center;
+	background-image: url("https://i.redd.it/q30q0vye5h861.jpg");
+	background-position: bottom;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	color: antiquewhite;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	min-height: 70vh;
+}
+
+.thank-page > h1 {
+	font-size: 4em;
+	font-weight: normal;
+}

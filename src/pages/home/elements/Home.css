@@ -1,0 +1,60 @@
+.homepage {
+	justify-content: center;
+	background-image: url("https://i.redd.it/hv48gqvpjd561.jpg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	color: antiquewhite;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	min-height: 90vh;
+}
+
+#homepage-greet {
+	font-size: 86px;
+	padding: 12px;
+}
+#homepage-greetd {
+	font-size: 32px;
+}
+#homepage-btn {
+	margin: 16px 32px;
+}
+#homepage-start:hover {
+	color: #ff971d;
+}
+
+#homepage-consent {
+	padding: 32px;
+	font-style: italic;
+}
+
+#homepage-consent > a {
+	text-decoration: none;
+	color: #ff971d;
+}
+
+@media screen and (max-width: 960px) {
+	#homepage-greet {
+		font-size: 72px;
+	}
+
+	#homepage-greetd {
+		font-size: 28px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#homepage-greet {
+		font-size: 48px;
+	}
+
+	#homepage-greetd {
+		font-size: 16px;
+	}
+}

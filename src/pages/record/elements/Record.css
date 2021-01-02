@@ -1,0 +1,36 @@
+.record-page {
+	justify-content: center;
+	background-image: url("https://external-preview.redd.it/kgcu2t1ULQFrh3nJO02yDz6kPfxAY7vbiyC_edeajH4.jpg?auto=webp&s=e26433a2b78d37239b195750318ff918cad8ec83");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	color: antiquewhite;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	min-height: 90vh;
+}
+
+.record-bgoverlay {
+	height: 100%;
+	width: 100%;
+	padding-top: 64px;
+	padding-bottom: 64px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.753);
+	color: antiquewhite;
+
+	min-height: 90vh;
+}
+
+.record-donebtn {
+	margin-top: 88px;
+}
