@@ -1,8 +1,8 @@
-$black: #000000;
+$black: #424242;
 $cornflower-lilac: #fff;
 $orange: #ff971d;
 $white: #ffffff;
-$black2: black;
+$black2: rgb(58, 58, 58);
 
 #text-input {
 	font-size: 8px; // change value to scale
@@ -124,6 +124,7 @@ $black2: black;
 	height: 100%;
 	width: 100%;
 	padding: 0 0.714em;
+	margin-left: 12px;
 
 	&::placeholder {
 		color: currentColor;

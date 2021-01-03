@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useContext } from "react";
 
 // Styles
 import "./UserList.css";
@@ -7,12 +7,17 @@ import "./UserList.css";
 // Components
 import Button from "../../../components/Button";
 
+// Context
+import { Context as UserContext } from "../../../context/data/UserContext";
+
 const UserList = ({ history }) => {
+	const { state } = useContext(UserContext);
+
 	const nextButton = () => {
 		history.push("/survey");
 	};
 
-	const userids = ["userdummy", "userhalcyon", "vwen", "kittykat69"]; // dummy user list
+	const userids = state || ["userdummy", "userhalcyon", "vwen", "kittykat69"]; // dummy user list
 
 	const addUser = (userid) => {
 		return (
@@ -35,7 +40,7 @@ const UserList = ({ history }) => {
 	return (
 		<div className="userlist-container">
 			<div className="radiogroup">
-				{userids.map((userid) => addUser(userid))}
+				{userids.map((user) => addUser(user.userName))}
 				<div id="radiogroup-btn">
 					<Button buttonStyle="btn--primary" onClick={nextButton}>
 						<p id="homepage-start">Next</p>
