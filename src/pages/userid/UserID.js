@@ -9,7 +9,6 @@ import AddUser from "./elements/AddUser";
 import UserList from "./elements/UserList";
 
 // Context
-import { Provider as UserProvider } from "../../context/data/UserContext";
 
 const UserID = ({ history }) => {
 	return (

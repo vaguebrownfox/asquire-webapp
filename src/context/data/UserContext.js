@@ -44,12 +44,12 @@ const userReducer = (state, action) => {
 const addUser = (dispatch) => {
 	return (newUser) => {
 		// dispatch ADD_USER
-		const newUserX = {
-			userName: "kittykat69",
-			userId: "kittykat69-32496FFC",
-			surveyDone: false,
-			recordDone: false,
-		};
+		// const newUserX = {
+		// 	userName: "kittykat69",
+		// 	userId: "kittykat69-32496FFC",
+		// 	surveyDone: false,
+		// 	recordDone: false,
+		// };
 		dispatch({ type: "ADD_USER", payload: newUser });
 	};
 };
