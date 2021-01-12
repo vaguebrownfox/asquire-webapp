@@ -43,6 +43,8 @@ const recOn = (dispatch) => {
 			recorder = await recordAudio();
 		}
 
+		if (!recorder) return;
+
 		if (isOn) {
 			// code to start recording
 			recorder.start();

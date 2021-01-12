@@ -13,37 +13,6 @@ self.addEventListener("install", (event) => {
 	);
 });
 
-// Listen for requests
-// self.addEventListener("fetch", (event) => {
-// 	event.respondWith(
-// 		caches.match(event.request).then(() => {
-// 			return fetch(event.request).catch(() =>
-// 				caches.match(event.request).then((response) => {
-// 					if (response) {
-// 						console.log("offline cache match");
-// 						return response;
-// 					} else {
-// 						return fetch(event.request)
-// 							.then((res) => {
-// 								return cache.open("dynamic").then((cache) => {
-// 									cache.put(event.request.url, res.clone());
-// 									return res;
-// 								});
-// 							})
-// 							.catch((e) =>
-// 								caches
-// 									.match("offline.html")
-// 									.then((response) => {
-// 										return response;
-// 									})
-// 							);
-// 					}
-// 				})
-// 			);
-// 		})
-// 	);
-// });
-
 self.addEventListener("fetch", (event) => {
 	event.respondWith(
 		caches.match(event.request).then((response) => {
@@ -53,7 +22,11 @@ self.addEventListener("fetch", (event) => {
 				return fetch(event.request)
 					.then((res) => {
 						return caches.open(DYNAMIC_CACHE).then((cache) => {
-							cache.put(event.request.url, res.clone());
+							cache
+								.put(event.request.url, res.clone())
+								.catch((err) => {
+									console.log("nothing really matters");
+								});
 							return res;
 						});
 					})
