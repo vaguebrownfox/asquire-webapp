@@ -1,5 +1,9 @@
 import createDataContext from "../createDataContext";
-import { addUserToIdb, getUsersFromIdb } from "../../functions/indexdb";
+import {
+	addUserToIdb,
+	getUsersFromIdb,
+	updateUserFromIdb,
+} from "../../functions/indexdb";
 
 // Initial State
 const userStates = {
@@ -38,6 +42,7 @@ const userReducer = (state, action) => {
 			return { ...state, users };
 		case "SELECT_USER":
 			return { ...state, selectedUser: action.payload };
+
 		default:
 			return state;
 	}
@@ -64,9 +69,18 @@ const selectUser = (dispatch) => {
 	};
 };
 
+const updateUser = (dispatch) => {
+	return async (user) => {
+		updateUserFromIdb(user).then(() => {
+			restoreUsers(dispatch);
+			dispatch({ type: "SELECT_USER", payload: user });
+		});
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
-	{ addUser, restoreUsers, selectUser },
+	{ addUser, restoreUsers, selectUser, updateUser },
 	userStates
 );

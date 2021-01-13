@@ -31,6 +31,10 @@ export const getUsersFromIdb = async () => {
 	return users;
 };
 
+export const updateUserFromIdb = async (user) => {
+	const db = await idb.userIdb;
+	db.delete(USERS_STORE, user.userName).then(() => addUserToIdb(user));
+};
 // const demo1 = () => {
 // 	openDB("db1", 1, {
 // 		upgrade(db) {

@@ -24,7 +24,6 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 	const routeLogic = (props) => {
 		if (state.selectedUser) {
 			const { surveyDone } = state.selectedUser;
-
 			switch (props.location.pathname) {
 				case "/survey":
 					return surveyDone ? (

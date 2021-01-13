@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useContext } from "react";
 
 // Styles
 import "./elements/Survey.css";
@@ -8,7 +8,12 @@ import "./elements/Survey.css";
 import Question from "./elements/Question";
 import Button from "../../components/Button";
 
+// Context
+import { Context as UserContext } from "../../context/data/UserContext";
+
 const Survey = ({ history }) => {
+	const { state, updateUser } = useContext(UserContext);
+
 	const questions = [
 		{
 			qno: 1,
@@ -33,11 +38,19 @@ const Survey = ({ history }) => {
 		{
 			qno: 5,
 			question: "What is Lorem Ipsum?",
-			options: ["Lorem", "Impsum", "Die", "PC masterace ", "Game"],
+			options: ["Lorem", "Impsum", "Die", "Game"],
 		},
 	];
 
 	const proceedButton = () => {
+		const { selectedUser } = state;
+		const userUp = {
+			...selectedUser,
+			surveyDone: true,
+		};
+		console.log("survey proceed", userUp);
+		updateUser(userUp);
+
 		history.push("/record");
 	};
 
