@@ -1,5 +1,5 @@
 // Modules
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 // Styles
@@ -11,14 +11,22 @@ import "./AddUser.scss";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
 const AddUser = () => {
-	const { addUser } = useContext(UserContext);
+	const { addUser, restoreUsers } = useContext(UserContext);
+
+	useEffect(restoreUsers, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const [userName, setUserName] = useState("");
 
 	const inputHelper = (event) => {
+		var r = /^[a-z]+(-[a-z]+)*$/;
 		var input = event.target.value.toLowerCase();
-		setUserName(input.length > 8 ? input.slice(0, 8) : input);
-		console.log("username: ", userName, uuid());
+		input = r.test(input)
+			? input.length > 8
+				? input.slice(0, 8)
+				: input
+			: userName;
+		setUserName(input);
+		console.log(userName, r.test(input));
 	};
 
 	const addUserHelper = () => {
@@ -44,7 +52,7 @@ const AddUser = () => {
 							className="c-form__input"
 							placeholder="Username (use a-z)"
 							type="text"
-							pattern="[a-z\-]+"
+							pattern="^[a-z]+(-[a-z]+)*$"
 							onChange={inputHelper}
 							value={userName}
 							required

@@ -11,27 +11,31 @@ import Button from "../../../components/Button";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
 const UserList = ({ history }) => {
-	const { state } = useContext(UserContext);
+	const { state, selectUser } = useContext(UserContext);
 
 	const nextButton = () => {
-		history.push("/survey");
+		if (state.selectedUser) history.push("/survey");
 	};
 
-	const userids = state || ["userdummy", "userhalcyon", "vwen", "kittykat69"]; // dummy user list
+	const selectHelper = (user) => {
+		console.log("user list event select: ", user);
+		selectUser(user);
+	};
 
-	const addUser = (userid) => {
+	const addUser = (user) => {
 		return (
-			<div className="wrapper" key={userid}>
+			<div className="wrapper" key={user.userName}>
 				<input
 					className="state"
 					type="radio"
 					name="users"
-					id={userid}
-					value={userid}
+					id={user.userName}
+					value={user.userName}
+					onClick={() => selectHelper(user)}
 				/>
-				<label className="label" htmlFor={userid}>
+				<label className="label" htmlFor={user.userName}>
 					<div className="indicator"></div>
-					<span className="text">{userid}</span>
+					<span className="text">{user.userName}</span>
 				</label>
 			</div>
 		);
@@ -40,7 +44,11 @@ const UserList = ({ history }) => {
 	return (
 		<div className="userlist-container">
 			<div className="radiogroup">
-				{userids.map((user) => addUser(user.userName))}
+				{state.users.length > 0 ? (
+					state.users.map((user) => addUser(user))
+				) : (
+					<p id="radiogroup-empty">No users yet!</p>
+				)}
 				<div id="radiogroup-btn">
 					<Button buttonStyle="btn--primary" onClick={nextButton}>
 						<p id="homepage-start">Next</p>

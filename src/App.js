@@ -8,6 +8,7 @@ import "./App.css";
 // Components
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./functions/protectedRoute";
 
 // Pages
 import Home from "./pages/home/Home";
@@ -29,9 +30,17 @@ const App = () => {
 					<Switch>
 						<Route path="/" exact component={Home} />
 						<Route path="/userid" exact component={UserID} />
-						<Route path="/survey" exact component={Survey} />
-						<Route path="/record" exact component={Record} />
-						<Route path="/done" exact component={Thank} />
+						<ProtectedRoute
+							path="/survey"
+							exact
+							component={Survey}
+						/>
+						<ProtectedRoute
+							path="/record"
+							exact
+							component={Record}
+						/>
+						<ProtectedRoute path="/done" exact component={Thank} />
 						<Route path="*" component={Error404} />
 					</Switch>
 				</UserProvider>

@@ -1,62 +1,72 @@
 import createDataContext from "../createDataContext";
+import { addUserToIdb, getUsersFromIdb } from "../../functions/indexdb";
 
 // Initial State
-const userStates = [
-	{
-		userName: "venw",
-		userId: "venw-3243ADFE",
-		surveyDone: false,
-		recordDone: false,
-	},
-	{
-		userName: "halcyon",
-		userId: "halcyon-3243ADFE",
-		surveyDone: false,
-		recordDone: false,
-	},
-];
+const userStates = {
+	users: [
+		{
+			userName: "venw",
+			userId: "venw-3243ADFE",
+			surveyDone: false,
+			recordDone: false,
+		},
+		{
+			userName: "halcyon",
+			userId: "halcyon-3243ADFE",
+			surveyDone: false,
+			recordDone: false,
+		},
+	],
+	selectedUser: null,
+};
 
 // Reducer
 const userReducer = (state, action) => {
 	switch (action.type) {
+		case "RESTORE_USERS":
+			return { users: [...action.payload], selectedUser: null };
 		case "ADD_USER":
-			/* 
-            action.payload = {
-				userName: "short-name",
-				userId: "short-name + uuid",
-				surveyDone: true / false,
-				recordDone: true / false,
-            }; 
-            */
 			var isDup =
-				state.filter(
+				state.users.filter(
 					(user) => user.userName === action.payload.userName
 				).length > 0;
 			console.log("user state:", state);
-			return isDup ? [...state] : [...state, action.payload];
-
+			if (!isDup) addUserToIdb(action.payload); // add to indexdb
+			var users = isDup
+				? [...state.users]
+				: [...state.users, action.payload];
+			return { ...state, users };
+		case "SELECT_USER":
+			return { ...state, selectedUser: action.payload };
 		default:
 			return state;
 	}
 };
 
 // Actions
+const restoreUsers = (dispatch) => {
+	return async () => {
+		const users = await getUsersFromIdb();
+		console.log("user context cunt ", users);
+		dispatch({ type: "RESTORE_USERS", payload: users });
+	};
+};
+
 const addUser = (dispatch) => {
 	return (newUser) => {
-		// dispatch ADD_USER
-		// const newUserX = {
-		// 	userName: "kittykat69",
-		// 	userId: "kittykat69-32496FFC",
-		// 	surveyDone: false,
-		// 	recordDone: false,
-		// };
 		dispatch({ type: "ADD_USER", payload: newUser });
+	};
+};
+
+const selectUser = (dispatch) => {
+	return (selectedUser) => {
+		dispatch({ type: "SELECT_USER", payload: selectedUser });
 	};
 };
 
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
-	{ addUser },
+	{ addUser, restoreUsers, selectUser },
 	userStates
 );
