@@ -18,4 +18,22 @@
 
 .control-btn:hover {
 	color: #ff971d;
+	cursor: pointer;
+}
+
+#timer {
+	font-size: 1.5em;
+}
+#timer-rec {
+	font-size: 1.5em;
+	color: rgb(255, 108, 108);
+}
+
+#timer-ply {
+	font-size: 1.5em;
+	color: greenyellow;
+}
+
+#descp-btn {
+	font-size: 0.3em;
 }

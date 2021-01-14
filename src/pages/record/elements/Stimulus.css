@@ -1,7 +1,8 @@
 .stimulus-container {
 	padding: 32px 16px;
 	margin: 8px;
-	min-width: 20em;
+	min-width: 22em;
+	max-width: 22em;
 
 	display: flex;
 	flex-direction: column;
@@ -15,6 +16,7 @@
 
 .stimulus-text {
 	font-size: 1.2em;
+	height: 3em;
 }
 
 .stimulus-img {

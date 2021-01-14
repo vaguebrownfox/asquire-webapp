@@ -17,7 +17,10 @@ const recordReducer = (state, action) => {
 	switch (action.type) {
 		case "REC_STATE":
 			console.log("rec state:", state);
-			return { ...state, isRecording: action.payload };
+			return {
+				...state,
+				isRecording: action.payload,
+			};
 		case "TIMER":
 			return {
 				...state,
@@ -48,6 +51,7 @@ const recOn = (dispatch) => {
 		if (isOn) {
 			// code to start recording
 			recorder.start();
+			dispatch({ type: "TIMER", payload: false });
 			interval = setInterval(() => {
 				console.log("recording...");
 				dispatch({ type: "TIMER", payload: true });

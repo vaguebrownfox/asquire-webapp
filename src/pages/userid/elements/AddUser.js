@@ -1,5 +1,5 @@
 // Modules
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 // Styles
@@ -11,9 +11,7 @@ import "./AddUser.scss";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
 const AddUser = () => {
-	const { addUser, restoreUsers } = useContext(UserContext);
-
-	useEffect(restoreUsers, []); // eslint-disable-line react-hooks/exhaustive-deps
+	const { addUser } = useContext(UserContext);
 
 	const [userName, setUserName] = useState("");
 

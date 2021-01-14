@@ -38,6 +38,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 					) : (
 						<Component {...props} />
 					);
+				case "/done":
+					return <Component {...props} />;
 				default:
 					break;
 			}

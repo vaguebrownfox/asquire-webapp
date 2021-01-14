@@ -10,6 +10,7 @@ import Button from "../../components/Button";
 
 // Context
 import { Provider as RecordProvider } from "../../context/data/RecordContext";
+import { Provider as StimulusProvider } from "../../context/data/StimulusContext";
 
 const Record = ({ history }) => {
 	const doneButton = () => {
@@ -18,19 +19,24 @@ const Record = ({ history }) => {
 
 	return (
 		<RecordProvider>
-			<div className="record-page">
-				<div className="record-bgoverlay">
-					<h1>Record</h1>
-					<div className="record-activity">
-						<Stimulus />
-					</div>
-					<div className="record-donebtn">
-						<Button buttonStyle="btn--primary" onClick={doneButton}>
-							<p id="survey-proceedbtntxt">Done</p>
-						</Button>
+			<StimulusProvider>
+				<div className="record-page">
+					<div className="record-bgoverlay">
+						<h1>Record</h1>
+						<div className="record-activity">
+							<Stimulus />
+						</div>
+						<div className="record-donebtn">
+							<Button
+								buttonStyle="btn--primary"
+								onClick={doneButton}
+							>
+								<p id="survey-proceedbtntxt">Done</p>
+							</Button>
+						</div>
 					</div>
 				</div>
-			</div>
+			</StimulusProvider>
 		</RecordProvider>
 	);
 };

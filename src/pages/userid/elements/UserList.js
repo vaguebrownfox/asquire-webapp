@@ -1,5 +1,5 @@
 // Modules
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 // Styles
 import "./UserList.css";
@@ -11,7 +11,9 @@ import Button from "../../../components/Button";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
 const UserList = ({ history }) => {
-	const { state, selectUser } = useContext(UserContext);
+	const { state, selectUser, restoreUsers } = useContext(UserContext);
+
+	useEffect(restoreUsers, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const nextButton = () => {
 		if (state.selectedUser) history.push("/survey");
