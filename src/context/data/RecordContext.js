@@ -74,9 +74,15 @@ const plyOn = (dispatch) => {
 		dispatch({ type: "PLY_STATE", payload: isOn });
 	};
 };
+
+const next = (dispatch) => {
+	return () => {
+		dispatch({ type: "TIMER", payload: false });
+	};
+};
 // Export
 export const { Context, Provider } = createDataContext(
 	recordReducer,
-	{ recOn, plyOn },
+	{ recOn, plyOn, next },
 	recordStates
 );
