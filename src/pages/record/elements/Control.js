@@ -12,7 +12,7 @@ import { Context as RecordContext } from "../../../context/data/RecordContext";
 import { Context as StimContext } from "../../../context/data/StimulusContext";
 
 const Control = () => {
-	const { state, recOn, plyOn } = useContext(RecordContext);
+	const { state, recOn, plyOn, next } = useContext(RecordContext);
 	const { nextStim } = useContext(StimContext);
 
 	const [timerStyle, setTimerStyle] = useState("timer");
@@ -43,7 +43,7 @@ const Control = () => {
 	};
 
 	const plyHelper = () => {
-		if (!state.isPlaying && !state.isRecording) {
+		if (!state.isPlaying && !state.isRecording && seconds > 0) {
 			plyOn(true);
 			setTimerStyle("timer-ply");
 			setTimeout(() => {
@@ -53,6 +53,15 @@ const Control = () => {
 			}, (state.seconds + 1) * 1000);
 		}
 	};
+
+	const nextStimHelper = () => {
+		if (!state.isPlaying && !state.isRecording && seconds > 0) {
+			nextStim();
+			setSeconds(time(0));
+			next();
+		}
+	};
+
 	return (
 		<div>
 			<p id={timerStyle}>
@@ -84,7 +93,7 @@ const Control = () => {
 				<div className="control-btn control-next">
 					<i
 						className="fas fa-chevron-circle-right"
-						onClick={nextStim}
+						onClick={() => nextStimHelper()}
 					></i>
 					<p id="descp-btn">Next</p>
 				</div>
