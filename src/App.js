@@ -20,6 +20,7 @@ import Error404 from "./pages/home/elements/Error404";
 
 // Context
 import { Provider as UserProvider } from "./context/data/UserContext";
+import { Provider as SurveyProvider } from "./context/data/SurveyContext";
 
 const App = () => {
 	return (
@@ -27,22 +28,30 @@ const App = () => {
 			<Router>
 				<NavBar />
 				<UserProvider>
-					<Switch>
-						<Route path="/" exact component={Home} />
-						<Route path="/userid" exact component={UserID} />
-						<ProtectedRoute
-							path="/survey"
-							exact
-							component={Survey}
-						/>
-						<ProtectedRoute
-							path="/record"
-							exact
-							component={Record}
-						/>
-						<ProtectedRoute path="/done" exact component={Thank} />
-						<Route path="*" component={Error404} />
-					</Switch>
+					<SurveyProvider>
+						<Switch>
+							<Route path="/" exact component={Home} />
+							<Route path="/userid" exact component={UserID} />
+
+							<ProtectedRoute
+								path="/survey"
+								exact
+								component={Survey}
+							/>
+
+							<ProtectedRoute
+								path="/record"
+								exact
+								component={Record}
+							/>
+							<ProtectedRoute
+								path="/done"
+								exact
+								component={Thank}
+							/>
+							<Route path="*" component={Error404} />
+						</Switch>
+					</SurveyProvider>
 				</UserProvider>
 				<Footer />
 			</Router>
@@ -51,3 +60,13 @@ const App = () => {
 };
 
 export default App;
+
+//                 • What does the fox say ? •
+//  /¯      ∆__∆    ˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘˘
+//  \_______\··/
+//  /¬ ¬  ¬  \/
+//  \¬_„_„„_¬„/
+//  / |    | |
+// /  /    / |
+// ˘  ˘   ˘  ˘
+//  J_Fox

@@ -33,6 +33,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 					);
 
 				case "/record":
+					console.log("route record");
 					return !surveyDone ? (
 						redirect("/survey", props.location)
 					) : (

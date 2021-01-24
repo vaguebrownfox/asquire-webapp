@@ -1,15 +1,34 @@
 // Modules
-import React from "react";
+import React, { useContext, useState } from "react";
 
 // Styles
 import "./Question.css";
 import "./InputText.scss";
 
 // Components
+import Button from "../../../components/Button";
 
-const Question = ({ qno, question, options }) => {
-	const inputHelper = (event, qno) => {
-		console.log("radio button", qno, event.target.value);
+// Context
+import { Context as SurveyContext } from "../../../context/data/SurveyContext";
+
+const Question = ({ qno, question, options, nQnos }) => {
+	const { nextQuestion } = useContext(SurveyContext);
+	const [inputText, setInputText] = useState("");
+
+	const inputHelper = (event) => {
+		let answer = event.target.value;
+		nextQuestion(qno, answer, options, nQnos);
+		console.log("radio button", qno, answer);
+	};
+
+	const inputTextHelper = (event) => {
+		setInputText(event.target.value);
+	};
+
+	const inputTextOk = () => {
+		let answer = inputText;
+		nextQuestion(qno, answer, options, nQnos);
+		console.log("answer okay", qno, answer);
 	};
 
 	const addOption = (option) => {
@@ -20,7 +39,7 @@ const Question = ({ qno, question, options }) => {
 					id={qno + option}
 					name="selector"
 					value={option}
-					onChange={(event) => inputHelper(event, qno)}
+					onClick={(event) => inputHelper(event)}
 				/>
 				<label htmlFor={qno + option}>{option}</label>
 
@@ -59,14 +78,22 @@ const Question = ({ qno, question, options }) => {
 							className="form__field"
 							placeholder="text"
 							name="name"
-							autoComplete="false"
+							autoComplete="off"
 							id={qno}
-							onChange={(event) => inputHelper(event, qno)}
+							onChange={(event) => inputTextHelper(event)}
 							required
 						/>
 						<label htmlFor={qno} className="form__label">
 							Answer
 						</label>
+					</div>
+					<div className="question-answer-ok">
+						<Button
+							buttonStyle="btn--outline"
+							onClick={() => inputTextOk()}
+						>
+							<p id="question-answer-ok-text">OK</p>
+						</Button>
 					</div>
 				</div>
 			)}

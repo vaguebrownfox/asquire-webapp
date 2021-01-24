@@ -17,8 +17,8 @@ const Questions = () => {
 
 	return (
 		<div className="survey-questions">
-			{state.questions &&
-				Object.values(state.questions)
+			{state.renderQuestions &&
+				Object.values(state.renderQuestions)
 					.reverse()
 					.map((q) => {
 						return (
@@ -27,6 +27,7 @@ const Questions = () => {
 								qno={q.qno}
 								question={q.question}
 								options={q.options}
+								nQnos={q.nextQnos}
 							/>
 						);
 					})}

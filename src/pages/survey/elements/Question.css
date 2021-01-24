@@ -118,3 +118,21 @@
 .question-radio input[type="radio"]:checked ~ label {
 	color: #ff971d;
 }
+
+.question-answer {
+	display: flex;
+	flex-direction: row;
+}
+
+.question-answer-ok {
+	display: flex;
+	align-self: flex-end;
+	margin: 8px;
+}
+
+#question-answer-ok-text {
+	padding: 0px 8px;
+}
+#question-answer-ok-text:hover {
+	color: #ff971d;
+}
