@@ -68,8 +68,12 @@ const recOn = (dispatch) => {
 
 const plyOn = (dispatch) => {
 	return async (isOn) => {
-		if (audio && isOn) {
-			audio.play();
+		if (audio) {
+			if (isOn) {
+				audio.play();
+			} else {
+				audio.pause();
+			}
 		}
 		dispatch({ type: "PLY_STATE", payload: isOn });
 	};

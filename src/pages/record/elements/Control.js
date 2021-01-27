@@ -28,7 +28,10 @@ const Control = () => {
 		} else {
 			clearInterval(id);
 		}
-		return () => clearInterval(id);
+		return () => {
+			clearInterval(id);
+			recOn(false);
+		};
 	}, [state.isPlaying, seconds]);
 
 	const recHelper = () => {
