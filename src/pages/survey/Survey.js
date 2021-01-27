@@ -7,6 +7,7 @@ import "./elements/Survey.css";
 // Components
 import Questions from "./elements/Questions";
 import Button from "../../components/Button";
+import BioData from "./elements/BioData";
 
 // Context
 import { Context as UserContext } from "../../context/data/UserContext";
@@ -49,6 +50,7 @@ const Survey = ({ history }) => {
 					</div>
 				)}
 				<Questions />
+				<BioData />
 			</div>
 		</div>
 	);

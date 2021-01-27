@@ -31,6 +31,7 @@ const recordAudio = () =>
 			})
 			.catch((err) => {
 				alert("Your browser does not support audio recording!");
+				console.log("record.js", err);
 			});
 
 		if (stream) {
@@ -43,7 +44,12 @@ const recordAudio = () =>
 
 			const start = () => {
 				audioChunks = [];
-				mediaRecorder.start();
+				try {
+					mediaRecorder.start();
+				} catch (error) {
+					console.log("start failed rec.js", error);
+					mediaRecorder.stop();
+				}
 			};
 
 			const stop = () =>
@@ -54,13 +60,26 @@ const recordAudio = () =>
 						});
 						const audioUrl = URL.createObjectURL(audioBlob);
 						const audio = new Audio(audioUrl);
-						const play = () => {
+						const play = async () => {
 							audio.play();
 						};
-						resolve({ audioChunks, audioBlob, audioUrl, play });
+						const pause = () => {
+							audio.pause();
+						};
+						resolve({
+							audioChunks,
+							audioBlob,
+							audioUrl,
+							play,
+							pause,
+						});
 					});
 
-					mediaRecorder.stop();
+					try {
+						mediaRecorder.stop();
+					} catch (error) {
+						console.log("stop failed rec.js", error);
+					}
 				});
 			resolve({ start, stop });
 		} else {

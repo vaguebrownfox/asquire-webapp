@@ -31,6 +31,7 @@ const App = () => {
 					<SurveyProvider>
 						<Switch>
 							<Route path="/" exact component={Home} />
+
 							<Route path="/userid" exact component={UserID} />
 
 							<ProtectedRoute
@@ -44,11 +45,13 @@ const App = () => {
 								exact
 								component={Record}
 							/>
+
 							<ProtectedRoute
 								path="/done"
 								exact
 								component={Thank}
 							/>
+
 							<Route path="*" component={Error404} />
 						</Switch>
 					</SurveyProvider>
