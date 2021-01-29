@@ -18,3 +18,10 @@
 #biofield:first-letter {
 	text-transform: capitalize;
 }
+
+#biodata-error-p:first-letter {
+	text-transform: capitalize;
+}
+#biodata-error-p {
+	color: rgb(255, 62, 62);
+}

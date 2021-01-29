@@ -23,6 +23,20 @@
 .survey-nextbtn {
 	margin: 16px 0px;
 }
+@keyframes zoominoutsinglefeatured {
+	0% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1.25, 1.25);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+.survey-nextbtn {
+	animation: zoominoutsinglefeatured 0.75s infinite;
+}
 
 #survey-proceedbtntxt {
 	font-size: 0.8em;

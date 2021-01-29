@@ -38,7 +38,7 @@ const Survey = ({ history }) => {
 	return (
 		<div className="survey-page">
 			<div className="survey-bgoverlay">
-				<h1>Survey</h1>
+				{userState.selectedUser.biodataDone && <h1>Survey</h1>}
 				{surveyState.isSurveyDone && (
 					<div className="survey-nextbtn">
 						<Button
@@ -49,8 +49,8 @@ const Survey = ({ history }) => {
 						</Button>
 					</div>
 				)}
-				<Questions />
-				<BioData />
+				{userState.selectedUser.biodataDone && <Questions />}
+				{!userState.selectedUser.biodataDone && <BioData />}
 			</div>
 		</div>
 	);

@@ -14,15 +14,16 @@ const AddUser = () => {
 	const { addUser } = useContext(UserContext);
 
 	const [userName, setUserName] = useState("");
+	const r = /^[a-z]+(-[a-z]+)*$/;
 
 	const inputHelper = (event) => {
-		var r = /^[a-z]+(-[a-z]+)*$/;
 		var input = event.target.value.toLowerCase();
-		input = r.test(input)
-			? input.length > 8
-				? input.slice(0, 8)
-				: input
-			: userName;
+		input =
+			r.test(input) || input === ""
+				? input.length > 8
+					? input.slice(0, 8)
+					: input
+				: userName;
 		setUserName(input);
 		console.log(userName, r.test(input));
 	};

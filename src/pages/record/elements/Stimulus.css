@@ -14,9 +14,40 @@
 	border-radius: 0.5em;
 }
 
+@keyframes zoominoutsinglefeatured {
+	0% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1.03, 1.03);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+.stimulus-container {
+	animation: zoominoutsinglefeatured 4s infinite;
+}
+
 .stimulus-text {
 	font-size: 1.2em;
 	height: 3em;
+}
+
+@keyframes zoominoutsinglefeatured2 {
+	0% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1.025, 1.025);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+.stimulus-text-p {
+	animation: zoominoutsinglefeatured2 4s infinite;
 }
 
 .stimulus-img {

@@ -18,7 +18,9 @@ const Stimulus = ({ stimulus, img }) => {
 	return (
 		<div className="stimulus-container">
 			<div className="stimulus-text">
-				<p>{state.stimulus[state.currentStim]}</p>
+				<p className="stimulus-text-p">
+					{state.stimulus[state.currentStim]}
+				</p>
 			</div>
 			<div className="stimulus-img"></div>
 			<div className="stimulus-con">

@@ -7,12 +7,16 @@ const surveyState = {
 	currentQuestion: 0,
 	renderQuestions: [],
 	answered: {},
+	bioData: {},
 	isSurveyDone: false,
+	isBiodataDone: false,
 };
 
 // Reducer
 const questionReducer = (state, action) => {
 	switch (action.type) {
+		case "BIO_DATA":
+			return { ...state, bioData: action.payload, isBiodataDone: true };
 		case "SET_QUESTIONS":
 			return {
 				...state,
@@ -56,6 +60,12 @@ const setQuestions = (dispatch) => {
 	};
 };
 
+const setBiodata = (dispatch) => {
+	return (bioData) => {
+		dispatch({ type: "BIO_DATA", payload: bioData });
+	};
+};
+
 const nextQuestion = (dispatch) => {
 	return (currQno, currAnswer, options, nQnos) => {
 		console.log("survey context", currQno, currAnswer);
@@ -78,6 +88,6 @@ const nextQuestion = (dispatch) => {
 // Export
 export const { Context, Provider } = createDataContext(
 	questionReducer,
-	{ setQuestions, nextQuestion },
+	{ setQuestions, setBiodata, nextQuestion },
 	surveyState
 );

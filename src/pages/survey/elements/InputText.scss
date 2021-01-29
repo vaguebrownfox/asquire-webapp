@@ -16,7 +16,7 @@ $gray: #9b9b9b;
 	width: 100%;
 	min-height: 1.5em;
 	border: 0;
-	border-bottom: 2px solid $gray;
+	border-bottom: 1px solid $gray;
 	outline: 0;
 	font-size: 1.3rem;
 	font-weight: 100;
@@ -57,7 +57,7 @@ $gray: #9b9b9b;
 	}
 	padding-bottom: 6px;
 	font-weight: 700;
-	border-width: 3px;
+	border-width: 2px;
 	border-image: linear-gradient(to right, $primary, $secondary);
 	border-image-slice: 1;
 }
