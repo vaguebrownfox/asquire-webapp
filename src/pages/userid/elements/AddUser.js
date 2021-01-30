@@ -10,7 +10,7 @@ import "./AddUser.scss";
 // Context
 import { Context as UserContext } from "../../../context/data/UserContext";
 
-const AddUser = () => {
+const AddUser = ({ history }) => {
 	const { addUser } = useContext(UserContext);
 
 	const [userName, setUserName] = useState("");
@@ -25,10 +25,9 @@ const AddUser = () => {
 					: input
 				: userName;
 		setUserName(input);
-		console.log(userName, r.test(input));
 	};
 
-	const addUserHelper = () => {
+	const addUserHelper = async () => {
 		if (userName.length > 0) {
 			const newUser = {
 				userName: userName,
@@ -37,7 +36,11 @@ const AddUser = () => {
 				recordDone: false,
 			};
 			console.log("user: ", newUser);
-			addUser(newUser);
+			await addUser(newUser).catch((e) => {
+				console.log("add user err", e);
+				alert("It appears there might be a network issue!");
+				history.go(0);
+			});
 		}
 	};
 

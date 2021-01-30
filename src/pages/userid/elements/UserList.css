@@ -112,3 +112,7 @@
 	font-weight: lighter;
 	font-style: italic;
 }
+
+.userList-wait {
+	height: 32px;
+}

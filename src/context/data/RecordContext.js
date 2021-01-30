@@ -84,6 +84,7 @@ const next = (dispatch) => {
 		dispatch({ type: "TIMER", payload: false });
 	};
 };
+
 // Export
 export const { Context, Provider } = createDataContext(
 	recordReducer,

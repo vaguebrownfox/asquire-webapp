@@ -15,7 +15,7 @@ const UserID = ({ history }) => {
 		<div className="useridpage">
 			<div className="userid-bgoverlay">
 				<h1>User ID</h1>
-				<AddUser />
+				<AddUser history={history} />
 				<UserList history={history} />
 			</div>
 		</div>
