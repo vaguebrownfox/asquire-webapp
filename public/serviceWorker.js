@@ -43,6 +43,7 @@ self.addEventListener("fetch", (event) => {
 
 // Activate SW
 self.addEventListener("activate", (event) => {
+	console.log("activating SW");
 	const cacheWhitelist = [];
 	cacheWhitelist.push(BASIC_CACHE, DYNAMIC_CACHE);
 
