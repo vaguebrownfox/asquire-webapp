@@ -10,10 +10,12 @@ import { time } from "../../../functions/timer";
 // Context
 import { Context as RecordContext } from "../../../context/data/RecordContext";
 import { Context as StimContext } from "../../../context/data/StimulusContext";
+import { Context as UserContext } from "../../../context/data/UserContext";
 
 const Control = () => {
 	const { state, recOn, plyOn, next } = useContext(RecordContext);
-	const { nextStim } = useContext(StimContext);
+	const { state: stimState, nextStim } = useContext(StimContext);
+	const { state: userState } = useContext(UserContext);
 
 	const [timerStyle, setTimerStyle] = useState("timer");
 	const [seconds, setSeconds] = useState(0);
@@ -59,9 +61,10 @@ const Control = () => {
 
 	const nextStimHelper = () => {
 		if (!state.isPlaying && !state.isRecording && seconds > 0) {
+			const id = `${userState.selectedUser.userId}_${stimState.currentStim}`;
 			nextStim();
 			setSeconds(time(0));
-			next();
+			next(id);
 		}
 	};
 

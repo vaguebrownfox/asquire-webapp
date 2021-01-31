@@ -2,6 +2,8 @@ import createDataContext from "../createDataContext";
 
 import recordAudio from "../../functions/record";
 
+import { firebaseUserAudio } from "../../functions/firebase";
+
 // Initial State
 const recordStates = {
 	userName: "venw",
@@ -80,8 +82,9 @@ const plyOn = (dispatch) => {
 };
 
 const next = (dispatch) => {
-	return () => {
+	return (user_rec_id) => {
 		dispatch({ type: "TIMER", payload: false });
+		firebaseUserAudio(user_rec_id, audio);
 	};
 };
 

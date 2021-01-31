@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 require("firebase/auth");
 require("firebase/firestore");
+require("firebase/storage");
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDfbURyEUAL-c5aaRV1SQq0UjucucRKb7c",
@@ -15,6 +16,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
 
 export const firebaseSignUp = async (email, password) => {
 	email = email + "@asquire.spire";
@@ -40,5 +43,16 @@ export const firebaseUserData = async (data) => {
 	await userDocRef.set(data).catch((e) => {
 		console.log(e);
 	});
+};
+
+export const firebaseUserAudio = (filename, audio) => {
+	const userAudioRef = storageRef.child("data0x01");
+
+	userAudioRef
+		.child(`${filename}.wav`)
+		.put(audio.audioBlob)
+		.then((snapshot) => {
+			console.log("Uploaded a blob or file!");
+		});
 };
 export default firebase;
