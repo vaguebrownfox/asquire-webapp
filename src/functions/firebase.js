@@ -1,4 +1,6 @@
 import firebase from "firebase/app";
+require("firebase/auth");
+require("firebase/firestore");
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDfbURyEUAL-c5aaRV1SQq0UjucucRKb7c",
@@ -12,5 +14,31 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
+export const firebaseSignUp = async (email, password) => {
+	email = email + "@asquire.spire";
+	password = password + "asquire";
+	const userCredential = await firebase
+		.auth()
+		.createUserWithEmailAndPassword(email, password);
+	return userCredential.user;
+};
+
+export const firebaseSignIn = async (email, password) => {
+	email = email + "@asquire.spire";
+	password = password + "asquire";
+	const userCredential = await firebase
+		.auth()
+		.signInWithEmailAndPassword(email, password);
+	return userCredential.user;
+};
+
+export const firebaseUserData = async (data) => {
+	const userDocRef = db.collection("users").doc(data.userId);
+
+	await userDocRef.set(data).catch((e) => {
+		console.log(e);
+	});
+};
 export default firebase;

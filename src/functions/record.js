@@ -28,6 +28,7 @@ const recordAudio = () =>
 		const stream = await navigator.mediaDevices
 			.getUserMedia({
 				audio: true,
+				video: false,
 			})
 			.catch((err) => {
 				alert("Your browser does not support audio recording!");

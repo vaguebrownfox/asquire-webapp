@@ -4,9 +4,9 @@ import "./Wait.css";
 
 const Wait = () => {
 	return (
-		<div class="centered">
-			<div class="blob-1"></div>
-			<div class="blob-2"></div>
+		<div className="centered">
+			<div className="blob-1"></div>
+			<div className="blob-2"></div>
 		</div>
 	);
 };

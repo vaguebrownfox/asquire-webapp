@@ -5,8 +5,11 @@ import {
 	updateUserFromIdb,
 } from "../../functions/indexdb";
 
-import firebase from "../../functions/firebase";
-require("firebase/auth");
+import {
+	firebaseSignIn,
+	firebaseSignUp,
+	firebaseUserData,
+} from "../../functions/firebase";
 
 // Initial State
 const userStates = {
@@ -103,29 +106,14 @@ const logInUser = (dispatch) => {
 
 const updateUser = (dispatch) => {
 	return async (user) => {
-		updateUserFromIdb(user).then(() => {
+		await updateUserFromIdb(user).then(() => {
 			restoreUsers(dispatch);
 			dispatch({ type: "SELECT_USER", payload: user });
 		});
+		if (user.surveyDone) {
+			await firebaseUserData(user);
+		}
 	};
-};
-
-const firebaseSignUp = async (email, password) => {
-	email = email + "@asquire.spire";
-	password = password + "asquire";
-	const userCredential = await firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password);
-	return userCredential.user;
-};
-
-const firebaseSignIn = async (email, password) => {
-	email = email + "@asquire.spire";
-	password = password + "asquire";
-	const userCredential = await firebase
-		.auth()
-		.signInWithEmailAndPassword(email, password);
-	return userCredential.user;
 };
 
 // Export

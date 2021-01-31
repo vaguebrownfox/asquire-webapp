@@ -31,7 +31,6 @@ const Survey = ({ history }) => {
 		};
 		console.log("survey proceed", userUp, answers);
 		updateUser(userUp);
-
 		history.push("/record");
 	};
 
