@@ -16,7 +16,7 @@ const Footer = () => {
 						<h2>About</h2>
 						<Link to="/how">How it works?</Link>
 						<Link to="/future">Future Scope</Link>
-						<Link to="/consent">Consent</Link>
+						<Link to="/conditions">Consent</Link>
 					</div>
 					<div className="footer-link-items">
 						<h2>Contact</h2>

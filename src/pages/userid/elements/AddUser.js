@@ -11,7 +11,7 @@ import "./AddUser.scss";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
 const AddUser = ({ history }) => {
-	const { addUser } = useContext(UserContext);
+	const { state, addUser } = useContext(UserContext);
 
 	const [userName, setUserName] = useState("");
 	const r = /^[a-z]+(-[a-z]+)*$/;
@@ -35,8 +35,7 @@ const AddUser = ({ history }) => {
 				surveyDone: false,
 				recordDone: false,
 			};
-			console.log("user: ", newUser);
-			await addUser(newUser).catch((e) => {
+			await addUser(newUser, state.users).catch((e) => {
 				console.log("add user err", e);
 				alert("It appears there might be a network issue!");
 				history.go(0);

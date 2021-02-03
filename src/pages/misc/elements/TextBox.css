@@ -1,0 +1,33 @@
+.tv-container {
+	display: flex;
+	justify-content: center;
+	margin: 3rem;
+}
+
+.tv {
+	width: 350px;
+	padding: 32px;
+	background: rgba(0, 0, 0, 0.85);
+	border-radius: 0% 0% 0% 0% / 0% 0% 0% 0%;
+	color: white;
+	box-shadow: 20px 20px rgba(0, 0, 0, 0);
+	transition: all 0.4s ease;
+}
+.tv:hover {
+	border-radius: 0% 50% 0% 0% / 5% 12% 5% 5%;
+	box-shadow: 10px 10px rgba(0, 0, 0, 0);
+}
+
+.tv-unit {
+	margin: 16px auto;
+}
+
+.tv-head {
+	color: #ff971d;
+	margin: 8px auto;
+}
+
+.tv-text {
+	font-size: 1em;
+	line-height: 1.5em;
+}

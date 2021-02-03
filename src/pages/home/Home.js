@@ -29,7 +29,7 @@ const Home = ({ history }) => {
 
 				<p id="homepage-consent">
 					{"*By clicking START, you are agreeing to the "}
-					<Link id="homepage-consent-text" to="/consent">
+					<Link id="homepage-consent-text" to="/conditions">
 						terms and conditions
 					</Link>{" "}
 					(click to view){" "}

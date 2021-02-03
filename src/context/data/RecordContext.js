@@ -18,7 +18,6 @@ const recordStates = {
 const recordReducer = (state, action) => {
 	switch (action.type) {
 		case "REC_STATE":
-			console.log("rec state:", state);
 			return {
 				...state,
 				isRecording: action.payload,
@@ -42,8 +41,6 @@ let audio = null;
 // Actions
 const recOn = (dispatch) => {
 	return async (isOn) => {
-		console.log("recorder\n", recorder, "\naudio\n", audio);
-
 		if (!recorder) {
 			recorder = await recordAudio();
 		}
@@ -51,7 +48,6 @@ const recOn = (dispatch) => {
 		if (!recorder) return;
 
 		if (isOn) {
-			// code to start recording
 			recorder.start();
 			dispatch({ type: "TIMER", payload: false });
 			interval = setInterval(() => {
@@ -59,7 +55,6 @@ const recOn = (dispatch) => {
 				dispatch({ type: "TIMER", payload: true });
 			}, 1000);
 		} else {
-			// code to stop n save recording
 			audio = await recorder.stop();
 			clearInterval(interval);
 		}

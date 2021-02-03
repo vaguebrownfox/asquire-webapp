@@ -12,6 +12,7 @@ import ProtectedRoute from "./functions/protectedRoute";
 
 // Pages
 import Home from "./pages/home/Home";
+import Conditions from "./pages/misc/Conditions";
 import UserID from "./pages/userid/UserID";
 import Survey from "./pages/survey/Survey";
 import Record from "./pages/record/Record";
@@ -31,6 +32,11 @@ const App = () => {
 					<SurveyProvider>
 						<Switch>
 							<Route path="/" exact component={Home} />
+							<Route
+								path="/conditions"
+								exact
+								component={Conditions}
+							/>
 
 							<Route path="/userid" exact component={UserID} />
 

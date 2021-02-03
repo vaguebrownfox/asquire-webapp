@@ -1,0 +1,17 @@
+.miscellpage {
+	justify-content: center;
+	background-image: url("https://i.redd.it/hv48gqvpjd561.jpg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100%;
+	padding: 64px 0px;
+	color: antiquewhite;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	min-height: 90vh;
+}

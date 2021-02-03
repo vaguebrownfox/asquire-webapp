@@ -32,7 +32,7 @@ const Control = () => {
 		}
 		return () => {
 			clearInterval(id);
-			recOn(false);
+			state.isRecording && recOn(false);
 		};
 	}, [state.isPlaying, seconds]); // eslint-disable-line react-hooks/exhaustive-deps
 
