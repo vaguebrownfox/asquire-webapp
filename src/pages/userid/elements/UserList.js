@@ -66,11 +66,13 @@ const UserList = ({ history }) => {
 				) : (
 					<p id="radiogroup-empty">No users yet!</p>
 				)}
-				<div id="radiogroup-btn">
-					<Button buttonStyle="btn--primary" onClick={nextButton}>
-						<p id="homepage-start">Next</p>
-					</Button>
-				</div>
+				{!state.wait && (
+					<div id="radiogroup-btn">
+						<Button buttonStyle="btn--primary" onClick={nextButton}>
+							<p id="homepage-start">Next</p>
+						</Button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

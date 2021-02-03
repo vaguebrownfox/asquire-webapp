@@ -35,3 +35,8 @@
 .record-donebtn {
 	margin-top: 88px;
 }
+
+.instruction-list {
+	margin-left: 16px;
+	text-align: start;
+}

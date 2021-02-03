@@ -7,6 +7,7 @@ import "./elements/Record.css";
 // Components
 import Stimulus from "./elements/Stimulus";
 import Button from "../../components/Button";
+import TextBox from "../../components/TextBox";
 
 // Context
 import { Provider as RecordProvider } from "../../context/data/RecordContext";
@@ -26,6 +27,7 @@ const Record = ({ history }) => {
 						<div className="record-activity">
 							<Stimulus />
 						</div>
+						<Instructions />
 						<div className="record-donebtn">
 							<Button
 								buttonStyle="btn--primary"
@@ -38,6 +40,30 @@ const Record = ({ history }) => {
 				</div>
 			</StimulusProvider>
 		</RecordProvider>
+	);
+};
+
+const Instructions = () => {
+	return (
+		<TextBox>
+			<div className="instruction-list">
+				<ul>
+					<li>
+						<p className="tv-text">
+							Click to start record and record your voice
+						</p>
+					</li>
+					<li>
+						<p className="tv-text">Do what txt says</p>
+					</li>
+					<li>
+						<p className="tv-text">
+							Need help to add instruction ...
+						</p>
+					</li>
+				</ul>
+			</div>
+		</TextBox>
 	);
 };
 

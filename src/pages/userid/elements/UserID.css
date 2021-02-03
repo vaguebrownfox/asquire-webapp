@@ -21,3 +21,8 @@
 	background-color: rgba(0, 0, 0, 0.753);
 	color: antiquewhite;
 }
+
+.instruction-list {
+	margin-left: 32px;
+	text-align: start;
+}
