@@ -1,6 +1,6 @@
 .homepage {
 	justify-content: center;
-	background-image: url("https://i.redd.it/hv48gqvpjd561.jpg");
+	/* background-image: url("https://i.redd.it/hv48gqvpjd561.jpg"); */
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -13,6 +13,7 @@
 	text-align: center;
 
 	min-height: 90vh;
+	z-index: 100;
 }
 
 #homepage-greet {
@@ -24,6 +25,7 @@
 }
 #homepage-btn {
 	margin: 16px 32px;
+	z-index: 100;
 }
 #homepage-start:hover {
 	color: #ff971d;
