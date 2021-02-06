@@ -1,5 +1,6 @@
 // Modules
 import React, { useContext, useState, useEffect } from "react";
+import Tooltip from "@material-ui/core/Tooltip";
 
 // Styles
 import "./Control.css";
@@ -75,32 +76,50 @@ const Control = () => {
 			</p>
 			<div className="control-container">
 				<div className="control-btn control-play">
-					<i
-						className={
-							state.isPlaying ? "fas fa-pause" : "fas fa-play"
-						}
-						onClick={plyHelper}
-					></i>
+					<Tooltip
+						title="Play"
+						placement="top-start"
+						enterDelay={1500}
+					>
+						<i
+							className={
+								state.isPlaying ? "fas fa-pause" : "fas fa-play"
+							}
+							onClick={plyHelper}
+						></i>
+					</Tooltip>
 					<p id="descp-btn">Play</p>
 					{/* <i className="fas fa-pause"></i> */}
 				</div>
+
 				<div className="control-btn control-record">
-					<i
-						className={
+					<Tooltip
+						title={
 							state.isRecording
-								? "fas fa-microphone-alt-slash"
-								: "fas fa-microphone-alt"
+								? "Stop Recording"
+								: "Start Recording"
 						}
-						onClick={recHelper}
-					></i>
+						enterDelay={1500}
+					>
+						<i
+							className={
+								state.isRecording
+									? "fas fa-microphone-alt-slash"
+									: "fas fa-microphone-alt"
+							}
+							onClick={recHelper}
+						></i>
+					</Tooltip>
 					<p id="descp-btn">Record</p>
 					{/* <i className="fas fa-microphone-alt-slash"></i> */}
 				</div>
 				<div className="control-btn control-next">
-					<i
-						className="fas fa-chevron-circle-right"
-						onClick={() => nextStimHelper()}
-					></i>
+					<Tooltip title="Next" placement="top-end" enterDelay={1500}>
+						<i
+							className="fas fa-chevron-circle-right"
+							onClick={() => nextStimHelper()}
+						></i>
+					</Tooltip>
 					<p id="descp-btn">Next</p>
 				</div>
 			</div>
