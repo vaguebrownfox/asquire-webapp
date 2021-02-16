@@ -11,7 +11,7 @@ import Control from "./Control";
 import { Context as StimContext } from "../../../context/data/StimulusContext";
 import { Context as UserContext } from "../../../context/data/UserContext";
 
-const Stimulus = ({ stimulus, img }) => {
+const Stimulus = () => {
 	const { state, setStims } = useContext(StimContext);
 	const { state: userState } = useContext(UserContext);
 
