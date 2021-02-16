@@ -10,7 +10,13 @@ const stimStates = {
 const stimReducer = (state, action) => {
 	switch (action.type) {
 		case "SET_STIMS":
-			return { ...state, stimulus: action.payload, currentStim: 0 };
+			return {
+				...state,
+				stimulus: action.payload.stims,
+				currentStim:
+					action.payload.index %
+					Object.keys(action.payload.stims).length,
+			};
 		case "NEXT_STIM":
 			return {
 				...state,
@@ -25,9 +31,9 @@ const stimReducer = (state, action) => {
 
 // Actions
 const setStims = (dispatch) => {
-	return () => {
+	return (index) => {
 		let stims = stimulus;
-		dispatch({ type: "SET_STIMS", payload: stims });
+		dispatch({ type: "SET_STIMS", payload: { stims, index } });
 	};
 };
 

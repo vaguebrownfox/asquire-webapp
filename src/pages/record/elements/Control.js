@@ -16,7 +16,7 @@ import { Context as UserContext } from "../../../context/data/UserContext";
 const Control = () => {
 	const { state, recOn, plyOn, next } = useContext(RecordContext);
 	const { state: stimState, nextStim } = useContext(StimContext);
-	const { state: userState } = useContext(UserContext);
+	const { state: userState, updateUser } = useContext(UserContext);
 
 	const [timerStyle, setTimerStyle] = useState("timer");
 	const [seconds, setSeconds] = useState(0);
@@ -66,6 +66,11 @@ const Control = () => {
 			nextStim();
 			setSeconds(time(0));
 			next(id);
+			const userUp = {
+				...userState.selectedUser,
+				stimIndex: stimState.currentStim,
+			};
+			updateUser(userUp);
 		}
 	};
 

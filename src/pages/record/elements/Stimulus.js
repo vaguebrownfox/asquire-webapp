@@ -9,11 +9,13 @@ import Control from "./Control";
 
 // Context
 import { Context as StimContext } from "../../../context/data/StimulusContext";
+import { Context as UserContext } from "../../../context/data/UserContext";
 
 const Stimulus = ({ stimulus, img }) => {
 	const { state, setStims } = useContext(StimContext);
+	const { state: userState } = useContext(UserContext);
 
-	useEffect(setStims, []); // eslint-disable-line react-hooks/exhaustive-deps
+	useEffect(() => setStims(userState.selectedUser.stimIndex + 1 || 0), []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="stimulus-container">

@@ -13,33 +13,26 @@ import TextBox from "../../components/TextBox";
 import { Provider as RecordProvider } from "../../context/data/RecordContext";
 import { Provider as StimulusProvider } from "../../context/data/StimulusContext";
 
-const Record = ({ history }) => {
+const RecordComponent = ({ history }) => {
 	const doneButton = () => {
 		history.push("/done");
 	};
 
 	return (
-		<RecordProvider>
-			<StimulusProvider>
-				<div className="record-page">
-					<div className="record-bgoverlay">
-						<h1>Record</h1>
-						<div className="record-activity">
-							<Stimulus />
-						</div>
-						<Instructions />
-						<div className="record-donebtn">
-							<Button
-								buttonStyle="btn--primary"
-								onClick={doneButton}
-							>
-								<p id="survey-proceedbtntxt">Done</p>
-							</Button>
-						</div>
-					</div>
+		<div className="record-page">
+			<div className="record-bgoverlay">
+				<h1>Record</h1>
+				<div className="record-activity">
+					<Stimulus />
 				</div>
-			</StimulusProvider>
-		</RecordProvider>
+				<Instructions />
+				<div className="record-donebtn">
+					<Button buttonStyle="btn--primary" onClick={doneButton}>
+						<p id="survey-proceedbtntxt">Done</p>
+					</Button>
+				</div>
+			</div>
+		</div>
 	);
 };
 
@@ -66,5 +59,13 @@ const Instructions = () => {
 		</TextBox>
 	);
 };
+
+const Record = ({ history }) => (
+	<RecordProvider>
+		<StimulusProvider>
+			<RecordComponent {...{ history }} />
+		</StimulusProvider>
+	</RecordProvider>
+);
 
 export default Record;
