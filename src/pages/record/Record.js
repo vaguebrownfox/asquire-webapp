@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { useContext } from "react";
 
 // Styles
 import "./elements/Record.css";
@@ -11,9 +11,11 @@ import TextBox from "../../components/TextBox";
 
 // Context
 import { Provider as RecordProvider } from "../../context/data/RecordContext";
+import { Context as UserContext } from "../../context/data/UserContext";
 import { Provider as StimulusProvider } from "../../context/data/StimulusContext";
 
 const RecordComponent = ({ history }) => {
+	const { state } = useContext(UserContext);
 	const doneButton = () => {
 		history.push("/done");
 	};
@@ -21,7 +23,7 @@ const RecordComponent = ({ history }) => {
 	return (
 		<div className="record-page">
 			<div className="record-bgoverlay">
-				<h1>Record</h1>
+				<h1>{`Recording for ${state.selectedUser.userName}`}</h1>
 				<div className="record-activity">
 					<Stimulus />
 				</div>
