@@ -18,7 +18,6 @@ const Question = ({ qno, question, options, nQnos }) => {
 	const inputHelper = (event) => {
 		let answer = event.target.value;
 		nextQuestion(qno, answer, options, nQnos);
-		console.log("radio button", qno, answer);
 	};
 
 	const inputTextHelper = (event) => {
@@ -28,7 +27,6 @@ const Question = ({ qno, question, options, nQnos }) => {
 	const inputTextOk = () => {
 		let answer = inputText;
 		nextQuestion(qno, answer, options, nQnos);
-		console.log("answer okay", qno, answer);
 	};
 
 	const addOption = (option) => {

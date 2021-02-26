@@ -23,18 +23,18 @@ const UserList = ({ history }) => {
 			const { userId: email, userName: password } = state.selectedUser;
 			await logInUser(email, password)
 				.then(() => {
-					console.log("user list", state.authUser);
 					history.push("/survey");
 				})
 				.catch((e) => {
 					console.log("user list next error", e);
-					alert("It appears there might be a network issue!");
+					alert(
+						"It appears there might be a network or other issue!"
+					);
 				});
 		}
 	};
 
 	const selectHelper = (user) => {
-		console.log("user list event select: ", user);
 		selectUser(user);
 	};
 
@@ -66,11 +66,13 @@ const UserList = ({ history }) => {
 				) : (
 					<p id="radiogroup-empty">No users yet!</p>
 				)}
-				<div id="radiogroup-btn">
-					<Button buttonStyle="btn--primary" onClick={nextButton}>
-						<p id="homepage-start">Next</p>
-					</Button>
-				</div>
+				{!state.wait && (
+					<div id="radiogroup-btn">
+						<Button buttonStyle="btn--primary" onClick={nextButton}>
+							<p id="homepage-start">Next</p>
+						</Button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

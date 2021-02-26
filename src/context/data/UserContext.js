@@ -43,16 +43,7 @@ const userReducer = (state, action) => {
 				wait: false,
 			};
 		case "ADD_USER":
-			var isDup =
-				state.users.filter(
-					(user) => user.userName === action.payload.userName
-				).length > 0;
-			console.log("user state:", state);
-			if (!isDup) addUserToIdb(action.payload); // add to indexdb
-			var users = isDup
-				? [...state.users]
-				: [...state.users, action.payload];
-			return { ...state, users };
+			return { ...state, users: action.payload };
 		case "SELECT_USER":
 			return { ...state, selectedUser: action.payload };
 		case "AUTH_USER":
@@ -68,19 +59,29 @@ const userReducer = (state, action) => {
 const restoreUsers = (dispatch) => {
 	return async () => {
 		const users = await getUsersFromIdb();
-		console.log("user context cunt ", users);
 		dispatch({ type: "RESTORE_USERS", payload: users });
 	};
 };
 
 const addUser = (dispatch) => {
-	return async (newUser) => {
+	return async (newUser, allUsers) => {
 		dispatch({ type: "WAIT", payload: true });
-		await firebaseSignUp(newUser.userId, newUser.userName).then((user) => {
-			user && dispatch({ type: "ADD_USER", payload: newUser });
-			console.log("add user", user);
+
+		var isDup = allUsers.some((user) => user.userName === newUser.userName);
+		if (!isDup) {
+			await firebaseSignUp(newUser.userId, newUser.userName).then(
+				(user) => {
+					if (user) {
+						var users = [...allUsers, newUser];
+						dispatch({ type: "ADD_USER", payload: users });
+						addUserToIdb(newUser); // add to indexdb
+						dispatch({ type: "WAIT", payload: false });
+					}
+				}
+			);
+		} else {
 			dispatch({ type: "WAIT", payload: false });
-		});
+		}
 	};
 };
 

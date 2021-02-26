@@ -27,7 +27,6 @@ const questionReducer = (state, action) => {
 				isSurveyDone: false,
 			};
 		case "NEXT_QUESTION":
-			console.log("action next", action.payload);
 			const { currQno, currAnswer, nQ } = action.payload;
 			if (nQ !== -1) {
 				let newRenQs = state.renderQuestions.filter(
@@ -68,7 +67,6 @@ const setBiodata = (dispatch) => {
 
 const nextQuestion = (dispatch) => {
 	return (currQno, currAnswer, options, nQnos) => {
-		console.log("survey context", currQno, currAnswer);
 		let nQ;
 		if (nQnos.length === 1 || currAnswer === options[0]) {
 			nQ = nQnos[0];
