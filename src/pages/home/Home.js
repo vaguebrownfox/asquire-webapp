@@ -18,7 +18,7 @@ const Home = ({ history }) => {
 		<Background>
 			<div className="homepage">
 				<h1 id="homepage-greet">{greetMsg()}</h1>
-				<p id="homepage-greetd">Hope you have few minutes to spare!</p>
+				<p id="homepage-greetd">Hope you have few minutes to spare!!</p>
 				<div id="homepage-btn">
 					<Button
 						className="btns"

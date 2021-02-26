@@ -45,15 +45,23 @@ const Instructions = () => {
 				<ul>
 					<li>
 						<p className="tv-text">
-							Click to start record and record your voice
+							Please sit straight on a firm surface like chair or
+							floor etc.
 						</p>
 					</li>
 					<li>
-						<p className="tv-text">Do what txt says</p>
+						<p className="tv-text">
+							Please take a deep breath through your mouth and
+							while exhaling(through the mouth), please speak the
+							task/word on your screen, like aaa, ooo, sss till
+							you exhale completely.
+						</p>
 					</li>
 					<li>
 						<p className="tv-text">
-							Need help to add instruction ...
+							Please place the microphone of your at a distance
+							equal to the width of your 4 fingers excluding
+							thumb, approximately 5 cm.
 						</p>
 					</li>
 				</ul>

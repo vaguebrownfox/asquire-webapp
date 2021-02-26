@@ -13,33 +13,33 @@ self.addEventListener("install", (event) => {
 	);
 });
 
-self.addEventListener("fetch", (event) => {
-	event.respondWith(
-		caches.match(event.request).then((response) => {
-			if (response) {
-				return response;
-			} else {
-				return fetch(event.request)
-					.then((res) => {
-						return caches.open(DYNAMIC_CACHE).then((cache) => {
-							cache
-								.put(event.request.url, res.clone())
-								.catch((err) => {
-									console.log("nothing really matters");
-								});
-							return res;
-						});
-					})
-					.catch((e) => {
-						console.log("fetch catch: ", e);
-						return caches.match("offline.html").then((r) => {
-							return r;
-						});
-					});
-			}
-		})
-	);
-});
+// self.addEventListener("fetch", (event) => {
+// 	event.respondWith(
+// 		caches.match(event.request).then((response) => {
+// 			if (response) {
+// 				return response;
+// 			} else {
+// 				return fetch(event.request)
+// 					.then((res) => {
+// 						return caches.open(DYNAMIC_CACHE).then((cache) => {
+// 							cache
+// 								.put(event.request.url, res.clone())
+// 								.catch((err) => {
+// 									console.log("nothing really matters");
+// 								});
+// 							return res;
+// 						});
+// 					})
+// 					.catch((e) => {
+// 						console.log("fetch catch: ", e);
+// 						return caches.match("offline.html").then((r) => {
+// 							return r;
+// 						});
+// 					});
+// 			}
+// 		})
+// 	);
+// });
 
 // Activate SW
 self.addEventListener("activate", (event) => {
