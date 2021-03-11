@@ -27,7 +27,17 @@ const recordAudio = () =>
 
 		const stream = await navigator.mediaDevices
 			.getUserMedia({
-				audio: true,
+				audio: {
+					autoGainControl: false, //(2) [true, false]
+					channelCount: 1, // {max: 2, min: 1}
+					deviceId: "default",
+					// groupId: null,
+					echoCancellation: false, //(2) [true, false]
+					latency: 0.01, //{max: 0.01, min: 0.01}
+					noiseSuppression: false, //(2) [true, false]
+					sampleRate: 16000, //{max: 48000, min: 48000}
+					sampleSize: 16, //{max: 16, min: 16}
+				},
 				video: false,
 			})
 			.catch((err) => {
