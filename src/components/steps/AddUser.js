@@ -69,7 +69,8 @@ const AddUser = () => {
 					className={classes.textInput}
 					noValidate
 					autoComplete="off"
-					onSubmit={() => {
+					onSubmit={(e) => {
+						e.preventDefault();
 						console.log("submit");
 					}}
 				>
