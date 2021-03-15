@@ -24,7 +24,10 @@ const initializeMedia = () => {
 const recordAudio = () =>
 	new Promise(async (resolve, reject) => {
 		initializeMedia();
-
+		console.log(
+			"constraints: ",
+			navigator.mediaDevices.getSupportedConstraints()
+		);
 		const stream = await navigator.mediaDevices
 			.getUserMedia({
 				audio: {
