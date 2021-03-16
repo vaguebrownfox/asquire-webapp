@@ -5,18 +5,38 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import ContactIcon from "@material-ui/icons/Mail";
 import HomeIcon from "@material-ui/icons/Home";
 import FeedbackIcon from "@material-ui/icons/Feedback";
+import { grey } from "@material-ui/core/colors";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	root: {
-		position: "fixed",
+		position: "relative",
 		bottom: "0",
 		width: "100%",
-		height: 32 * 3,
+		height: 32 * 2,
 	},
-});
+	icon: {
+		color: "green",
+	},
+	selected: {
+		color: "red",
+	},
+}));
+
+const makeActionStyles = makeStyles((theme) => ({
+	root: {
+		color: grey[500],
+		"&$selected": {
+			color: "red",
+		},
+	},
+	selected: {
+		color: theme.palette.secondary.main,
+	},
+}));
 
 export default function LabelBottomNavigation() {
 	const classes = useStyles();
+	const actionClasses = makeActionStyles();
 	const [value, setValue] = React.useState("recents");
 
 	const handleChange = (event, newValue) => {
@@ -33,16 +53,19 @@ export default function LabelBottomNavigation() {
 			<BottomNavigationAction
 				label="Contact"
 				value="contact"
+				classes={actionClasses}
 				icon={<ContactIcon />}
 			/>
 			<BottomNavigationAction
 				label="Home Page"
 				value="homepage"
+				classes={actionClasses}
 				icon={<HomeIcon />}
 			/>
 			<BottomNavigationAction
 				label="Feedback"
 				value="feedback"
+				classes={actionClasses}
 				icon={<FeedbackIcon />}
 			/>
 		</BottomNavigation>

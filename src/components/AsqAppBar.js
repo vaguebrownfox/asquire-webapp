@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 	toolbar: {
-		background: theme.palette.primary.background,
+		background: theme.palette.secondary.background,
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 		// [theme.breakpoints.up("sm")]: {
 		// 	display: "block",
 		// },
+		color: theme.palette.primary.main,
 	},
 	inputRoot: {
 		color: "inherit",
@@ -191,7 +192,7 @@ function AsqAppBar({ title }) {
 					<IconButton
 						edge="start"
 						className={classes.menuButton}
-						color="secondary"
+						color="primary"
 						aria-label="open drawer"
 						onClick={() => {
 							// toggleDrawer(true);
@@ -209,7 +210,7 @@ function AsqAppBar({ title }) {
 						<ButtonGroup
 							variant="text"
 							className={classes.navbuttons}
-							color="secondary"
+							color="primary"
 							aria-label="text primary button group"
 						>
 							<Button className={classes.navbuttons}>
@@ -230,7 +231,7 @@ function AsqAppBar({ title }) {
 							aria-controls={menuId}
 							aria-haspopup="true"
 							onClick={handleProfileMenuOpen}
-							color="secondary"
+							color="primary"
 						>
 							<AccountCircle />
 						</IconButton>
@@ -241,7 +242,7 @@ function AsqAppBar({ title }) {
 							aria-controls={mobileMenuId}
 							aria-haspopup="true"
 							onClick={handleMobileMenuOpen}
-							color="secondary"
+							color="primary"
 						>
 							<MoreIcon />
 						</IconButton>

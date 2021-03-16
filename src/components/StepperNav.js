@@ -12,10 +12,11 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: "100%",
 		height: "100%",
+		marginBottom: 32 * 3,
 	},
 	stepper: {
 		background: theme.palette.background.default,
-		color: theme.palette.primary.background,
+		iconColor: theme.palette.secondary.main,
 	},
 	button: {
 		marginTop: theme.spacing(1),
@@ -29,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
 		background: theme.palette.background.default,
 
 		height: "100%",
+	},
+	steptitle: {
+		display: "flex",
+		textAlign: "flex-start",
+		paddingLeft: theme.spacing(2),
 	},
 }));
 
@@ -56,9 +62,13 @@ export default function VerticalLinearStepper({ components }) {
 				orientation="vertical"
 			>
 				{components.map((item, index) => (
-					<Step key={index} color="secondary">
+					<Step key={index} color="primary">
 						<StepLabel>
-							<Typography variant="h6" component="h2">
+							<Typography
+								className={classes.steptitle}
+								variant="body1"
+								component="div"
+							>
 								{item.title}
 							</Typography>
 						</StepLabel>

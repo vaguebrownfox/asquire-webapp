@@ -90,9 +90,6 @@ const AddUser = () => {
 					</Button>
 				</form>
 			</CardContent>
-			<CardActions>
-				<Button size="small">Learn More</Button>
-			</CardActions>
 		</Card>
 	);
 };

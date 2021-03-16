@@ -6,6 +6,8 @@ import SimpleCard from "./components/SimpleCard";
 import FooterLinks from "./components/FooterLinks";
 import AboutProject from "./components/steps/AboutProject";
 import AddUser from "./components/steps/AddUser";
+import Survey from "./components/steps/Survey";
+import BioData from "./components/steps/BioData";
 
 const components = [
 	{
@@ -14,7 +16,15 @@ const components = [
 	},
 	{
 		title: "Create User ID!",
-		component: <AddUser title="secon" />,
+		component: <AddUser />,
+	},
+	{
+		title: "Bio Data",
+		component: <BioData />,
+	},
+	{
+		title: "Quick Survey!",
+		component: <Survey title="secon" />,
 	},
 	{
 		title: "Record your voice!",
