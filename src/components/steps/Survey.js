@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		justifyContent: "space-around",
 	},
+
+	controlIcon: {
+		height: 38,
+		width: 38,
+	},
 }));
 
 const Survey = () => {
@@ -57,12 +62,12 @@ const Survey = () => {
 				<div className={classes.controls}>
 					<IconButton aria-label="previous">
 						<Tooltip title="Previous question">
-							<SkipPreviousIcon />
+							<SkipPreviousIcon className={classes.controlIcon} />
 						</Tooltip>
 					</IconButton>
 					<IconButton aria-label="next">
 						<Tooltip title="Next question">
-							<SkipNextIcon />
+							<SkipNextIcon className={classes.controlIcon} />
 						</Tooltip>
 					</IconButton>
 				</div>

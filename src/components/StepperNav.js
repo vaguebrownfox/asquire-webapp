@@ -7,6 +7,7 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Finish from "./steps/Finish";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -102,6 +103,7 @@ export default function VerticalLinearStepper({ components }) {
 			</Stepper>
 			{activeStep === components.length && (
 				<Paper square elevation={0} className={classes.resetContainer}>
+					<Finish />
 					<Typography>
 						All steps completed - you&apos;re finished
 					</Typography>

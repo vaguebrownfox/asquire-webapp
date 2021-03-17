@@ -5,10 +5,15 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { CardActionArea, CardMedia, IconButton } from "@material-ui/core";
+import {
+	CardActionArea,
+	CardMedia,
+	IconButton,
+	Tooltip,
+} from "@material-ui/core";
 
-import SkipPreviousIcon from "@material-ui/icons/PlayArrow";
-import PlayArrowIcon from "@material-ui/icons/Mic";
+import PlayIcon from "@material-ui/icons/PlayArrow";
+import RecordStartIcon from "@material-ui/icons/Mic";
 import SkipNextIcon from "@material-ui/icons/NavigateNext";
 
 const useStyles = makeStyles((theme) => ({
@@ -81,13 +86,21 @@ export default function Record({ title }) {
 					/>
 					<div className={classes.controls}>
 						<IconButton aria-label="previous">
-							<SkipPreviousIcon className={classes.controlIcon} />
+							<Tooltip title="Play">
+								<PlayIcon className={classes.controlIcon} />
+							</Tooltip>
 						</IconButton>
 						<IconButton aria-label="play/pause">
-							<PlayArrowIcon className={classes.controlIcon} />
+							<Tooltip title="Start recording">
+								<RecordStartIcon
+									className={classes.controlIcon}
+								/>
+							</Tooltip>
 						</IconButton>
 						<IconButton aria-label="next">
-							<SkipNextIcon className={classes.controlIcon} />
+							<Tooltip title="Next">
+								<SkipNextIcon className={classes.controlIcon} />
+							</Tooltip>
 						</IconButton>
 					</div>
 				</div>
