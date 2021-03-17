@@ -8,10 +8,11 @@ import AboutProject from "./components/steps/AboutProject";
 import AddUser from "./components/steps/AddUser";
 import Survey from "./components/steps/Survey";
 import BioData from "./components/steps/BioData";
+import Record from "./components/steps/Record";
 
 const components = [
 	{
-		title: "Welcome! Learn about our project...",
+		title: "Welcome!",
 		component: <AboutProject title="firse" />,
 	},
 	{
@@ -28,7 +29,7 @@ const components = [
 	},
 	{
 		title: "Record your voice!",
-		component: <SimpleCard title="thirr" />,
+		component: <Record />,
 	},
 ];
 

@@ -6,6 +6,7 @@ import ContactIcon from "@material-ui/icons/Mail";
 import HomeIcon from "@material-ui/icons/Home";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { grey } from "@material-ui/core/colors";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -14,11 +15,9 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		height: 32 * 2,
 	},
-	icon: {
-		color: "green",
-	},
-	selected: {
-		color: "red",
+	avatar: {
+		width: theme.spacing(7),
+		height: theme.spacing(7),
 	},
 }));
 
@@ -26,7 +25,7 @@ const makeActionStyles = makeStyles((theme) => ({
 	root: {
 		color: grey[500],
 		"&$selected": {
-			color: "red",
+			color: theme.palette.secondary.main,
 		},
 	},
 	selected: {

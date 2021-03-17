@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: "100%",
 		height: "100%",
+		minHeight: "80vh",
 		marginBottom: 32 * 3,
 	},
 	stepper: {
@@ -85,7 +86,7 @@ export default function VerticalLinearStepper({ components }) {
 									</Button>
 									<Button
 										variant="contained"
-										color="primary"
+										color="secondary"
 										onClick={handleNext}
 										className={classes.button}
 									>

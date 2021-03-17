@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 275,
 		background: theme.palette.primary.card,
 	},
 	bullet: {
@@ -17,10 +16,25 @@ const useStyles = makeStyles((theme) => ({
 		transform: "scale(0.8)",
 	},
 	title: {
-		fontSize: 14,
+		fontSize: 16,
+	},
+	subtitleDiv: {
+		marginRight: "auto",
+		marginLeft: "auto",
+		maxWidth: 600,
+	},
+	subtitle: {
+		fontWeight: "bold",
 	},
 	pos: {
 		marginBottom: 12,
+	},
+	consentbutton: {
+		textTransform: "none",
+		marginTop: theme.spacing(1),
+	},
+	terms: {
+		paddingTop: theme.spacing(2),
 	},
 }));
 
@@ -32,17 +46,95 @@ const AboutProject = () => {
 			<CardContent>
 				<Typography
 					className={classes.title}
-					color="textSecondary"
+					color="textPrimary"
 					gutterBottom
 				>
-					{"Diagnosis with AI"}
+					Diagnosis with Machine Learning
 				</Typography>
-				<Typography className={classes.pos} color="textSecondary">
-					adjective
-				</Typography>
-				<Typography variant="body2" component="p">
-					The future
-				</Typography>
+				<div className={classes.subtitleDiv}>
+					<Typography
+						className={classes.subtitle}
+						color="textPrimary"
+						variant="subtitle1"
+						component="div"
+						gutterBottom
+					>
+						Objective
+					</Typography>
+					<Typography
+						color="secondary"
+						variant="body2"
+						component="div"
+						paragraph
+					>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Aenean molestie dignissim erat, nec auctor mauris porta
+						sed. Mauris dui ante, pulvinar et eleifend ac,
+						sollicitudin ac massa.
+					</Typography>
+				</div>
+				<div className={classes.subtitleDiv}>
+					<Typography
+						className={classes.subtitle}
+						color="textPrimary"
+						variant="subtitle1"
+						component="div"
+						gutterBottom
+					>
+						Motivation and Background
+					</Typography>
+					<Typography
+						color="secondary"
+						variant="body2"
+						component="div"
+						paragraph
+					>
+						Quisque tristique ac nulla aliquam tempus. Donec in
+						vehicula nisl. Donec quis molestie augue. Ut
+						pellentesque accumsan nunc, vitae semper mi pulvinar
+						quis. Nunc luctus odio ac purus tempus varius.
+					</Typography>
+				</div>
+				<div className={classes.subtitleDiv}>
+					<Typography
+						className={classes.subtitle}
+						color="textPrimary"
+						variant="subtitle1"
+						component="div"
+						gutterBottom
+					>
+						Significance of your voice
+					</Typography>
+					<Typography
+						color="secondary"
+						variant="body2"
+						component="div"
+						paragraph
+					>
+						Donec quis molestie augue. Ut pellentesque accumsan
+						nunc, vitae semper mi pulvinar quis. Nunc luctus odio ac
+						purus tempus varius. Proin auctor nec diam vitae
+						maximus.
+					</Typography>
+				</div>
+				<div className={classes.terms}>
+					<Typography
+						color="textPrimary"
+						variant="body2"
+						component="div"
+					>
+						*By clicking NEXT, you are agreeing to the terms and
+						conditions.
+					</Typography>
+					<Button
+						className={classes.consentbutton}
+						variant="outlined"
+						size="small"
+						color="inherit"
+					>
+						Read Terms and Condition
+					</Button>
+				</div>
 			</CardContent>
 			<CardActions>
 				<Button size="small">Learn More</Button>

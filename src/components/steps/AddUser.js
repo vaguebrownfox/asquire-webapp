@@ -15,10 +15,16 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
+import {
+	Checkbox,
+	FormControl,
+	FormControlLabel,
+	FormGroup,
+	FormHelperText,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 275,
 		background: theme.palette.primary.card,
 	},
 	bullet: {
@@ -46,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: 32,
 		"& > *": {
 			margin: theme.spacing(1),
-			width: "25ch",
+			minWidth: "20ch",
 		},
 	},
 	submitButton: {
@@ -55,8 +61,52 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const getUsers = () => {
+	// code to get local users - idb
+	const users = [
+		{
+			userId: "venw-UUDIC",
+			userName: "venw",
+		},
+		{
+			userId: "halcyon-UUDIC",
+			userName: "halcyon",
+		},
+		{
+			userId: "userdummy-UUDIC",
+			userName: "userdummy",
+		},
+	];
+
+	return users;
+};
+
 const AddUser = () => {
 	const classes = useStyles();
+	const [users, setUsers] = React.useState([]);
+	const [userName, setUserName] = React.useState("");
+
+	React.useEffect(() => {
+		setUsers(getUsers());
+		return () => {
+			console.log("Add user component cleanup");
+		};
+	}, []);
+
+	const handleUserName = (e) => {
+		console.log("add user", e.target.value);
+
+		setUserName(e.target.value.toUpperCase());
+	};
+
+	const handleAddUser = (e) => {
+		setUsers([
+			...users,
+			{ userName: userName, userId: userName + "12345" },
+		]);
+		setUserName("");
+		console.log("add user", users);
+	};
 
 	return (
 		<Card className={classes.root}>
@@ -64,7 +114,7 @@ const AddUser = () => {
 				<Typography className={classes.pos} color="textSecondary">
 					Select user
 				</Typography>
-				<UserList />
+				<UserList users={users} />
 				<form
 					className={classes.textInput}
 					noValidate
@@ -79,11 +129,15 @@ const AddUser = () => {
 						label="Enter Username"
 						placeholder="only characters a-z"
 						variant="standard"
+						color="secondary"
+						value={userName}
+						onChange={handleUserName}
 					/>
 					<Button
 						className={classes.submitButton}
 						variant="contained"
-						color="primary"
+						color="secondary"
+						onClick={handleAddUser}
 						submit
 					>
 						Add User
@@ -94,24 +148,54 @@ const AddUser = () => {
 	);
 };
 
-const UserList = () => {
+const UserList = ({ users }) => {
 	const classes = useStyles();
+
+	const [selectedUser, selectUser] = React.useState(null);
+
+	React.useEffect(() => {
+		let userSelect = {};
+		users.forEach((u) => {
+			userSelect[u.userId] = false;
+		});
+		selectUser(userSelect);
+		return () => {
+			console.log("user list component cleanup");
+		};
+	}, [users]);
+
+	const handleChange = (e) => {
+		console.log("selc", e.target.value);
+		selectUser({ [e.target.value]: true });
+	};
 	return (
 		<div className={classes.userList}>
-			<List component="nav" aria-label="main mailbox folders">
-				<ListItem button>
-					<ListItemIcon>
-						<ProfileIcon />
-					</ListItemIcon>
-					<ListItemText primary="userdummy" />
-				</ListItem>
-				<ListItem button>
-					<ListItemIcon>
-						<ProfileIcon />
-					</ListItemIcon>
-					<ListItemText primary="halcyon" />
-				</ListItem>
-			</List>
+			<FormControl component="fieldset" className={classes.formControl}>
+				<FormGroup>
+					{users &&
+						users.map((user, i) => {
+							return (
+								<FormControlLabel
+									key={i}
+									control={
+										<Checkbox
+											icon={<ProfileIcon />}
+											checkedIcon={<ProfileIcon />}
+											checked={
+												selectedUser[user.userId] ||
+												false
+											}
+											onChange={handleChange}
+											name={user.userName}
+											value={user.userId}
+										/>
+									}
+									label={user.userName}
+								/>
+							);
+						})}
+				</FormGroup>
+			</FormControl>
 			<Divider />
 		</div>
 	);
