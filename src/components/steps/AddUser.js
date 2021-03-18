@@ -11,6 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
 import {
 	Checkbox,
+	CircularProgress,
 	FormControl,
 	FormControlLabel,
 	FormGroup,
@@ -83,6 +84,7 @@ const AddUserComponent = () => {
 						error={userState.error}
 						onSelect={handleUserSelect}
 					/>
+
 					<form
 						className={classes.textInput}
 						noValidate
@@ -93,6 +95,12 @@ const AddUserComponent = () => {
 							handleAddUser();
 						}}
 					>
+						{userState.loading && (
+							<div className={classes.progress}>
+								<CircularProgress color="secondary" />
+							</div>
+						)}
+
 						<TextField
 							id="outlined-basic"
 							label="Enter Username"
@@ -241,6 +249,7 @@ const useStyles = makeStyles((theme) => ({
 	actionsContainer: {
 		marginTop: theme.spacing(2),
 	},
+	progress: {},
 }));
 
 const AddUser = () => (

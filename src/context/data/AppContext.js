@@ -39,6 +39,16 @@ const appSelectedUserAction = (dispatch) => {
 	};
 };
 
+const appUserLoginAction = (dispatch) => {
+	return (user) => {
+		dispatch({ type: "LOADING", payload: true });
+
+		console.log("app action log:: user login", user);
+
+		dispatch({ type: "LOADING", payload: false });
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	appReducer,

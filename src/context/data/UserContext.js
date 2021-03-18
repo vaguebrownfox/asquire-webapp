@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 
 // functions
 import { getAllUsersFromIdb, addUserToIdb } from "../../functions/indexdb";
+import { firebaseSignIn, firebaseSignUp } from "../../functions/auth";
 
 // Initial State
 const userInitialState = {
@@ -43,17 +44,17 @@ const userReducer = (state, action) => {
 
 const userLoadAction = (dispatch) => {
 	return () => {
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: true });
 
 		console.log("user action log");
 
-		dispatch({ type: "LOADING", payload: false });
+		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
 
 const userGetAllAction = (dispatch) => {
 	return async () => {
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: true });
 
 		const allUsers = await getAllUsersFromIdb();
 		console.log("user action log:: all users", allUsers);
@@ -66,13 +67,13 @@ const userGetAllAction = (dispatch) => {
 			dispatch({ type: "SET_ALLUSERS", payload: allUsers });
 		}
 
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
 
 const userAddAction = (dispatch) => {
 	return async (userName) => {
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: true });
 
 		let user = {
 			...typicalUser,
@@ -80,10 +81,12 @@ const userAddAction = (dispatch) => {
 			userId: `${userName}_${uuid().slice(0, 8)}`,
 		};
 
+		let uAuth = await firebaseSignUp(user.userId, user.userName);
 		user = await addUserToIdb(user);
 
-		if (user !== null) {
+		if (uAuth && user !== null) {
 			dispatch({ type: "ADD_USER", payload: user });
+
 			dispatch({ type: "ERROR", payload: "" });
 			console.log("user action log:: add user", user);
 		} else {
@@ -96,7 +99,7 @@ const userAddAction = (dispatch) => {
 			}, 3000);
 		}
 
-		dispatch({ type: "LOADING", payload: false });
+		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
 
