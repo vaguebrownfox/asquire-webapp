@@ -25,7 +25,7 @@ const surveyAction = (dispatch) => {
 
 		console.log("survey action log");
 
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "LOADING", payload: false });
 	};
 };
 
@@ -35,7 +35,7 @@ const surveyLoadQuestions = (dispatch) => {
 
 		fetch("..");
 
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "LOADING", payload: false });
 	};
 };
 

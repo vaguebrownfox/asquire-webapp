@@ -1,16 +1,29 @@
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import StepperNav from "./components/StepperNav";
 import AsqAppBar from "./components/AsqAppBar";
-import SimpleCard from "./components/SimpleCard";
 import FooterLinks from "./components/FooterLinks";
+import StepperNav from "./components/StepperNav";
+
 import AboutProject from "./components/steps/AboutProject";
 import AddUser from "./components/steps/AddUser";
 import Survey from "./components/steps/Survey";
 import BioData from "./components/steps/BioData";
 import Record from "./components/steps/Record";
 
-const components = [
+import About from "./components/static/About";
+import Consent from "./components/static/Consent";
+import Contact from "./components/static/Contact";
+import Feedback from "./components/static/Feedback";
+
+// Context
+import { Provider as AppProvider } from "./context/data/AppContext";
+import { Provider as StepProvider } from "./context/data/StepContext";
+import { Provider as UserProvider } from "./context/data/UserContext";
+
+// import { components } from "./components/steps/components";
+
+export const components = [
 	{
 		title: "Welcome!",
 		component: <AboutProject title="firse" />,
@@ -36,9 +49,54 @@ const components = [
 const App = () => {
 	return (
 		<div className="App">
-			<AsqAppBar title="Asquire" />
-			<StepperNav {...{ components }} />
-			<FooterLinks />
+			<>
+				<Router>
+					<AsqAppBar title="Asquire" />
+
+					<AppProvider>
+						<StepProvider>
+							<UserProvider>
+								<Switch>
+									{/* Home Page */}
+									<Route
+										path="/"
+										exact
+										render={(props) => (
+											<StepperNav
+												{...{ components, ...props }}
+											/>
+										)}
+									/>
+
+									{/* Static Pages */}
+									<Route
+										path="/about"
+										exact
+										component={About}
+									/>
+									<Route
+										path="/consent"
+										exact
+										component={Consent}
+									/>
+									<Route
+										path="/contact"
+										exact
+										component={Contact}
+									/>
+									<Route
+										path="/feedback"
+										exact
+										component={Feedback}
+									/>
+								</Switch>
+							</UserProvider>
+						</StepProvider>
+					</AppProvider>
+
+					<FooterLinks />
+				</Router>
+			</>
 		</div>
 	);
 };

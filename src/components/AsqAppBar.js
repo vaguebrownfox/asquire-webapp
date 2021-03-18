@@ -1,11 +1,9 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import HomeIcon from "@material-ui/icons/HomeRounded";
@@ -13,7 +11,6 @@ import AboutIcon from "@material-ui/icons/InfoRounded";
 import ContactIcon from "@material-ui/icons/MailOutlineRounded";
 import ConsentIcon from "@material-ui/icons/NotesRounded";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Button, ButtonGroup } from "@material-ui/core";
 
@@ -71,9 +68,15 @@ const useStyles = makeStyles((theme) => ({
 	badge: {
 		color: theme.palette.background.default,
 	},
+	link: {
+		textDecoration: "none",
+		"&:visited": {
+			color: theme.palette.primary.contrastText,
+		},
+	},
 }));
 
-function AsqAppBar({ title }) {
+function AsqAppBar({ title, history }) {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -98,13 +101,13 @@ function AsqAppBar({ title }) {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
 
-	const Messages = () => (
-		<IconButton aria-label="show 4 new mails" color="inherit">
-			<Badge badgeContent={4} color="inherit">
-				<MailIcon />
-			</Badge>
-		</IconButton>
-	);
+	// const Messages = () => (
+	// 	<IconButton aria-label="show 4 new mails" color="inherit">
+	// 		<Badge badgeContent={4} color="inherit">
+	// 			<MailIcon />
+	// 		</Badge>
+	// 	</IconButton>
+	// );
 
 	const menuId = "primary-search-account-menu";
 	const renderMenu = (
@@ -155,10 +158,13 @@ function AsqAppBar({ title }) {
 					aria-controls="about"
 					aria-haspopup="true"
 					color="inherit"
+					href="/about"
 				>
 					<AboutIcon />
 				</IconButton>
-				<p>About</p>
+				<a className={classes.link} href="/about">
+					About
+				</a>
 			</MenuItem>
 			<MenuItem /*onClick={}*/>
 				<IconButton
@@ -166,10 +172,13 @@ function AsqAppBar({ title }) {
 					aria-controls="contact"
 					aria-haspopup="true"
 					color="inherit"
+					href="/contact"
 				>
 					<ContactIcon />
 				</IconButton>
-				<p>Contact</p>
+				<a className={classes.link} href="/contact">
+					Contact
+				</a>
 			</MenuItem>
 			<MenuItem /*onClick={}*/>
 				<IconButton
@@ -177,10 +186,13 @@ function AsqAppBar({ title }) {
 					aria-controls="consent"
 					aria-haspopup="false"
 					color="inherit"
+					href="/consent"
 				>
 					<ConsentIcon />
 				</IconButton>
-				<p>Consent</p>
+				<a className={classes.link} href="/consent">
+					Consent
+				</a>
 			</MenuItem>
 		</Menu>
 	);
@@ -194,9 +206,7 @@ function AsqAppBar({ title }) {
 						className={classes.menuButton}
 						color="primary"
 						aria-label="open drawer"
-						onClick={() => {
-							// toggleDrawer(true);
-						}}
+						href="/"
 					>
 						<HomeIcon />
 					</IconButton>
@@ -213,10 +223,16 @@ function AsqAppBar({ title }) {
 							color="primary"
 							aria-label="text primary button group"
 						>
-							<Button className={classes.navbuttons}>
+							<Button
+								className={classes.navbuttons}
+								href="/about"
+							>
 								About
 							</Button>
-							<Button className={classes.navbuttons}>
+							<Button
+								className={classes.navbuttons}
+								href="/consent"
+							>
 								Consent
 							</Button>
 						</ButtonGroup>

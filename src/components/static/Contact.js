@@ -6,8 +6,9 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 275,
-		background: theme.palette.background.default,
+		minHeight: "90vh",
+		background: theme.palette.primary.main,
+		padding: theme.spacing(4),
 	},
 	bullet: {
 		display: "inline-block",
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Finish({ title }) {
+export default function Contact() {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -34,8 +35,11 @@ export default function Finish({ title }) {
 					color="textSecondary"
 					gutterBottom
 				>
-					{bull}
-					{"Thank you for taking part in out project!"}
+					Contact us
+				</Typography>
+
+				<Typography variant="body2" component="p">
+					{bull} Project members email address
 				</Typography>
 			</CardContent>
 		</Card>

@@ -1,13 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 275,
-		background: theme.palette.background.default,
+		minHeight: "90vh",
+		background: theme.palette.primary.main,
+		padding: theme.spacing(4),
 	},
 	bullet: {
 		display: "inline-block",
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Finish({ title }) {
+export default function About() {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -34,10 +37,17 @@ export default function Finish({ title }) {
 					color="textSecondary"
 					gutterBottom
 				>
-					{bull}
-					{"Thank you for taking part in out project!"}
+					About Us
+				</Typography>
+
+				<Typography variant="body2" component="p">
+					{bull} Feeling excited? Check out other similar projects
+					from SPIRE Lab
 				</Typography>
 			</CardContent>
+			<CardActions>
+				<Button size="small">Learn More</Button>
+			</CardActions>
 		</Card>
 	);
 }

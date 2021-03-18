@@ -1,3 +1,4 @@
+// sample context
 import createDataContext from "../createDataContext";
 
 // Initial State
@@ -17,13 +18,13 @@ const sampleReducer = (state, action) => {
 
 // Actions
 
-const sampleAction = (dispatch) => {
+const sampleLoadAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "LOADING", payload: true });
 
 		console.log("sample action log");
 
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "LOADING", payload: false });
 	};
 };
 
@@ -31,7 +32,7 @@ const sampleAction = (dispatch) => {
 export const { Context, Provider } = createDataContext(
 	sampleReducer,
 	{
-		sampleAction,
+		sampleLoadAction,
 	},
 	sampleInitialState
 );

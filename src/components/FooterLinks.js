@@ -6,7 +6,6 @@ import ContactIcon from "@material-ui/icons/Mail";
 import HomeIcon from "@material-ui/icons/Home";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { grey } from "@material-ui/core/colors";
-import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -54,18 +53,21 @@ export default function LabelBottomNavigation() {
 				value="contact"
 				classes={actionClasses}
 				icon={<ContactIcon />}
+				href="/contact"
 			/>
 			<BottomNavigationAction
 				label="Home Page"
 				value="homepage"
 				classes={actionClasses}
 				icon={<HomeIcon />}
+				href="/"
 			/>
 			<BottomNavigationAction
 				label="Feedback"
 				value="feedback"
 				classes={actionClasses}
 				icon={<FeedbackIcon />}
+				href={"/feedback"}
 			/>
 		</BottomNavigation>
 	);
