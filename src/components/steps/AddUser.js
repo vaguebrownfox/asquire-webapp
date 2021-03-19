@@ -21,7 +21,6 @@ import {
 import { components } from "../../App";
 
 // Context
-import { Context as AppContext } from "../../context/data/AppContext";
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 
@@ -31,14 +30,16 @@ const AddUserComponent = () => {
 		state: userState,
 		userGetAllAction,
 		userAddAction,
+		userSelectAction,
+		userLoginAction,
 	} = React.useContext(UserContext);
 	const {
 		state: stepState,
 		stepNextAction,
 		stepPreviousAction,
 	} = React.useContext(StepContext);
-	const { appSelectedUserAction } = React.useContext(AppContext);
 	const [userName, setUserName] = React.useState("");
+	const regxUN = /^[a-z]+(-[a-z]+)*$/;
 
 	React.useEffect(() => {
 		userGetAllAction();
@@ -47,9 +48,11 @@ const AddUserComponent = () => {
 		};
 	}, []);
 
-	const handleNext = () => {
+	const handleNext = async () => {
 		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		stepNextAction();
+		const auth = await userLoginAction(userState.selectedUser);
+		console.log("add user next :: ", auth);
+		auth && stepNextAction();
 	};
 
 	const handleBack = () => {
@@ -58,18 +61,24 @@ const AddUserComponent = () => {
 	};
 
 	const handleUserName = (e) => {
-		console.log("add user", e.target.value);
+		var input = e.target.value.toLowerCase();
+		input =
+			regxUN.test(input) || input === ""
+				? input.length > 16
+					? input.slice(0, 16)
+					: input
+				: userName;
 
-		setUserName(e.target.value);
+		setUserName(input);
 	};
 
 	const handleAddUser = (e) => {
-		userAddAction(userName);
+		userName.length > 0 && userAddAction(userName);
 		setUserName("");
 	};
 
 	const handleUserSelect = (user) => {
-		appSelectedUserAction(user);
+		userSelectAction(user);
 	};
 
 	return (
@@ -97,7 +106,7 @@ const AddUserComponent = () => {
 					>
 						{userState.loading && (
 							<div className={classes.progress}>
-								<CircularProgress color="secondary" />
+								<CircularProgress color="secondary" size={28} />
 							</div>
 						)}
 
@@ -130,16 +139,18 @@ const AddUserComponent = () => {
 					>
 						Back
 					</Button>
-					<Button
-						variant="contained"
-						color="secondary"
-						onClick={handleNext}
-						className={classes.button}
-					>
-						{stepState.activeStep === components.length - 1
-							? "Finish"
-							: "Next"}
-					</Button>
+					{userState.allUsers.length > 0 && (
+						<Button
+							variant="contained"
+							color="secondary"
+							onClick={handleNext}
+							className={classes.button}
+						>
+							{stepState.activeStep === components.length - 1
+								? "Finish"
+								: "Next"}
+						</Button>
+					)}
 				</div>
 			</div>
 		</>

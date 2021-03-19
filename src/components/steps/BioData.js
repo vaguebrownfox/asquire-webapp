@@ -3,15 +3,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
+import {
+	CircularProgress,
+	FormHelperText,
+	InputAdornment,
+	MenuItem,
+	TextField,
+} from "@material-ui/core";
 
 import { components } from "../../App";
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
+import { Context as UserContext } from "../../context/data/UserContext";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		background: theme.palette.primary.card,
+		paddingTop: theme.spacing(2),
+		paddingBottom: theme.spacing(2),
 	},
 	bullet: {
 		display: "inline-block",
@@ -41,7 +50,13 @@ const useStyles = makeStyles((theme) => ({
 	actionsContainer: {
 		marginTop: theme.spacing(2),
 	},
+	helpertxt: {
+		textAlign: "center",
+		paddingBottom: theme.spacing(2),
+	},
 }));
+
+const fields = ["name", "age", "gender", "height", "weight"];
 
 const genders = [
 	{
@@ -58,23 +73,112 @@ const genders = [
 	},
 ];
 
+const r_name = /^([a-zA-Z]+\s?)*\s*$/; ///^[a-z A-Z]{0,30}$/;
+const r_digit = /^[\d+]{0,3}$/;
+const r_gender = /^(m|f|o)$/;
+
 const BioData = () => {
 	const classes = useStyles();
 	const {
 		state: stepState,
 		stepNextAction,
 		stepPreviousAction,
+		stepSetAction,
 	} = React.useContext(StepContext);
+	const { state: userState, userUpdateAction } = React.useContext(
+		UserContext
+	);
 	const [bio, setBio] = React.useState({});
+	const [error, setError] = React.useState({ field: "", isErr: false });
 
-	const handleNext = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		stepNextAction();
+	React.useEffect(() => {
+		if (userState.selectedUser.bioDataDone) {
+			if (stepState.previousStep < stepState.activeStep) {
+				stepNextAction();
+			} else if (stepState.previousStep > stepState.activeStep) {
+				stepSetAction(1);
+			}
+		}
+		return () => {
+			console.log("Bio data component cleanup");
+		};
+	}, []);
+
+	const handleNext = async () => {
+		if (onNextHelper()) {
+			const user = {
+				...userState.selectedUser,
+				bioDataDone: true,
+				bio,
+			};
+			await userUpdateAction(user);
+
+			stepNextAction();
+		}
+		console.info("bio data component next :: bio ", bio);
 	};
 
 	const handleBack = () => {
 		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
+	};
+
+	// inputs handles
+	const handleInputs = (type, event) => {
+		let data = event.target.value.trim();
+
+		if (data === "") return setBio({ ...bio, [type]: data });
+
+		switch (type) {
+			case fields[0]: // name
+				data = r_name.test(event.target.value)
+					? event.target.value
+					: bio["name"]?.trim() || "";
+				break;
+			case fields[1]: // age
+				data = r_digit.test(data) ? data : bio["age"] || "";
+				break;
+			case fields[2]: // gender
+				// data = data.toUpperCase();
+				data = r_gender.test(data) ? data : bio["gender"] || "";
+				console.log("handle inputh data", data);
+				break;
+			case fields[3]: // height
+				data = r_digit.test(data) ? data : bio["height"] || "";
+				break;
+			case fields[4]: // weight
+				data = r_digit.test(data) ? data : bio["weight"] || "";
+				break;
+			default:
+				return;
+		}
+		setBio({ ...bio, [type]: data });
+	};
+
+	const onNextHelper = () => {
+		let f = true;
+
+		for (let field in fields) {
+			if (bio[fields[field]]?.length > 0) {
+				setError({ field: "", isErr: false });
+				continue;
+			} else {
+				setError({ field: fields[field], isErr: true });
+				f = false;
+				break;
+			}
+		}
+
+		return f;
+		// if (f) {
+		// 	const { selectedUser } = userState;
+		// 	const userUp = {
+		// 		...selectedUser,
+		// 		biodataDone: true,
+		// 		bioData: bioData,
+		// 	};
+		// 	updateUser(userUp);
+		// }
 	};
 
 	return (
@@ -97,7 +201,8 @@ const BioData = () => {
 							color="secondary"
 							value={bio.name || ""}
 							onChange={(e) =>
-								setBio({ ...bio, name: e.target.value })
+								// setBio({ ...bio, name: e.target.value })
+								handleInputs(fields[0], e)
 							}
 						/>
 						<TextField
@@ -108,7 +213,8 @@ const BioData = () => {
 							color="secondary"
 							value={bio.age || ""}
 							onChange={(e) =>
-								setBio({ ...bio, age: e.target.value })
+								// setBio({ ...bio, age: e.target.value })
+								handleInputs(fields[1], e)
 							}
 						/>
 						<TextField
@@ -116,9 +222,10 @@ const BioData = () => {
 							select
 							label="Gender"
 							color="secondary"
-							value={bio.gender || "Select"}
+							value={bio.gender || "x"}
 							onChange={(e) =>
-								setBio({ ...bio, gender: e.target.value })
+								// setBio({ ...bio, gender: e.target.value })
+								handleInputs(fields[2], e)
 							}
 							variant="outlined"
 							helperText="Select your gender"
@@ -140,7 +247,8 @@ const BioData = () => {
 							color="secondary"
 							value={bio.height || ""}
 							onChange={(e) =>
-								setBio({ ...bio, height: e.target.value })
+								// setBio({ ...bio, height: e.target.value })
+								handleInputs(fields[3], e)
 							}
 							InputProps={{
 								endAdornment: (
@@ -158,7 +266,8 @@ const BioData = () => {
 							color="secondary"
 							value={bio.weight || ""}
 							onChange={(e) =>
-								setBio({ ...bio, weight: e.target.value })
+								// setBio({ ...bio, weight: e.target.value })
+								handleInputs(fields[4], e)
 							}
 							InputProps={{
 								endAdornment: (
@@ -170,6 +279,18 @@ const BioData = () => {
 						/>
 					</form>
 				</CardContent>
+				{error.isErr && (
+					<FormHelperText error>
+						<div
+							className={classes.helpertxt}
+						>{`Please fill ${error.field} properly`}</div>
+					</FormHelperText>
+				)}
+				{userState.loading && (
+					<div className={classes.progress}>
+						<CircularProgress color="secondary" size={28} />
+					</div>
+				)}
 			</Card>
 			<div className={classes.actionsContainer}>
 				<div>

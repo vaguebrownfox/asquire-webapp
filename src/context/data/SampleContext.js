@@ -20,11 +20,11 @@ const sampleReducer = (state, action) => {
 
 const sampleLoadAction = (dispatch) => {
 	return () => {
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: true });
 
 		console.log("sample action log");
 
-		dispatch({ type: "LOADING", payload: false });
+		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
 
