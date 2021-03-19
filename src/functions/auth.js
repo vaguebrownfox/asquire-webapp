@@ -2,25 +2,30 @@ import "firebase/auth";
 import { auth } from "./firebase";
 
 export const firebaseSignUp = async (email, password) => {
-	email = email + "@asquire.spire";
-	password = password + "asquire";
+	const format = getCreds(email, password);
 	const userCredential = await auth
-		.createUserWithEmailAndPassword(email, password)
+		.createUserWithEmailAndPassword(format.email, format.password)
 		.catch((err) => {
 			console.log("fb sign up error :: ", err);
-			return "nope";
+			return null;
 		});
-	return userCredential.user;
+	return userCredential?.user || null;
 };
 
 export const firebaseSignIn = async (email, password) => {
-	email = email + "@asquire.spire";
-	password = password + "asquire";
+	const format = getCreds(email, password);
 	const userCredential = await auth
-		.signInWithEmailAndPassword(email, password)
+		.signInWithEmailAndPassword(format.email, format.password)
 		.catch((err) => {
 			console.log("fb sign in error :: ", err);
-			return "nope";
+			return null;
 		});
-	return userCredential.user;
+	return userCredential?.user || null;
+};
+
+// helpers
+const getCreds = (email, password) => {
+	email = email + "@asquire.spire";
+	password = password + "asquire";
+	return { email, password };
 };

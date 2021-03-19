@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const fields = ["name", "age", "gender", "height", "weight"];
+
 const genders = [
 	{
 		value: "m",
@@ -57,6 +59,10 @@ const genders = [
 		label: "Other",
 	},
 ];
+
+const r_name = /^([a-zA-Z]+\s?)*\s*$/; ///^[a-z A-Z]{0,30}$/;
+const r_digit = /^[\d+]{0,3}$/;
+const r_gender = /^(M|F|O)$/;
 
 const BioData = () => {
 	const classes = useStyles();
@@ -75,6 +81,32 @@ const BioData = () => {
 	const handleBack = () => {
 		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
+	};
+
+	// inputs handles
+	const handleInputs = (type, event) => {
+		switch (type) {
+			case fields[0]: // name
+				data = r_name.test(event.target.value)
+					? event.target.value
+					: bioData["name"]?.trim() || "";
+				break;
+			case fields[1]: // age
+				data = r_digit.test(data) ? data : bioData["age"] || "";
+				break;
+			case fields[2]: // gender
+				data = data.toUpperCase();
+				data = r_gender.test(data) ? data : bioData["gender"] || "";
+				break;
+			case fields[3]: // height
+				data = r_digit.test(data) ? data : bioData["height"] || "";
+				break;
+			case fields[4]: // weight
+				data = r_digit.test(data) ? data : bioData["weight"] || "";
+				break;
+			default:
+				return;
+		}
 	};
 
 	return (

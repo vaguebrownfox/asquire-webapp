@@ -10,6 +10,7 @@ import { firebaseSignIn, firebaseSignUp } from "../../functions/auth";
 const userInitialState = {
 	loading: false,
 	allUsers: [],
+	selectedUser: null,
 	error: "",
 };
 
@@ -30,9 +31,11 @@ const userReducer = (state, action) => {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
 		case "SET_ALLUSERS":
-			return { ...state, allUsers: action.payload };
+			return { ...state, allUsers: action.payload, selectedUser: null };
 		case "ADD_USER":
 			return { ...state, allUsers: [...state.allUsers, action.payload] };
+		case "SELECT_USER":
+			return { ...state, selectedUser: action.payload };
 		case "ERROR":
 			return { ...state, error: action.payload };
 		default:
@@ -81,10 +84,11 @@ const userAddAction = (dispatch) => {
 			userId: `${userName}_${uuid().slice(0, 8)}`,
 		};
 
-		let uAuth = await firebaseSignUp(user.userId, user.userName);
-		user = await addUserToIdb(user);
+		let uAuth = await firebaseSignUp(user.userId, user.userName); // firebase sign up
+		console.log("user action log:: fb sign up", uAuth);
+		uAuth && (user = await addUserToIdb(user));
 
-		if (uAuth && user !== null) {
+		if (uAuth && user) {
 			dispatch({ type: "ADD_USER", payload: user });
 
 			dispatch({ type: "ERROR", payload: "" });
@@ -103,6 +107,39 @@ const userAddAction = (dispatch) => {
 	};
 };
 
+const userSelectAction = (dispatch) => {
+	return (user) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		console.log("user action log :: select user");
+		dispatch({ type: "SELECT_USER", payload: user });
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const userLoginAction = (dispatch) => {
+	return async (user) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+		let uAuth = null;
+
+		if (user) {
+			uAuth = await firebaseSignIn(user.userId, user.userName);
+		} else {
+			dispatch({
+				type: "ERROR",
+				payload: "You have to select an user to continue!",
+			});
+			setTimeout(() => {
+				dispatch({ type: "ERROR", payload: "" });
+			}, 5000);
+		}
+
+		dispatch({ type: "SET_LOADING", payload: false });
+		return uAuth;
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
@@ -110,6 +147,8 @@ export const { Context, Provider } = createDataContext(
 		userLoadAction,
 		userGetAllAction,
 		userAddAction,
+		userSelectAction,
+		userLoginAction,
 	},
 	userInitialState
 );
