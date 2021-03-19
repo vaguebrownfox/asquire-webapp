@@ -21,7 +21,6 @@ import {
 import { components } from "../../App";
 
 // Context
-import { Context as AppContext } from "../../context/data/AppContext";
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 
@@ -107,7 +106,7 @@ const AddUserComponent = () => {
 					>
 						{userState.loading && (
 							<div className={classes.progress}>
-								<CircularProgress color="secondary" />
+								<CircularProgress color="secondary" size={28} />
 							</div>
 						)}
 

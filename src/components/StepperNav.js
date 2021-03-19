@@ -17,8 +17,8 @@ export default function VerticalLinearStepper({ components }) {
 	// const [activeStep, setActiveStep] = React.useState(0);
 	const {
 		state: stepState,
-		stepNextAction,
-		stepPreviousAction,
+		// stepNextAction,
+		// stepPreviousAction,
 		stepSetAction,
 	} = React.useContext(StepContext);
 
@@ -29,15 +29,15 @@ export default function VerticalLinearStepper({ components }) {
 		};
 	});
 
-	const handleNext = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-		stepNextAction();
-	};
+	// const handleNext = () => {
+	// 	// setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	// 	stepNextAction();
+	// };
 
-	const handleBack = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
-		stepPreviousAction();
-	};
+	// const handleBack = () => {
+	// 	// setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	// 	stepPreviousAction();
+	// };
 
 	const handleReset = () => {
 		// setActiveStep(0);

@@ -20,6 +20,7 @@ import Feedback from "./components/static/Feedback";
 import { Provider as AppProvider } from "./context/data/AppContext";
 import { Provider as StepProvider } from "./context/data/StepContext";
 import { Provider as UserProvider } from "./context/data/UserContext";
+import { Provider as SurveyProvider } from "./context/data/SurveyContext";
 
 // import { components } from "./components/steps/components";
 
@@ -56,40 +57,45 @@ const App = () => {
 					<AppProvider>
 						<StepProvider>
 							<UserProvider>
-								<Switch>
-									{/* Home Page */}
-									<Route
-										path="/"
-										exact
-										render={(props) => (
-											<StepperNav
-												{...{ components, ...props }}
-											/>
-										)}
-									/>
+								<SurveyProvider>
+									<Switch>
+										{/* Home Page */}
+										<Route
+											path="/"
+											exact
+											render={(props) => (
+												<StepperNav
+													{...{
+														components,
+														...props,
+													}}
+												/>
+											)}
+										/>
 
-									{/* Static Pages */}
-									<Route
-										path="/about"
-										exact
-										component={About}
-									/>
-									<Route
-										path="/consent"
-										exact
-										component={Consent}
-									/>
-									<Route
-										path="/contact"
-										exact
-										component={Contact}
-									/>
-									<Route
-										path="/feedback"
-										exact
-										component={Feedback}
-									/>
-								</Switch>
+										{/* Static Pages */}
+										<Route
+											path="/about"
+											exact
+											component={About}
+										/>
+										<Route
+											path="/consent"
+											exact
+											component={Consent}
+										/>
+										<Route
+											path="/contact"
+											exact
+											component={Contact}
+										/>
+										<Route
+											path="/feedback"
+											exact
+											component={Feedback}
+										/>
+									</Switch>
+								</SurveyProvider>
 							</UserProvider>
 						</StepProvider>
 					</AppProvider>

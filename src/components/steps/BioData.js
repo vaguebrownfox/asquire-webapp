@@ -288,7 +288,7 @@ const BioData = () => {
 				)}
 				{userState.loading && (
 					<div className={classes.progress}>
-						<CircularProgress color="secondary" />
+						<CircularProgress color="secondary" size={28} />
 					</div>
 				)}
 			</Card>

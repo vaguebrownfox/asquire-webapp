@@ -23,11 +23,11 @@ const appReducer = (state, action) => {
 
 const appLoadAction = (dispatch) => {
 	return () => {
-		dispatch({ type: "LOADING", payload: true });
+		dispatch({ type: "SET_LOADING", payload: true });
 
 		console.log("app action log");
 
-		dispatch({ type: "LOADING", payload: false });
+		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
 
