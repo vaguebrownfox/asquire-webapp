@@ -3,7 +3,11 @@ import createDataContext from "../createDataContext";
 import { v4 as uuid } from "uuid";
 
 // functions
-import { getAllUsersFromIdb, addUserToIdb } from "../../functions/indexdb";
+import {
+	getAllUsersFromIdb,
+	addUserToIdb,
+	updateUserInIdb,
+} from "../../functions/indexdb";
 import { firebaseSignIn, firebaseSignUp } from "../../functions/auth";
 
 // Initial State
@@ -140,6 +144,19 @@ const userLoginAction = (dispatch) => {
 	};
 };
 
+const userUpdateAction = (dispatch) => {
+	return async (user) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		user = await updateUserInIdb(user);
+		user && dispatch({ type: "SELECT_USER", payload: user });
+
+		console.log("user update action log");
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
@@ -149,6 +166,7 @@ export const { Context, Provider } = createDataContext(
 		userAddAction,
 		userSelectAction,
 		userLoginAction,
+		userUpdateAction,
 	},
 	userInitialState
 );

@@ -36,5 +36,13 @@ export const getAllUsersFromIdb = async () => {
 
 export const updateUserInIdb = async (user) => {
 	const db = await idb.userIdb;
-	db.delete(USERS_STORE, user.userName).then(() => addUserToIdb(user));
+	user = await db
+		.delete(USERS_STORE, user.userName)
+		.then(() => addUserToIdb(user))
+		.then(() => user)
+		.catch((err) => {
+			console.error(`error while updating ${user.userName} to idb`, err);
+			return null;
+		});
+	return user;
 };

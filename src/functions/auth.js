@@ -1,4 +1,3 @@
-import "firebase/auth";
 import { auth } from "./firebase";
 
 export const firebaseSignUp = async (email, password) => {

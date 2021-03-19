@@ -4,6 +4,7 @@ import createDataContext from "../createDataContext";
 // Initial State
 const stepInitialState = {
 	loading: false,
+	previousStep: 0,
 	activeStep: 0,
 };
 
@@ -13,11 +14,23 @@ const stepReducer = (state, action) => {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
 		case "STEP_NEXT":
-			return { ...state, activeStep: state.activeStep + 1 };
+			return {
+				...state,
+				previousStep: state.activeStep,
+				activeStep: state.activeStep + 1,
+			};
 		case "STEP_PREVIOUS":
-			return { ...state, activeStep: state.activeStep - 1 };
+			return {
+				...state,
+				previousStep: state.activeStep,
+				activeStep: state.activeStep - 1,
+			};
 		case "STEP_SET":
-			return { ...state, activeStep: action.payload };
+			return {
+				...state,
+				previousStep: state.activeStep,
+				activeStep: action.payload,
+			};
 		default:
 			return state;
 	}
