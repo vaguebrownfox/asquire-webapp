@@ -11,6 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import {
+	CircularProgress,
 	FormHelperText,
 	IconButton,
 	TextField,
@@ -76,9 +77,11 @@ const Survey = () => {
 	const { state: surveyState, surveyLoadQuestionsAction } = React.useContext(
 		SurveyContext
 	);
-	const { state: userState, userUpdateAction } = React.useContext(
-		UserContext
-	);
+	const {
+		state: userState,
+		userUpdateAction,
+		userUpdateCloud,
+	} = React.useContext(UserContext);
 
 	React.useEffect(() => {
 		if (userState.selectedUser.surveyDone) {
@@ -90,6 +93,7 @@ const Survey = () => {
 		} else {
 			surveyLoadQuestionsAction();
 		}
+
 		console.info("survey component :: surveystate", surveyState);
 		return () => {
 			console.log("Survey component cleanup");
@@ -105,6 +109,7 @@ const Survey = () => {
 			survey: surveyState.previousQuestions,
 		};
 		await userUpdateAction(user);
+		await userUpdateCloud(user);
 		stepNextAction();
 		console.log("survey component :: surveystate", surveyState);
 	};
@@ -119,6 +124,11 @@ const Survey = () => {
 			<Card className={classes.root}>
 				<CardContent>
 					<Question question={surveyState.currentQuestion} />
+					{userState.loading && (
+						<div className={classes.progress}>
+							<CircularProgress color="secondary" size={28} />
+						</div>
+					)}
 				</CardContent>
 			</Card>
 			<div className={classes.actionsContainer}>

@@ -9,6 +9,7 @@ import {
 	updateUserInIdb,
 } from "../../functions/indexdb";
 import { firebaseSignIn, firebaseSignUp } from "../../functions/auth";
+import { firebaseUserData } from "../../functions/firestore";
 
 // Initial State
 const userInitialState = {
@@ -157,6 +158,17 @@ const userUpdateAction = (dispatch) => {
 	};
 };
 
+const userUpdateCloud = (dispatch) => {
+	return async (user) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		const data = await firebaseUserData(user);
+		console.log("user action log :: fb firestore", data);
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
@@ -167,6 +179,7 @@ export const { Context, Provider } = createDataContext(
 		userSelectAction,
 		userLoginAction,
 		userUpdateAction,
+		userUpdateCloud,
 	},
 	userInitialState
 );

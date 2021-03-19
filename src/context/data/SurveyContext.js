@@ -23,6 +23,7 @@ const surveyReducer = (state, action) => {
 				allQuestions: action.payload,
 				currentQuestion: action.payload[1],
 				previousQuestions: [],
+				surveyDone: false,
 			};
 		case "NEXT_QUESTION":
 			const { nextQuestionNo, answeredQuestion } = action.payload;
