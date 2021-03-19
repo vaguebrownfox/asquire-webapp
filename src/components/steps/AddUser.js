@@ -208,7 +208,7 @@ const UserList = ({ users, error, onSelect }) => {
 			</FormControl>
 
 			{
-				<FormHelperText error>
+				<FormHelperText error component="div">
 					<div className={classes.helpertxt}>{error}</div>
 				</FormHelperText>
 			}

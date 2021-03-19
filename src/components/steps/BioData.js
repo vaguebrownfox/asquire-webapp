@@ -280,7 +280,7 @@ const BioData = () => {
 					</form>
 				</CardContent>
 				{error.isErr && (
-					<FormHelperText error>
+					<FormHelperText error components="div">
 						<div
 							className={classes.helpertxt}
 						>{`Please fill ${error.field} properly`}</div>
