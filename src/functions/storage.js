@@ -5,7 +5,7 @@ const storageRef = stor.ref();
 
 export const firebaseUserAudio = (user, audio) => {
 	const userAudioRef = storageRef.child(DATA_FOLDER);
-	const filename = `webapp-${user.userId}-recId-asquire.wav`;
+	const filename = `webapp-${user.userId}-recId-asquire.mka`;
 	userAudioRef
 		.child(filename)
 		.put(audio.audioBlob)
