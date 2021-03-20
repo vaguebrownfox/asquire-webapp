@@ -120,7 +120,6 @@ export default function Record({ title }) {
 	const {
 		state: recordState,
 		recordGetDevicesAction,
-		recordSetInputAction,
 		recordStartAction,
 		recordStopAction,
 	} = React.useContext(RecordContext);
