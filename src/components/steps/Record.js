@@ -18,6 +18,8 @@ import SkipNextIcon from "@material-ui/icons/NavigateNext";
 import SpeakerIcon from "@material-ui/icons/VolumeUpRounded";
 import DropArrowIcon from "@material-ui/icons/ArrowDropDown";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import DownloadIcon from "@material-ui/icons/ArrowDownward";
+import DoneIcon from "@material-ui/icons/Done";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -105,7 +107,10 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: theme.spacing(16),
 	},
 	htmlAudioPlayer: {
-		height: 48,
+		display: "flex",
+		flexDirection: "column",
+	},
+	player: {
 		background: theme.palette.background.default,
 	},
 }));
@@ -122,6 +127,7 @@ export default function Record({ title }) {
 		recordGetDevicesAction,
 		recordStartAction,
 		recordStopAction,
+		recordUploadAction,
 	} = React.useContext(RecordContext);
 	const { state: userState } = React.useContext(UserContext);
 	const bull = <span className={classes.bullet}>•</span>;
@@ -156,6 +162,10 @@ export default function Record({ title }) {
 
 	const handleRefresh = () => {
 		recordGetDevicesAction();
+	};
+
+	const handleDone = () => {
+		recordUploadAction(userState.selectedUser);
 	};
 
 	return (
@@ -247,16 +257,25 @@ export default function Record({ title }) {
 							title="Contemplative Reptile"
 						/>
 						<div className={classes.controls}>
-							<IconButton aria-label="previous">
-								<Tooltip title="Play">
-									<PlayIcon className={classes.controlIcon} />
+							<IconButton
+								aria-label="previous"
+								onClick={handleDone}
+							>
+								<Tooltip title="Done">
+									<DoneIcon className={classes.controlIcon} />
 								</Tooltip>
 							</IconButton>
 							<IconButton
 								aria-label="play/pause"
 								onClick={handleRecord}
 							>
-								<Tooltip title="Start recording">
+								<Tooltip
+									title={`${
+										recordState.isRecording
+											? "Stop"
+											: "Start"
+									} recording`}
+								>
 									{recordState.isRecording ? (
 										<RecordStopIcon
 											className={classes.controlIcon}
@@ -277,11 +296,26 @@ export default function Record({ title }) {
 							</IconButton>
 						</div>
 						<div className={classes.htmlAudioPlayer}>
-							<audio
-								id="player"
-								src={recordState.playUrl}
-								controls
-							></audio>
+							{recordState.recDone && (
+								<>
+									<audio
+										id="player"
+										className={classes.player}
+										src={recordState.playUrl}
+										controls
+									/>
+									<Button
+										className={classes.button}
+										aria-controls="download-audio"
+										size="small"
+										startIcon={<DownloadIcon />}
+										href={recordState.playUrl}
+										target="_blank"
+									>
+										Download
+									</Button>
+								</>
+							)}
 						</div>
 					</div>
 				</CardContent>

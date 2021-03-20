@@ -8,6 +8,7 @@ import {
 	getAudioInputStream,
 	audioRecord,
 } from "../../functions/recorder";
+import { firebaseUserAudio } from "../../functions/storage";
 
 // Initial State
 const recordInitialState = {
@@ -136,6 +137,7 @@ const recordStartAction = (dispatch) => {
 		console.log("record action log:: start record", isRecStart);
 
 		if (isRecStart) {
+			dispatch({ type: "SET_REC_DONE", payload: false });
 			dispatch({ type: "SET_REC_STATE", payload: true });
 			dispatch({ type: "SET_PLY_STATE", payload: false });
 		} else {
@@ -148,6 +150,8 @@ const recordStartAction = (dispatch) => {
 	};
 };
 
+let audio = null;
+
 const recordStopAction = (dispatch) => {
 	return async () => {
 		dispatch({ type: "SET_LOADING", payload: true });
@@ -156,13 +160,31 @@ const recordStopAction = (dispatch) => {
 			console.log("record action log:: recorder not defined");
 			return null;
 		}
-		const audio = await recorder.stopRecord().catch(() => null);
+		audio = await recorder.stopRecord().catch(() => null);
 		console.log("record action log:: stop record", audio);
 
 		if (audio) {
 			dispatch({ type: "SET_REC_STATE", payload: false });
 			dispatch({ type: "SET_REC_DONE", payload: true });
 			dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
+		}
+
+		console.log("record action log:: start record");
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const recordUploadAction = (dispatch) => {
+	return async (user) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		console.log("record action log:: uploading record");
+
+		if (audio) {
+			firebaseUserAudio(user, audio);
+		} else {
+			console.log("record action log:: audio not defined");
 		}
 
 		console.log("record action log:: start record");
@@ -181,6 +203,7 @@ export const { Context, Provider } = createDataContext(
 		recordSetOutputAction,
 		recordStartAction,
 		recordStopAction,
+		recordUploadAction,
 	},
 	recordInitialState
 );

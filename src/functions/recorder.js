@@ -127,7 +127,7 @@ export const audioRecord = (audioStream) => {
 
 				mediaRecorder.addEventListener("stop", () => {
 					const audioBlob = new Blob(recordedChunks, {
-						type: "audio/webm",
+						type: "audio/wav",
 					});
 
 					const audioUrl = URL.createObjectURL(audioBlob);
@@ -154,6 +154,7 @@ export const audioRecord = (audioStream) => {
 
 					resolveStop({
 						audioUrl,
+						audioBlob,
 						playAudio,
 						pauseAudio,
 					});
