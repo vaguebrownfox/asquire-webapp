@@ -87,8 +87,13 @@ export const audioRecord = (audioStream) => {
 			rejectRecord("Stream not defined!");
 		}
 
-		const options = { mimeType: "audio/webm" };
-		const mediaRecorder = new MediaRecorder(audioStream, options);
+		const options = { mimeType: "audio/wav" };
+		let mediaRecorder = null;
+		try {
+			mediaRecorder = new MediaRecorder(audioStream, options);
+		} catch (err) {
+			rejectRecord(err);
+		}
 
 		let recordedChunks = [];
 
