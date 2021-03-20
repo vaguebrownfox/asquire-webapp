@@ -6,6 +6,7 @@ import {
 	getAudioInputDevices,
 	getAudioOutputDevices,
 	getAudioInputStream,
+	startAudioRecord,
 } from "../../functions/recorder";
 
 // Initial State
@@ -28,6 +29,7 @@ const recordReducer = (state, action) => {
 				audioDevices: action.payload,
 				inputDevice: action.payload.inputDevices[0],
 				outputDevice: action.payload.outputDevices[0],
+				inputStream: action.payload.audioInputStream,
 			};
 		case "SET_INPUT_DEVICE":
 			return {
@@ -66,12 +68,15 @@ const recordGetDevicesAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		console.log("record action log:: get devices");
-		const inputDevices = await getAudioInputDevices();
+		const {
+			audioDevices: inputDevices,
+			audioInputStream,
+		} = await getAudioInputDevices();
 		const outputDevices = await getAudioOutputDevices();
 
 		dispatch({
 			type: "GET_DEVICES",
-			payload: { inputDevices, outputDevices },
+			payload: { inputDevices, outputDevices, audioInputStream },
 		});
 
 		dispatch({ type: "SET_LOADING", payload: false });
@@ -82,7 +87,7 @@ const recordSetInputAction = (dispatch) => {
 	return async (device) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log");
+		console.log("record action log:: set input");
 		const stream = await getAudioInputStream(device);
 		dispatch({ type: "SET_INPUT_DEVICE", payload: device });
 		dispatch({ type: "SET_INPUT_STREAM", payload: stream });
@@ -95,8 +100,19 @@ const recordSetOutputAction = (dispatch) => {
 	return (device) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log");
+		console.log("record action log :: set output");
 		dispatch({ type: "SET_OUTPUT_DEVICE", payload: device });
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const recordStartAction = (dispatch) => {
+	return (inputStream) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		console.log("record action log:: start record");
+		startAudioRecord(inputStream);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -110,6 +126,7 @@ export const { Context, Provider } = createDataContext(
 		recordGetDevicesAction,
 		recordSetInputAction,
 		recordSetOutputAction,
+		recordStartAction,
 	},
 	recordInitialState
 );

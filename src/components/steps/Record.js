@@ -114,14 +114,19 @@ export default function Record({ title }) {
 		stepNextAction,
 		stepPreviousAction,
 	} = React.useContext(StepContext);
-	const { state: recordState, recordGetDevicesAction } = React.useContext(
-		RecordContext
-	);
+	const {
+		state: recordState,
+		recordGetDevicesAction,
+		recordSetInputAction,
+		recordStartAction,
+	} = React.useContext(RecordContext);
 	const { state: userState } = React.useContext(UserContext);
 	const bull = <span className={classes.bullet}>•</span>;
 
 	React.useEffect(() => {
 		recordGetDevicesAction();
+		//recordSetInputAction(recordState.inputDevice);
+
 		return () => {
 			console.log("record component cleanup");
 		};
@@ -139,6 +144,7 @@ export default function Record({ title }) {
 
 	const handleRecord = () => {
 		// recordGetDevicesAction();
+		recordStartAction(recordState.inputStream);
 	};
 
 	const handleRefresh = () => {
@@ -302,7 +308,7 @@ const DeviceList = ({ type, devices, iconStart, iconEnd }) => {
 	} = React.useContext(RecordContext);
 
 	React.useEffect(() => {
-		recordSetInputAction(recordState.inputDevice);
+		// recordSetInputAction(recordState.inputDevice);
 		return () => {
 			console.log("record component dev list cleanup");
 		};

@@ -36,7 +36,8 @@ export const getAudioInputDevices = async () => {
 			console.error("asq::recorder:: get input devices error", err);
 			return null;
 		});
-	return audioDevices;
+	const audioInputStream = await getAudioInputStream(audioDevices[0]);
+	return { audioDevices, audioInputStream };
 };
 
 export const getAudioOutputDevices = async () => {
@@ -77,4 +78,48 @@ export const getAudioInputStream = async (device) => {
 			return null;
 		});
 	return audioStream;
+};
+
+export const startAudioRecord = (audioStream) => {
+	// const context = new AudioContext();
+	// console.info(audioStream);
+
+	// const source = context.createMediaStreamSource(audioStream);
+	// const processor = context.createScriptProcessor(1024, 1, 1);
+
+	// source.connect(processor);
+	// processor.connect(context.destination);
+
+	// let audioChunks = [];
+	// processor.onaudioprocess = (e) => {
+	// 	console.info(e.inputBuffer.getChannelData(0).buffer);
+	// 	// Raw audio samples
+	// };
+
+	let shouldStop = false;
+	let stopped = false;
+	const downloadLink = document.getElementById("download");
+	const stopButton = document.getElementById("stop");
+
+	const options = { mimeType: "audio/webm" };
+	const recordedChunks = [];
+	const mediaRecorder = new MediaRecorder(audioStream, options);
+
+	mediaRecorder.addEventListener("dataavailable", function (e) {
+		if (e.data.size > 0) {
+			recordedChunks.push(e.data);
+		}
+
+		if (shouldStop === true && stopped === false) {
+			mediaRecorder.stop();
+			stopped = true;
+		}
+	});
+
+	mediaRecorder.addEventListener("stop", function () {
+		downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
+		downloadLink.download = "acetest.wav";
+	});
+
+	mediaRecorder.start();
 };
