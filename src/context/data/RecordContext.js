@@ -6,7 +6,7 @@ import {
 	getAudioInputDevices,
 	getAudioOutputDevices,
 	getAudioInputStream,
-	startAudioRecord,
+	audioRecord,
 } from "../../functions/recorder";
 
 // Initial State
@@ -16,6 +16,11 @@ const recordInitialState = {
 	inputDevice: {},
 	outputDevice: {},
 	inputStream: null,
+
+	isRecording: false,
+	isPlaying: false,
+	recDone: false,
+	playUrl: "",
 };
 
 // Reducer
@@ -46,6 +51,14 @@ const recordReducer = (state, action) => {
 				...state,
 				inputStream: action.payload,
 			};
+		case "SET_REC_STATE":
+			return { ...state, isRecording: action.payload };
+		case "SET_PLY_STATE":
+			return { ...state, isPlaying: action.payload };
+		case "SET_REC_DONE":
+			return { ...state, recDone: action.payload };
+		case "SET_PLY_URL":
+			return { ...state, playUrl: action.payload };
 		default:
 			return state;
 	}
@@ -107,12 +120,52 @@ const recordSetOutputAction = (dispatch) => {
 	};
 };
 
+let recorder = null;
+
 const recordStartAction = (dispatch) => {
-	return (inputStream) => {
+	return async (inputStream) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
+		if (!recorder) {
+			recorder = await audioRecord(inputStream).catch(() => null);
+		}
+		if (!recorder) {
+			return null;
+		}
+		const isRecStart = await recorder.startRecord().catch(() => null);
+		console.log("record action log:: start record", isRecStart);
+
+		if (isRecStart) {
+			dispatch({ type: "SET_REC_STATE", payload: true });
+			dispatch({ type: "SET_PLY_STATE", payload: false });
+		} else {
+			dispatch({ type: "SET_REC_STATE", payload: false });
+		}
+
 		console.log("record action log:: start record");
-		startAudioRecord(inputStream);
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const recordStopAction = (dispatch) => {
+	return async () => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		if (!recorder) {
+			console.log("record action log:: recorder not defined");
+			return null;
+		}
+		const audio = await recorder.stopRecord().catch(() => null);
+		console.log("record action log:: stop record", audio);
+
+		if (audio) {
+			dispatch({ type: "SET_REC_STATE", payload: false });
+			dispatch({ type: "SET_REC_DONE", payload: true });
+			dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
+		}
+
+		console.log("record action log:: start record");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -127,6 +180,7 @@ export const { Context, Provider } = createDataContext(
 		recordSetInputAction,
 		recordSetOutputAction,
 		recordStartAction,
+		recordStopAction,
 	},
 	recordInitialState
 );

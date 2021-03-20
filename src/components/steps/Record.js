@@ -13,6 +13,7 @@ import {
 
 import PlayIcon from "@material-ui/icons/PlayArrow";
 import RecordStartIcon from "@material-ui/icons/Mic";
+import RecordStopIcon from "@material-ui/icons/MicOff";
 import SkipNextIcon from "@material-ui/icons/NavigateNext";
 import SpeakerIcon from "@material-ui/icons/VolumeUpRounded";
 import DropArrowIcon from "@material-ui/icons/ArrowDropDown";
@@ -31,11 +32,6 @@ import { Context as RecordContext } from "../../context/data/RecordContext";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		background: theme.palette.background.default,
-	},
-	bullet: {
-		display: "inline-block",
-		margin: "0 2px",
-		transform: "scale(0.8)",
 	},
 	titleDiv: {
 		display: "flex",
@@ -93,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
 	devices: {
 		display: "flex",
 		justifyContent: "space-around",
-		alignItems: "center",
-		alignContent: "baseline",
+		alignItems: "flex-start",
+		alignContent: "flex-start",
 		padding: theme.spacing(0),
 	},
 	bullet: {
@@ -104,6 +100,13 @@ const useStyles = makeStyles((theme) => ({
 		"&:hover": {
 			transform: "scale(2)",
 		},
+	},
+	deviceSelect: {
+		maxWidth: theme.spacing(16),
+	},
+	htmlAudioPlayer: {
+		height: 48,
+		background: theme.palette.background.default,
 	},
 }));
 
@@ -119,6 +122,7 @@ export default function Record({ title }) {
 		recordGetDevicesAction,
 		recordSetInputAction,
 		recordStartAction,
+		recordStopAction,
 	} = React.useContext(RecordContext);
 	const { state: userState } = React.useContext(UserContext);
 	const bull = <span className={classes.bullet}>•</span>;
@@ -144,7 +148,11 @@ export default function Record({ title }) {
 
 	const handleRecord = () => {
 		// recordGetDevicesAction();
-		recordStartAction(recordState.inputStream);
+		if (recordState.isRecording) {
+			recordStopAction();
+		} else {
+			recordStartAction(recordState.inputStream);
+		}
 	};
 
 	const handleRefresh = () => {
@@ -178,7 +186,7 @@ export default function Record({ title }) {
 					</div>
 
 					<div className={classes.devices}>
-						<div>
+						<div className={classes.deviceSelect}>
 							<DeviceList
 								type="input"
 								devices={recordState.audioDevices.inputDevices}
@@ -189,6 +197,7 @@ export default function Record({ title }) {
 								color="textSecondary"
 								variant="body2"
 								gutterBottom
+								noWrap
 							>
 								{`${recordState.inputDevice?.label}`}
 							</Typography>
@@ -199,7 +208,7 @@ export default function Record({ title }) {
 							</div>
 						)}
 
-						<div>
+						<div className={classes.deviceSelect}>
 							<DeviceList
 								type="output"
 								devices={recordState.audioDevices.outputDevices}
@@ -210,6 +219,7 @@ export default function Record({ title }) {
 								color="textSecondary"
 								variant="body2"
 								gutterBottom
+								noWrap
 							>
 								{`${recordState.outputDevice?.label}`}
 							</Typography>
@@ -248,9 +258,15 @@ export default function Record({ title }) {
 								onClick={handleRecord}
 							>
 								<Tooltip title="Start recording">
-									<RecordStartIcon
-										className={classes.controlIcon}
-									/>
+									{recordState.isRecording ? (
+										<RecordStopIcon
+											className={classes.controlIcon}
+										/>
+									) : (
+										<RecordStartIcon
+											className={classes.controlIcon}
+										/>
+									)}
 								</Tooltip>
 							</IconButton>
 							<IconButton aria-label="next">
@@ -260,6 +276,13 @@ export default function Record({ title }) {
 									/>
 								</Tooltip>
 							</IconButton>
+						</div>
+						<div className={classes.htmlAudioPlayer}>
+							<audio
+								id="player"
+								src={recordState.playUrl}
+								controls
+							></audio>
 						</div>
 					</div>
 				</CardContent>
