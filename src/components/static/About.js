@@ -41,8 +41,7 @@ export default function About() {
 				</Typography>
 
 				<Typography variant="body2" component="p">
-					{bull} Feeling excited? Check out other similar projects
-					from SPIRE Lab
+					{bull} Check out other projects from SPIRE Lab
 				</Typography>
 			</CardContent>
 			<CardActions>
