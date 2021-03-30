@@ -31,7 +31,7 @@ export const components = [
 		component: <AboutProject title="firse" />,
 	},
 	{
-		title: "Create User ID!",
+		title: "Select User",
 		component: <AddUser />,
 	},
 	{

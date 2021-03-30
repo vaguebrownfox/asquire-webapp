@@ -38,7 +38,9 @@ const AddUserComponent = () => {
 		stepNextAction,
 		stepPreviousAction,
 	} = React.useContext(StepContext);
+
 	const [userName, setUserName] = React.useState("");
+	const [added, setAdded] = React.useState(false);
 	const regxUN = /^[a-z]+(-[a-z]+)*$/;
 
 	React.useEffect(() => {
@@ -75,6 +77,7 @@ const AddUserComponent = () => {
 	const handleAddUser = (e) => {
 		userName.length > 0 && userAddAction(userName);
 		setUserName("");
+		setAdded(true);
 	};
 
 	const handleUserSelect = (user) => {
@@ -85,14 +88,19 @@ const AddUserComponent = () => {
 		<>
 			<Card className={classes.root}>
 				<CardContent>
-					<Typography className={classes.pos} color="textSecondary">
-						Select user
-					</Typography>
-					<UserList
-						users={userState.allUsers}
-						error={userState.error}
-						onSelect={handleUserSelect}
-					/>
+					<>
+						<Typography
+							className={classes.pos}
+							color="textSecondary"
+						>
+							Select user
+						</Typography>
+						<UserList
+							users={userState.allUsers}
+							error={userState.error}
+							onSelect={handleUserSelect}
+						/>
+					</>
 
 					<form
 						className={classes.textInput}
@@ -110,23 +118,27 @@ const AddUserComponent = () => {
 							</div>
 						)}
 
-						<TextField
-							id="outlined-basic"
-							label="Enter Username"
-							placeholder="only characters a-z"
-							variant="standard"
-							color="secondary"
-							value={userName}
-							onChange={handleUserName}
-						/>
-						<Button
-							className={classes.submitButton}
-							variant="contained"
-							color="secondary"
-							onClick={handleAddUser}
-						>
-							Add User
-						</Button>
+						{(!added || userState.allUsers.length < 1) && (
+							<>
+								<TextField
+									id="outlined-basic"
+									label="Enter New Username"
+									placeholder="only characters a-z"
+									variant="standard"
+									color="secondary"
+									value={userName}
+									onChange={handleUserName}
+								/>
+								<Button
+									className={classes.submitButton}
+									variant="contained"
+									color="secondary"
+									onClick={handleAddUser}
+								>
+									Add User
+								</Button>
+							</>
+						)}
 					</form>
 				</CardContent>
 			</Card>
@@ -180,7 +192,7 @@ const UserList = ({ users, error, onSelect }) => {
 		<div className={classes.userList}>
 			<FormControl component="fieldset" className={classes.formControl}>
 				<FormGroup>
-					{users &&
+					{users.length > 0 &&
 						users.map((user, i) => {
 							return (
 								<FormControlLabel

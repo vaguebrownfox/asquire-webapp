@@ -211,13 +211,8 @@ export default function Record({ title }) {
 								{`${recordState.inputDevice?.label}`}
 							</Typography>
 						</div>
-						{recordState.loading && (
-							<div className={classes.progress}>
-								<CircularProgress color="secondary" size={28} />
-							</div>
-						)}
 
-						<div className={classes.deviceSelect}>
+						{/* <div className={classes.deviceSelect}>
 							<DeviceList
 								type="output"
 								devices={recordState.audioDevices.outputDevices}
@@ -229,11 +224,16 @@ export default function Record({ title }) {
 								variant="body2"
 								gutterBottom
 								noWrap
-							>
+							>recordUploadAction(userState.selectedUser);
 								{`${recordState.outputDevice?.label}`}
 							</Typography>
-						</div>
+						</div> */}
 					</div>
+					{recordState.loading && (
+						<div className={classes.progress}>
+							<CircularProgress color="secondary" size={28} />
+						</div>
+					)}
 					<IconButton
 						className={classes.buttonRefresh}
 						aria-label="refresh-devices"
@@ -242,82 +242,86 @@ export default function Record({ title }) {
 					>
 						<RefreshIcon />
 					</IconButton>
-					<div className={classes.cardaction}>
-						<Typography
-							variant="h6"
-							color="textPrimary"
-							gutterBottom
-						>
-							{`Take a deep breath and say AAA...`}
-						</Typography>
+					<>
+						<div className={classes.cardaction}>
+							<Typography
+								variant="h6"
+								color="textPrimary"
+								gutterBottom
+							>
+								{`Take a deep breath and say AAA...`}
+							</Typography>
 
-						<CardMedia
-							className={classes.media}
-							image="https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg"
-							title="Contemplative Reptile"
-						/>
-						<div className={classes.controls}>
-							<IconButton
-								aria-label="previous"
-								onClick={handleDone}
-							>
-								<Tooltip title="Done">
-									<DoneIcon className={classes.controlIcon} />
-								</Tooltip>
-							</IconButton>
-							<IconButton
-								aria-label="play/pause"
-								onClick={handleRecord}
-							>
-								<Tooltip
-									title={`${
-										recordState.isRecording
-											? "Stop"
-											: "Start"
-									} recording`}
+							<CardMedia
+								className={classes.media}
+								image="https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg"
+								title="Contemplative Reptile"
+							/>
+							<div className={classes.controls}>
+								<IconButton
+									aria-label="previous"
+									onClick={handleDone}
 								>
-									{recordState.isRecording ? (
-										<RecordStopIcon
+									<Tooltip title="Done">
+										<DoneIcon
 											className={classes.controlIcon}
 										/>
-									) : (
-										<RecordStartIcon
-											className={classes.controlIcon}
-										/>
-									)}
-								</Tooltip>
-							</IconButton>
-							<IconButton aria-label="next">
-								<Tooltip title="Next">
-									<SkipNextIcon
-										className={classes.controlIcon}
-									/>
-								</Tooltip>
-							</IconButton>
-						</div>
-						<div className={classes.htmlAudioPlayer}>
-							{recordState.recDone && (
-								<>
-									<audio
-										id="player"
-										className={classes.player}
-										src={recordState.playUrl}
-										controls
-									/>
-									<Button
-										className={classes.button}
-										aria-controls="download-audio"
-										size="small"
-										startIcon={<DownloadIcon />}
-										href={recordState.playUrl}
-										target="_blank"
+									</Tooltip>
+								</IconButton>
+								<IconButton
+									aria-label="play/pause"
+									onClick={handleRecord}
+								>
+									<Tooltip
+										title={`${
+											recordState.isRecording
+												? "Stop"
+												: "Start"
+										} recording`}
 									>
-										Download
-									</Button>
-								</>
-							)}
+										{recordState.isRecording ? (
+											<RecordStopIcon
+												className={classes.controlIcon}
+											/>
+										) : (
+											<RecordStartIcon
+												className={classes.controlIcon}
+											/>
+										)}
+									</Tooltip>
+								</IconButton>
+								<IconButton aria-label="next">
+									<Tooltip title="Next">
+										<SkipNextIcon
+											className={classes.controlIcon}
+										/>
+									</Tooltip>
+								</IconButton>
+							</div>
+							<div className={classes.htmlAudioPlayer}>
+								{recordState.recDone && (
+									<>
+										<audio
+											id="player"
+											className={classes.player}
+											src={recordState.playUrl}
+											controls
+										/>
+										<Button
+											className={classes.button}
+											aria-controls="download-audio"
+											size="small"
+											startIcon={<DownloadIcon />}
+											href={recordState.playUrl}
+											target="_blank"
+										>
+											Download
+										</Button>
+									</>
+								)}
+							</div>
 						</div>
-					</div>
+					</>
 				</CardContent>
 			</Card>
 			<div className={classes.actionsContainer}>
