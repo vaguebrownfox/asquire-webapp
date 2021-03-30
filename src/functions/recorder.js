@@ -1,4 +1,4 @@
-const SAMPLE_RATE = 16000; // Hz
+const SAMPLE_RATE = 48000; // Hz
 const SAMPLE_SIZE = 16; // bits
 
 const initializeMedia = () => {
