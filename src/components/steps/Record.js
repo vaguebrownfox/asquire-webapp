@@ -33,7 +33,9 @@ import { Context as RecordContext } from "../../context/data/RecordContext";
 
 const stims = [
 	{
-		description: "",
+		description: "Take a deep breath and say AAA...",
+		imageLink:
+			"https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg",
 	},
 ];
 
