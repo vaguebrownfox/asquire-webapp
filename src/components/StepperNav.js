@@ -9,18 +9,15 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Finish from "./steps/Finish";
 
+import Status from "./static/Status";
+
 // Context
 import { Context as StepContext } from "../context/data/StepContext";
 
 export default function VerticalLinearStepper({ components }) {
 	const classes = useStyles();
 	// const [activeStep, setActiveStep] = React.useState(0);
-	const {
-		state: stepState,
-		// stepNextAction,
-		// stepPreviousAction,
-		stepSetAction,
-	} = React.useContext(StepContext);
+	const { state: stepState, stepSetAction } = React.useContext(StepContext);
 
 	React.useEffect(() => {
 		// stepSetAction(1);
@@ -29,23 +26,13 @@ export default function VerticalLinearStepper({ components }) {
 		};
 	});
 
-	// const handleNext = () => {
-	// 	// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	// 	stepNextAction();
-	// };
-
-	// const handleBack = () => {
-	// 	// setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	// 	stepPreviousAction();
-	// };
-
 	const handleReset = () => {
-		// setActiveStep(0);
 		stepSetAction(0);
 	};
 
 	return (
 		<div className={classes.root}>
+			<Status />
 			<Stepper
 				className={classes.stepper}
 				activeStep={stepState.activeStep}
@@ -62,34 +49,11 @@ export default function VerticalLinearStepper({ components }) {
 								{item.title}
 							</Typography>
 						</StepLabel>
-						<StepContent>
-							<>{item.component}</>
-							{/* <div className={classes.actionsContainer}>
-								<div>
-									<Button
-										disabled={stepState.activeStep === 0}
-										onClick={handleBack}
-										className={classes.button}
-									>
-										Back
-									</Button>
-									<Button
-										variant="contained"
-										color="secondary"
-										onClick={handleNext}
-										className={classes.button}
-									>
-										{stepState.activeStep ===
-										components.length - 1
-											? "Finish"
-											: "Next"}
-									</Button>
-								</div>
-							</div> */}
-						</StepContent>
+						<StepContent>{item.component}</StepContent>
 					</Step>
 				))}
 			</Stepper>
+
 			{stepState.activeStep === components.length && (
 				<Paper square elevation={0} className={classes.resetContainer}>
 					<Finish />
