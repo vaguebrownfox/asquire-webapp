@@ -60,7 +60,7 @@ export const getAudioInputStream = async (device) => {
 		.getUserMedia({
 			audio: {
 				autoGainControl: false, //(2) [true, false]
-				channelCount: 1, // {max: 2, min: 1}
+				channelCount: 0, // {max: 2, min: 1}
 				deviceId: device.deviceId || "default",
 				// groupId: null,
 				echoCancellation: false, //(2) [true, false]

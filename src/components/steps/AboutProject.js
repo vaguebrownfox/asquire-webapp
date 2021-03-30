@@ -155,8 +155,8 @@ const AboutProject = () => {
 							variant="body2"
 							component="div"
 						>
-							*By clicking NEXT, you are agreeing to the terms and
-							conditions.
+							*By clicking NEXT, you are agreeing to the consent
+							form.
 						</Typography>
 						<Button
 							className={classes.consentbutton}
@@ -165,13 +165,13 @@ const AboutProject = () => {
 							color="inherit"
 							href="/consent"
 						>
-							Read Terms and Condition
+							Read Consent form
 						</Button>
 					</div>
 				</CardContent>
-				<CardActions className={classes.cardactions}>
+				{/* <CardActions className={classes.cardactions}>
 					<Button size="small">Learn More</Button>
-				</CardActions>
+				</CardActions> */}
 			</Card>
 			<div className={classes.actionsContainer}>
 				<div>
