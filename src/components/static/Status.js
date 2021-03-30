@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	key: {
 		margin: theme.spacing(1),
+		fontSize: 18,
 	},
 	value: {
 		fontSize: 22,
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Status({ title }) {
+export default function Status() {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -43,7 +44,7 @@ export default function Status({ title }) {
 		<Card className={classes.root}>
 			<CardContent className={classes.content}>
 				<Grid container spacing={2}>
-					<Grid item xl={4} md={4} xs={12}>
+					<Grid item md={4} xs={12}>
 						<Button
 							className={classes.span}
 							variant="outlined"
@@ -56,7 +57,7 @@ export default function Status({ title }) {
 								component="div"
 								gutterBottom
 							>
-								Data received so far:
+								Data received so far
 							</Typography>
 							<Button
 								className={classes.value}
@@ -67,7 +68,7 @@ export default function Status({ title }) {
 							</Button>
 						</Button>
 					</Grid>
-					<Grid item xl={4} md={4} sm={12}>
+					<Grid item md={4} xs={12}>
 						<Button
 							className={classes.span}
 							variant="outlined"
@@ -80,7 +81,7 @@ export default function Status({ title }) {
 								component="div"
 								gutterBottom
 							>
-								Users recording right now:
+								Users recording right now
 							</Typography>
 							<Button
 								className={classes.value}
@@ -91,7 +92,7 @@ export default function Status({ title }) {
 							</Button>
 						</Button>
 					</Grid>
-					<Grid item xl={4} md={4} xs={12}>
+					<Grid item md={4} xs={12}>
 						<Button
 							className={classes.span}
 							variant="outlined"
@@ -104,7 +105,7 @@ export default function Status({ title }) {
 								component="div"
 								gutterBottom
 							>
-								Data required:
+								Data required
 							</Typography>
 							<Button
 								className={classes.value}

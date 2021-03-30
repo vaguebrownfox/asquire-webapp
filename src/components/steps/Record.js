@@ -31,89 +31,11 @@ import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 import { Context as RecordContext } from "../../context/data/RecordContext";
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		background: theme.palette.background.default,
+const stims = [
+	{
+		description: "",
 	},
-	titleDiv: {
-		display: "flex",
-		justifyContent: "center",
-		cursor: "none",
-	},
-	title: {
-		fontSize: 14,
-	},
-	pos: {
-		marginBottom: 12,
-	},
-
-	cardaction: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	media: {
-		height: 255,
-		width: 255,
-		margin: theme.spacing(2),
-		marginTop: theme.spacing(0),
-		borderRadius: theme.spacing(1),
-	},
-	controls: {
-		display: "flex",
-		alignItems: "center",
-		width: "100%",
-		justifyContent: "space-evenly",
-		paddingLeft: theme.spacing(1),
-		paddingBottom: theme.spacing(1),
-	},
-	controlIcon: {
-		height: 38,
-		width: 38,
-
-		"&:hover": {
-			transform: "scale(1.1)",
-			cursor: "crosshair",
-		},
-	},
-	button: {
-		marginTop: theme.spacing(1),
-		marginRight: theme.spacing(1),
-	},
-	buttonRefresh: {
-		textTransform: "none",
-		marginBottom: theme.spacing(4),
-	},
-	actionsContainer: {
-		marginTop: theme.spacing(2),
-	},
-	devices: {
-		display: "flex",
-		justifyContent: "space-around",
-		alignItems: "flex-start",
-		alignContent: "flex-start",
-		padding: theme.spacing(0),
-	},
-	bullet: {
-		display: "inline-block",
-		margin: "0 2px",
-		transform: "scale(1.25)",
-		"&:hover": {
-			transform: "scale(2)",
-		},
-	},
-	deviceSelect: {
-		maxWidth: theme.spacing(16),
-	},
-	htmlAudioPlayer: {
-		display: "flex",
-		flexDirection: "column",
-	},
-	player: {
-		background: theme.palette.background.default,
-	},
-}));
+];
 
 export default function Record({ title }) {
 	const classes = useStyles();
@@ -211,23 +133,6 @@ export default function Record({ title }) {
 								{`${recordState.inputDevice?.label}`}
 							</Typography>
 						</div>
-
-						{/* <div className={classes.deviceSelect}>
-							<DeviceList
-								type="output"
-								devices={recordState.audioDevices.outputDevices}
-								iconStart={<SpeakerIcon />}
-								iconEnd={<DropArrowIcon />}
-							/>
-							<Typography
-								color="textSecondary"
-								variant="body2"
-								gutterBottom
-								noWrap
-							>recordUploadAction(userState.selectedUser);
-								{`${recordState.outputDevice?.label}`}
-							</Typography>
-						</div> */}
 					</div>
 					{recordState.loading && (
 						<div className={classes.progress}>
@@ -425,3 +330,87 @@ const DeviceList = ({ type, devices, iconStart, iconEnd }) => {
 		</div>
 	);
 };
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		background: theme.palette.background.default,
+	},
+	titleDiv: {
+		display: "flex",
+		justifyContent: "center",
+		cursor: "none",
+	},
+	title: {
+		fontSize: 14,
+	},
+	pos: {
+		marginBottom: 12,
+	},
+
+	cardaction: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	media: {
+		height: 255,
+		width: 255,
+		margin: theme.spacing(2),
+		marginTop: theme.spacing(0),
+		borderRadius: theme.spacing(1),
+	},
+	controls: {
+		display: "flex",
+		alignItems: "center",
+		width: "100%",
+		justifyContent: "space-evenly",
+		paddingLeft: theme.spacing(1),
+		paddingBottom: theme.spacing(1),
+	},
+	controlIcon: {
+		height: 38,
+		width: 38,
+
+		"&:hover": {
+			transform: "scale(1.1)",
+			cursor: "crosshair",
+		},
+	},
+	button: {
+		marginTop: theme.spacing(1),
+		marginRight: theme.spacing(1),
+	},
+	buttonRefresh: {
+		textTransform: "none",
+		marginBottom: theme.spacing(4),
+	},
+	actionsContainer: {
+		marginTop: theme.spacing(2),
+	},
+	devices: {
+		display: "flex",
+		justifyContent: "space-around",
+		alignItems: "flex-start",
+		alignContent: "flex-start",
+		padding: theme.spacing(0),
+	},
+	bullet: {
+		display: "inline-block",
+		margin: "0 2px",
+		transform: "scale(1.25)",
+		"&:hover": {
+			transform: "scale(2)",
+		},
+	},
+	deviceSelect: {
+		maxWidth: theme.spacing(16),
+	},
+	htmlAudioPlayer: {
+		display: "flex",
+		flexDirection: "column",
+	},
+	player: {
+		background: theme.palette.background.default,
+	},
+}));
