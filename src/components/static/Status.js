@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		minWidth: 275,
 		background: theme.palette.primary.card,
-		margin: theme.spacing(4),
+		margin: theme.spacing(1),
 	},
 	bullet: {
 		display: "inline-block",
@@ -20,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	key: {
 		margin: theme.spacing(1),
-		fontSize: 18,
+		fontSize: 16,
 	},
 	value: {
-		fontSize: 22,
+		fontSize: 16,
 	},
 	content: {
 		display: "flex",
@@ -33,47 +32,31 @@ const useStyles = makeStyles((theme) => ({
 		textDecoration: "none",
 		textTransform: "none",
 		width: "100%",
+		height: "100%",
 	},
 }));
 
 export default function Status() {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<Card className={classes.root}>
 			<CardContent className={classes.content}>
 				<Grid container spacing={2}>
-					<Grid item md={4} xs={12}>
+					<Grid item className={classes.item} md={4} xs={12}>
 						<Button
 							className={classes.span}
 							variant="outlined"
 							color="secondary"
 						>
-							<Typography
-								className={classes.key}
-								color="textPrimary"
-								variant="h6"
-								component="div"
-								gutterBottom
-							>
-								Data received so far
-							</Typography>
 							<Button
 								className={classes.value}
+								size="small"
 								color="secondary"
 								variant="text"
 							>
 								{106}
 							</Button>
-						</Button>
-					</Grid>
-					<Grid item md={4} xs={12}>
-						<Button
-							className={classes.span}
-							variant="outlined"
-							color="secondary"
-						>
 							<Typography
 								className={classes.key}
 								color="textPrimary"
@@ -81,8 +64,16 @@ export default function Status() {
 								component="div"
 								gutterBottom
 							>
-								Users recording right now
+								users recorded so far
 							</Typography>
+						</Button>
+					</Grid>
+					<Grid item className={classes.item} md={4} xs={12}>
+						<Button
+							className={classes.span}
+							variant="outlined"
+							color="secondary"
+						>
 							<Button
 								className={classes.value}
 								color="secondary"
@@ -90,14 +81,6 @@ export default function Status() {
 							>
 								{12}
 							</Button>
-						</Button>
-					</Grid>
-					<Grid item md={4} xs={12}>
-						<Button
-							className={classes.span}
-							variant="outlined"
-							color="secondary"
-						>
 							<Typography
 								className={classes.key}
 								color="textPrimary"
@@ -105,8 +88,16 @@ export default function Status() {
 								component="div"
 								gutterBottom
 							>
-								Data required
+								users currently recording
 							</Typography>
+						</Button>
+					</Grid>
+					<Grid item className={classes.item} md={4} xs={12}>
+						<Button
+							className={classes.span}
+							variant="outlined"
+							color="secondary"
+						>
 							<Button
 								className={classes.value}
 								color="secondary"
@@ -114,6 +105,15 @@ export default function Status() {
 							>
 								{1000}
 							</Button>
+							<Typography
+								className={classes.key}
+								color="textPrimary"
+								variant="h6"
+								component="div"
+								gutterBottom
+							>
+								recordings required
+							</Typography>
 						</Button>
 					</Grid>
 				</Grid>

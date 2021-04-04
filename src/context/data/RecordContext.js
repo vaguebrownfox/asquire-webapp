@@ -1,5 +1,6 @@
 // record context
 import createDataContext from "../createDataContext";
+import { firebaseStims } from "../../functions/firestore";
 
 // functions
 import {
@@ -22,6 +23,9 @@ const recordInitialState = {
 	isPlaying: false,
 	recDone: false,
 	playUrl: "",
+
+	stims: {},
+	currentStim: {},
 };
 
 // Reducer
@@ -29,6 +33,12 @@ const recordReducer = (state, action) => {
 	switch (action.type) {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
+		case "LOAD_STIMS":
+			return {
+				...state,
+				stims: action.payload,
+				currentStim: action.payload[0],
+			};
 		case "GET_DEVICES":
 			return {
 				...state,
@@ -72,6 +82,19 @@ const recordLoadAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		console.log("record action log");
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const recordLoadStimsAction = (dispatch) => {
+	return async () => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		const stims = await firebaseStims();
+		console.log("record action log loading stims", stims);
+
+		dispatch({ type: "LOAD_STIMS", payload: stims });
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -198,6 +221,7 @@ export const { Context, Provider } = createDataContext(
 	recordReducer,
 	{
 		recordLoadAction,
+		recordLoadStimsAction,
 		recordGetDevicesAction,
 		recordSetInputAction,
 		recordSetOutputAction,

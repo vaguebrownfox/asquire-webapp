@@ -1,5 +1,5 @@
 import createDataContext from "../createDataContext";
-import { getQuestions } from "../../fetch/questions";
+import { firebaseSurvey } from "../../functions/firestore";
 
 // Initial State
 const surveyInitialState = {
@@ -79,10 +79,11 @@ const surveyAction = (dispatch) => {
 };
 
 const surveyLoadQuestionsAction = (dispatch) => {
-	return () => {
+	return async () => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		const questions = getQuestions();
+		const questions = await firebaseSurvey();
+		console.log("survey action log: loading questions");
 
 		dispatch({ type: "LOAD_QUESTIONS", payload: questions });
 

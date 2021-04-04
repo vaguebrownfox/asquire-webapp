@@ -247,6 +247,14 @@ const Question = ({ question, onSelect }) => {
 									{surveyState.currentQuestion?.question}
 								</Typography>
 							</FormLabel>
+							{surveyState.loading && (
+								<div className={classes.progress}>
+									<CircularProgress
+										color="secondary"
+										size={28}
+									/>
+								</div>
+							)}
 							{surveyState.currentQuestion?.options.length >
 								0 && (
 								<RadioGroup
@@ -289,7 +297,7 @@ const Question = ({ question, onSelect }) => {
 						</>
 					) : (
 						<Typography variant="h6" component="tbody">
-							Done
+							Done!
 						</Typography>
 					)}
 					<FormHelperText error>

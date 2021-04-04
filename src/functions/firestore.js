@@ -13,3 +13,14 @@ export const firebaseUserData = async (data) => {
 
 	return data;
 };
+
+export const firebaseSurvey = async () => {
+	const docRefSurvey = db.collection("content").doc("survey");
+	const survey = (await docRefSurvey.get()).data();
+	return survey;
+};
+export const firebaseStims = async () => {
+	const docRefSurvey = db.collection("content").doc("stimuli");
+	const stimuli = (await docRefSurvey.get()).data();
+	return stimuli;
+};

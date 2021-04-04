@@ -11,11 +11,9 @@ import {
 	Tooltip,
 } from "@material-ui/core";
 
-import PlayIcon from "@material-ui/icons/PlayArrow";
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 import SkipNextIcon from "@material-ui/icons/NavigateNext";
-import SpeakerIcon from "@material-ui/icons/VolumeUpRounded";
 import DropArrowIcon from "@material-ui/icons/ArrowDropDown";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import DownloadIcon from "@material-ui/icons/ArrowDownward";
@@ -30,6 +28,7 @@ import { components } from "../../App";
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 import { Context as RecordContext } from "../../context/data/RecordContext";
+import { red } from "@material-ui/core/colors";
 
 const stims = [
 	{
@@ -48,17 +47,19 @@ export default function Record({ title }) {
 	} = React.useContext(StepContext);
 	const {
 		state: recordState,
+		recordLoadStimsAction,
 		recordGetDevicesAction,
 		recordStartAction,
 		recordStopAction,
 		recordUploadAction,
 	} = React.useContext(RecordContext);
 	const { state: userState } = React.useContext(UserContext);
+	const [recording, setRecording] = React.useState(false);
 	const bull = <span className={classes.bullet}>•</span>;
 
 	React.useEffect(() => {
+		recordLoadStimsAction();
 		recordGetDevicesAction();
-		//recordSetInputAction(recordState.inputDevice);
 
 		return () => {
 			console.log("record component cleanup");
@@ -66,21 +67,20 @@ export default function Record({ title }) {
 	}, []);
 
 	const handleNext = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 		stepNextAction();
 	};
 
 	const handleBack = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
 	};
 
 	const handleRecord = () => {
-		// recordGetDevicesAction();
 		if (recordState.isRecording) {
 			recordStopAction();
+			setRecording(true);
 		} else {
 			recordStartAction(recordState.inputStream);
+			setRecording(false);
 		}
 	};
 
@@ -118,37 +118,6 @@ export default function Record({ title }) {
 						</Typography>
 					</div>
 
-					<div className={classes.devices}>
-						<div className={classes.deviceSelect}>
-							<DeviceList
-								type="input"
-								devices={recordState.audioDevices.inputDevices}
-								iconStart={<RecordStartIcon />}
-								iconEnd={<DropArrowIcon />}
-							/>
-							<Typography
-								color="textSecondary"
-								variant="body2"
-								gutterBottom
-								noWrap
-							>
-								{`${recordState.inputDevice?.label}`}
-							</Typography>
-						</div>
-					</div>
-					{recordState.loading && (
-						<div className={classes.progress}>
-							<CircularProgress color="secondary" size={28} />
-						</div>
-					)}
-					<IconButton
-						className={classes.buttonRefresh}
-						aria-label="refresh-devices"
-						size="medium"
-						onClick={handleRefresh}
-					>
-						<RefreshIcon />
-					</IconButton>
 					<>
 						<div className={classes.cardaction}>
 							<Typography
@@ -156,25 +125,28 @@ export default function Record({ title }) {
 								color="textPrimary"
 								gutterBottom
 							>
-								{`Take a deep breath and say AAA...`}
+								{recordState.currentStim.description}
 							</Typography>
 
 							<CardMedia
 								className={classes.media}
 								image="https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg"
-								title="Contemplative Reptile"
+								title="Stimulus image"
 							/>
+
+							<Timer isRecording={recording} />
+
 							<div className={classes.controls}>
-								<IconButton
+								{/* <IconButton
 									aria-label="previous"
-									onClick={handleDone}
+									
 								>
-									<Tooltip title="Done">
-										<DoneIcon
+									<Tooltip title="Next">
+										<SkipNextIcon
 											className={classes.controlIcon}
 										/>
 									</Tooltip>
-								</IconButton>
+								</IconButton> */}
 								<IconButton
 									aria-label="play/pause"
 									onClick={handleRecord}
@@ -197,9 +169,12 @@ export default function Record({ title }) {
 										)}
 									</Tooltip>
 								</IconButton>
-								<IconButton aria-label="next">
-									<Tooltip title="Next">
-										<SkipNextIcon
+								<IconButton
+									aria-label="next"
+									onClick={handleDone}
+								>
+									<Tooltip title="Done">
+										<DoneIcon
 											className={classes.controlIcon}
 										/>
 									</Tooltip>
@@ -229,6 +204,41 @@ export default function Record({ title }) {
 							</div>
 						</div>
 					</>
+					<div>
+						<div className={classes.devices}>
+							<div className={classes.deviceSelect}>
+								<DeviceList
+									type="input"
+									devices={
+										recordState.audioDevices.inputDevices
+									}
+									iconStart={<RecordStartIcon />}
+									iconEnd={<DropArrowIcon />}
+								/>
+								<Typography
+									color="textSecondary"
+									variant="body2"
+									gutterBottom
+									noWrap
+								>
+									{`${recordState.inputDevice?.label}`}
+								</Typography>
+							</div>
+						</div>
+						{recordState.loading && (
+							<div className={classes.progress}>
+								<CircularProgress color="secondary" size={28} />
+							</div>
+						)}
+						<IconButton
+							className={classes.buttonRefresh}
+							aria-label="refresh-devices"
+							size="medium"
+							onClick={handleRefresh}
+						>
+							<RefreshIcon />
+						</IconButton>
+					</div>
 				</CardContent>
 			</Card>
 			<div className={classes.actionsContainer}>
@@ -341,6 +351,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		justifyContent: "center",
 		cursor: "none",
+		marginBottom: theme.spacing(2),
 	},
 	title: {
 		fontSize: 14,
@@ -415,4 +426,38 @@ const useStyles = makeStyles((theme) => ({
 	player: {
 		background: theme.palette.background.default,
 	},
+	timer: {
+		color: red[500],
+	},
 }));
+
+const Timer = ({ isRecording }) => {
+	const classes = useStyles();
+	const [seconds, setSeconds] = React.useState(0);
+	React.useEffect(() => {
+		let id;
+		if (isRecording) {
+			setSeconds(0);
+			id = setInterval(() => {
+				setSeconds((seconds) => seconds + 1);
+			}, 1000);
+		} else {
+			clearInterval(id);
+		}
+	}, [isRecording, seconds]);
+	return (
+		<Typography variant="h6" className={classes.timer} gutterBottom>
+			{time(seconds)}
+		</Typography>
+	);
+};
+
+const time = (secs) => {
+	var min = Math.floor(secs / 60) || 0;
+	var sec = Math.floor(secs % 60) || 0;
+	if (sec < 10) {
+		return `0${min}:0${sec}`;
+	} else {
+		return `0${min}:${sec}`;
+	}
+};

@@ -1,4 +1,4 @@
-const getQuestions = () => ({
+const questions = {
 	1: {
 		qno: 1,
 		question: "What is your smoking status?",
@@ -173,6 +173,6 @@ const getQuestions = () => ({
 		options: [],
 		nextQnos: [-1],
 	},
-});
+};
 
-module.exports = { getQuestions };
+module.exports = { questions };

@@ -25,3 +25,6 @@ yarn-error.log*
 firebaseConfig.js
 
 .firebase/hosting.YnVpbGQ.cache
+
+firebaseAdmin.js
+fbAdminConfig.json
