@@ -6,6 +6,7 @@ import ContactIcon from "@material-ui/icons/Mail";
 import HomeIcon from "@material-ui/icons/Home";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { grey } from "@material-ui/core/colors";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

@@ -12,7 +12,9 @@ import ContactIcon from "@material-ui/icons/MailOutlineRounded";
 import ConsentIcon from "@material-ui/icons/NotesRounded";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button, ButtonGroup, Tooltip } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {
@@ -73,6 +75,19 @@ const useStyles = makeStyles((theme) => ({
 		"&:visited": {
 			color: theme.palette.primary.contrastText,
 		},
+	},
+	avatar: {
+		width: theme.spacing(6),
+		height: theme.spacing(6),
+		background: theme.palette.background.default,
+		borderWidth: 1,
+		borderColor: theme.palette.primary.contrastText,
+	},
+	avalink: {
+		// borderWidth: 0,
+	},
+	avagroup: {
+		marginRight: theme.spacing(2),
 	},
 }));
 
@@ -237,8 +252,26 @@ function AsqAppBar({ title, history }) {
 							</Button>
 						</ButtonGroup>
 					</div>
-
 					<div className={classes.grow} />
+					<AvatarGroup max={4} className={classes.avagroup}>
+						<Tooltip title="Spire Lab">
+							<Avatar
+								alt="Spire lab logo"
+								variant="circular"
+								src="https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fspire_logo_sq.png?alt=media&token=ea586ef3-d9ea-420c-8c1b-db3130855672"
+								className={classes.avatar}
+							/>
+						</Tooltip>
+						<Tooltip title="IISc Bangalore">
+							<Avatar
+								alt="IISc logo"
+								variant="circular"
+								src="https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fiisc_logo_sq.png?alt=media&token=2440a351-e45b-4197-9bb3-eb342c0ac39a"
+								className={classes.avatar}
+								href="https://iisc.ac.in/"
+							/>
+						</Tooltip>
+					</AvatarGroup>
 					<div className={classes.sectionDesktop}>
 						{/* <Messages /> */}
 						<IconButton

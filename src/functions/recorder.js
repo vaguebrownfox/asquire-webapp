@@ -88,7 +88,7 @@ export const audioRecord = (audioStream) => {
 		}
 
 		const options = { mimeType: "audio/webm" };
-		const mediaRecorder = new MediaRecorder(audioStream, options);
+		const mediaRecorder = new MediaRecorder(audioStream);
 
 		let recordedChunks = [];
 

@@ -11,7 +11,6 @@ import {
 	Tooltip,
 } from "@material-ui/core";
 
-import PlayIcon from "@material-ui/icons/PlayArrow";
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 import SkipNextIcon from "@material-ui/icons/NavigateNext";
