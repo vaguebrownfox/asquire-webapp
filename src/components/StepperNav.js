@@ -57,11 +57,8 @@ export default function VerticalLinearStepper({ components }) {
 			{stepState.activeStep === components.length && (
 				<Paper square elevation={0} className={classes.resetContainer}>
 					<Finish />
-					<Typography>
-						All steps completed - you&apos;re finished
-					</Typography>
 					<Button onClick={handleReset} className={classes.button}>
-						Reset
+						Yay!
 					</Button>
 				</Paper>
 			)}

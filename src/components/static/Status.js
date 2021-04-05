@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -29,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "space-around",
 	},
 	span: {
+		display: "flex",
+		justifyContent: "center",
 		textDecoration: "none",
 		textTransform: "none",
 		width: "100%",
@@ -44,8 +47,9 @@ export default function Status() {
 			<CardContent className={classes.content}>
 				<Grid container spacing={2}>
 					<Grid item className={classes.item} md={4} xs={12}>
-						<Button
+						<Paper
 							className={classes.span}
+							elevation={3}
 							variant="outlined"
 							color="secondary"
 						>
@@ -66,11 +70,12 @@ export default function Status() {
 							>
 								users recorded so far
 							</Typography>
-						</Button>
+						</Paper>
 					</Grid>
 					<Grid item className={classes.item} md={4} xs={12}>
-						<Button
+						<Paper
 							className={classes.span}
+							elevation={3}
 							variant="outlined"
 							color="secondary"
 						>
@@ -90,11 +95,12 @@ export default function Status() {
 							>
 								users currently recording
 							</Typography>
-						</Button>
+						</Paper>
 					</Grid>
 					<Grid item className={classes.item} md={4} xs={12}>
-						<Button
+						<Paper
 							className={classes.span}
+							elevation={30}
 							variant="outlined"
 							color="secondary"
 						>
@@ -114,7 +120,7 @@ export default function Status() {
 							>
 								recordings required
 							</Typography>
-						</Button>
+						</Paper>
 					</Grid>
 				</Grid>
 			</CardContent>

@@ -13,10 +13,10 @@ import {
 
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
-import SkipNextIcon from "@material-ui/icons/NavigateNext";
+import SkipNextIcon from "@material-ui/icons/InfoOutlined";
 import DropArrowIcon from "@material-ui/icons/ArrowDropDown";
 import RefreshIcon from "@material-ui/icons/Refresh";
-import DownloadIcon from "@material-ui/icons/ArrowDownward";
+// import DownloadIcon from "@material-ui/icons/ArrowDownward";
 import DoneIcon from "@material-ui/icons/Done";
 
 import Menu from "@material-ui/core/Menu";
@@ -30,14 +30,6 @@ import { Context as UserContext } from "../../context/data/UserContext";
 import { Context as RecordContext } from "../../context/data/RecordContext";
 import { red } from "@material-ui/core/colors";
 
-const stims = [
-	{
-		description: "Take a deep breath and say AAA...",
-		imageLink:
-			"https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg",
-	},
-];
-
 export default function Record({ title }) {
 	const classes = useStyles();
 	const {
@@ -48,13 +40,13 @@ export default function Record({ title }) {
 	const {
 		state: recordState,
 		recordLoadStimsAction,
+		recordNextStimAction,
 		recordGetDevicesAction,
 		recordStartAction,
 		recordStopAction,
 		recordUploadAction,
 	} = React.useContext(RecordContext);
 	const { state: userState } = React.useContext(UserContext);
-	const [recording, setRecording] = React.useState(false);
 	const bull = <span className={classes.bullet}>•</span>;
 
 	React.useEffect(() => {
@@ -77,10 +69,8 @@ export default function Record({ title }) {
 	const handleRecord = () => {
 		if (recordState.isRecording) {
 			recordStopAction();
-			setRecording(true);
 		} else {
 			recordStartAction(recordState.inputStream);
-			setRecording(false);
 		}
 	};
 
@@ -89,7 +79,9 @@ export default function Record({ title }) {
 	};
 
 	const handleDone = () => {
-		recordUploadAction(userState.selectedUser);
+		recordUploadAction(userState.selectedUser).then(() => {
+			recordNextStimAction();
+		});
 	};
 
 	return (
@@ -133,20 +125,22 @@ export default function Record({ title }) {
 								image="https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg"
 								title="Stimulus image"
 							/>
-
-							<Timer isRecording={recording} />
+							<Typography
+								variant="h6"
+								className={classes.timer}
+								gutterBottom
+							>
+								{time(recordState.seconds)}
+							</Typography>
 
 							<div className={classes.controls}>
-								{/* <IconButton
-									aria-label="previous"
-									
-								>
-									<Tooltip title="Next">
+								<IconButton aria-label="previous">
+									<Tooltip title="Skip">
 										<SkipNextIcon
 											className={classes.controlIcon}
 										/>
 									</Tooltip>
-								</IconButton> */}
+								</IconButton>
 								<IconButton
 									aria-label="play/pause"
 									onClick={handleRecord}
@@ -172,6 +166,7 @@ export default function Record({ title }) {
 								<IconButton
 									aria-label="next"
 									onClick={handleDone}
+									disabled={!recordState.recDone}
 								>
 									<Tooltip title="Done">
 										<DoneIcon
@@ -189,7 +184,7 @@ export default function Record({ title }) {
 											src={recordState.playUrl}
 											controls
 										/>
-										<Button
+										{/* <Button
 											className={classes.button}
 											aria-controls="download-audio"
 											size="small"
@@ -198,7 +193,7 @@ export default function Record({ title }) {
 											target="_blank"
 										>
 											Download
-										</Button>
+										</Button> */}
 									</>
 								)}
 							</div>
@@ -377,6 +372,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		width: "100%",
+		maxWidth: theme.spacing(64),
 		justifyContent: "space-evenly",
 		paddingLeft: theme.spacing(1),
 		paddingBottom: theme.spacing(1),
@@ -430,27 +426,6 @@ const useStyles = makeStyles((theme) => ({
 		color: red[500],
 	},
 }));
-
-const Timer = ({ isRecording }) => {
-	const classes = useStyles();
-	const [seconds, setSeconds] = React.useState(0);
-	React.useEffect(() => {
-		let id;
-		if (isRecording) {
-			setSeconds(0);
-			id = setInterval(() => {
-				setSeconds((seconds) => seconds + 1);
-			}, 1000);
-		} else {
-			clearInterval(id);
-		}
-	}, [isRecording, seconds]);
-	return (
-		<Typography variant="h6" className={classes.timer} gutterBottom>
-			{time(seconds)}
-		</Typography>
-	);
-};
 
 const time = (secs) => {
 	var min = Math.floor(secs / 60) || 0;

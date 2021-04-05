@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const fields = ["name", "age", "gender", "height", "weight"];
+// const fields = ["name", "age", "gender", "height", "weight"];
+const fields = ["age", "gender", "height", "weight"];
 
 const genders = [
 	{
@@ -73,7 +74,7 @@ const genders = [
 	},
 ];
 
-const r_name = /^([a-zA-Z]+\s?)*\s*$/; ///^[a-z A-Z]{0,30}$/;
+// const r_name = /^([a-zA-Z]+\s?)*\s*$/; ///^[a-z A-Z]{0,30}$/;
 const r_digit = /^[\d+]{0,3}$/;
 const r_gender = /^(m|f|o)$/;
 
@@ -130,23 +131,23 @@ const BioData = () => {
 		if (data === "") return setBio({ ...bio, [type]: data });
 
 		switch (type) {
-			case fields[0]: // name
-				data = r_name.test(event.target.value)
-					? event.target.value
-					: bio["name"]?.trim() || "";
-				break;
-			case fields[1]: // age
+			// case fields[0]: // name
+			// 	data = r_name.test(event.target.value)
+			// 		? event.target.value
+			// 		: bio["name"]?.trim() || "";
+			// 	break;
+			case fields[0]: // age
 				data = r_digit.test(data) ? data : bio["age"] || "";
 				break;
-			case fields[2]: // gender
+			case fields[1]: // gender
 				// data = data.toUpperCase();
 				data = r_gender.test(data) ? data : bio["gender"] || "";
 				console.log("handle inputh data", data);
 				break;
-			case fields[3]: // height
+			case fields[2]: // height
 				data = r_digit.test(data) ? data : bio["height"] || "";
 				break;
-			case fields[4]: // weight
+			case fields[3]: // weight
 				data = r_digit.test(data) ? data : bio["weight"] || "";
 				break;
 			default:
@@ -170,15 +171,6 @@ const BioData = () => {
 		}
 
 		return f;
-		// if (f) {
-		// 	const { selectedUser } = userState;
-		// 	const userUp = {
-		// 		...selectedUser,
-		// 		biodataDone: true,
-		// 		bioData: bioData,
-		// 	};
-		// 	updateUser(userUp);
-		// }
 	};
 
 	return (
@@ -193,7 +185,7 @@ const BioData = () => {
 							e.preventDefault();
 						}}
 					>
-						<TextField
+						{/* <TextField
 							id="bio-input-name"
 							label="Your name"
 							placeholder=""
@@ -204,7 +196,7 @@ const BioData = () => {
 								// setBio({ ...bio, name: e.target.value })
 								handleInputs(fields[0], e)
 							}
-						/>
+						/> */}
 						<TextField
 							id="bio-input-age"
 							label="Age"
@@ -214,7 +206,7 @@ const BioData = () => {
 							value={bio.age || ""}
 							onChange={(e) =>
 								// setBio({ ...bio, age: e.target.value })
-								handleInputs(fields[1], e)
+								handleInputs(fields[0], e)
 							}
 						/>
 						<TextField
@@ -225,7 +217,7 @@ const BioData = () => {
 							value={bio.gender || "x"}
 							onChange={(e) =>
 								// setBio({ ...bio, gender: e.target.value })
-								handleInputs(fields[2], e)
+								handleInputs(fields[1], e)
 							}
 							variant="outlined"
 							helperText="Select your gender"
@@ -248,7 +240,7 @@ const BioData = () => {
 							value={bio.height || ""}
 							onChange={(e) =>
 								// setBio({ ...bio, height: e.target.value })
-								handleInputs(fields[3], e)
+								handleInputs(fields[2], e)
 							}
 							InputProps={{
 								endAdornment: (
@@ -267,7 +259,7 @@ const BioData = () => {
 							value={bio.weight || ""}
 							onChange={(e) =>
 								// setBio({ ...bio, weight: e.target.value })
-								handleInputs(fields[4], e)
+								handleInputs(fields[3], e)
 							}
 							InputProps={{
 								endAdornment: (
