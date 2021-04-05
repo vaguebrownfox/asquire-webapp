@@ -109,7 +109,6 @@ const surveyNextQuestionAction = (dispatch) => {
 			answeredQuestion,
 			nextQuestionNo: nQ,
 		};
-		console.info("survey action log :: next question payload", payload);
 		dispatch({ type: "NEXT_QUESTION", payload });
 
 		dispatch({ type: "SET_LOADING", payload: false });
@@ -120,7 +119,6 @@ const surveyPreviousQuestionAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("survey action log :: prev question");
 		dispatch({ type: "PREVIOUS_QUESTION", payload: null });
 
 		dispatch({ type: "SET_LOADING", payload: false });

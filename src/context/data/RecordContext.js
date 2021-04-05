@@ -44,6 +44,7 @@ const recordReducer = (state, action) => {
 		case "NEXT_STIM":
 			let nostims = Object.keys(state.stims).length;
 			let csno = state.currentStim.sno;
+
 			return { ...state, currentStim: state.stims[(csno + 1) % nostims] };
 		case "GET_DEVICES":
 			return {
@@ -114,6 +115,7 @@ const recordLoadStimsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims();
+		console.log("record action log ::stims loading");
 
 		dispatch({ type: "LOAD_STIMS", payload: stims });
 
@@ -126,7 +128,6 @@ const recordNextStimAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		dispatch({ type: "NEXT_STIM", payload: null });
-		console.log("record action log");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -136,7 +137,6 @@ const recordGetDevicesAction = (dispatch) => {
 	return async () => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log:: get devices");
 		const {
 			audioDevices: inputDevices,
 			audioInputStream,
@@ -156,7 +156,6 @@ const recordSetInputAction = (dispatch) => {
 	return async (device) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log:: set input");
 		const stream = await getAudioInputStream(device);
 		dispatch({ type: "SET_INPUT_DEVICE", payload: device });
 		dispatch({ type: "SET_INPUT_STREAM", payload: stream });
@@ -169,7 +168,6 @@ const recordSetOutputAction = (dispatch) => {
 	return (device) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log :: set output");
 		dispatch({ type: "SET_OUTPUT_DEVICE", payload: device });
 
 		dispatch({ type: "SET_LOADING", payload: false });
@@ -193,6 +191,7 @@ const recordStartAction = (dispatch) => {
 		console.log("record action log:: start record", isRecStart);
 
 		if (isRecStart) {
+			console.log("record action log:: start record");
 			dispatch({ type: "SET_REC_DONE", payload: false });
 			dispatch({ type: "SET_REC_STATE", payload: true });
 			dispatch({ type: "SET_PLY_STATE", payload: false });
@@ -203,8 +202,6 @@ const recordStartAction = (dispatch) => {
 		} else {
 			dispatch({ type: "SET_REC_STATE", payload: false });
 		}
-
-		console.log("record action log:: start record");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -221,7 +218,6 @@ const recordStopAction = (dispatch) => {
 			return null;
 		}
 		audio = await recorder.stopRecord().catch(() => null);
-		console.log("record action log:: stop record", audio);
 
 		if (audio) {
 			dispatch({ type: "SET_REC_STATE", payload: false });
@@ -229,8 +225,6 @@ const recordStopAction = (dispatch) => {
 			dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
 			clearInterval(interval);
 		}
-
-		console.log("record action log:: start record");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -240,8 +234,6 @@ const recordUploadAction = (dispatch) => {
 	return async (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record action log:: uploading record");
-
 		if (audio) {
 			firebaseUserAudio(user, audio);
 			dispatch({ type: "SET_REC_DONE", payload: false });
@@ -249,8 +241,6 @@ const recordUploadAction = (dispatch) => {
 			console.log("record action log:: audio not defined");
 			throw new Error("Upload error");
 		}
-
-		console.log("record action log:: start record");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

@@ -28,7 +28,7 @@ import { Provider as RecordProvider } from "./context/data/RecordContext";
 export const components = [
 	{
 		title: "Welcome!",
-		component: <AboutProject title="firse" />,
+		component: <AboutProject />,
 	},
 	{
 		title: "Select User",
@@ -40,7 +40,7 @@ export const components = [
 	},
 	{
 		title: "Quick Survey!",
-		component: <Survey title="secon" />,
+		component: <Survey />,
 	},
 	{
 		title: "Record your voice!",

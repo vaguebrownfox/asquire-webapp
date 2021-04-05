@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Consent() {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
+	// const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<Card className={classes.root}>

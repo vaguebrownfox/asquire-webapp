@@ -100,7 +100,6 @@ export default function Status() {
 					<Grid item className={classes.item} md={4} xs={12}>
 						<Paper
 							className={classes.span}
-							elevation={30}
 							variant="outlined"
 							color="secondary"
 						>
