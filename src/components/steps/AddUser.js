@@ -75,7 +75,12 @@ const AddUserComponent = () => {
 	};
 
 	const handleAddUser = (e) => {
-		userName.length > 0 && userAddAction(userName);
+		userName.length > 0 &&
+			userAddAction(userName).then((res) => {
+				if (!res) {
+					setAdded(false);
+				}
+			});
 		setUserName("");
 		setAdded(true);
 	};
@@ -120,6 +125,12 @@ const AddUserComponent = () => {
 
 						{(!added || userState.allUsers.length < 1) && (
 							<>
+								<Typography
+									className={classes.pos}
+									color="textSecondary"
+								>
+									Or
+								</Typography>
 								<TextField
 									id="outlined-basic"
 									label="Enter New Username"

@@ -174,7 +174,10 @@ const questionStyles = makeStyles((theme) => ({
 	controls: {
 		display: "flex",
 		alignItems: "center",
+		alignSelf: "center",
 		justifyContent: "space-around",
+		width: "100%",
+		maxWidth: theme.spacing(64),
 	},
 	controlIcon: {
 		height: 38,

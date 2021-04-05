@@ -83,6 +83,7 @@ const userAddAction = (dispatch) => {
 	return async (userName) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
+		let res = false;
 		let user = {
 			...typicalUser,
 			userName: userName,
@@ -98,17 +99,21 @@ const userAddAction = (dispatch) => {
 
 			dispatch({ type: "ERROR", payload: "" });
 			console.log("user action log:: add user", user);
+			res = true;
 		} else {
 			dispatch({
 				type: "ERROR",
 				payload: "Error adding user, try again!",
 			});
+
 			setTimeout(() => {
 				dispatch({ type: "ERROR", payload: "" });
 			}, 3000);
+			res = false;
 		}
 
 		dispatch({ type: "SET_LOADING", payload: false });
+		return res;
 	};
 };
 

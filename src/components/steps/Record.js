@@ -13,7 +13,7 @@ import {
 
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
-import SkipNextIcon from "@material-ui/icons/InfoOutlined";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
 import DropArrowIcon from "@material-ui/icons/ArrowDropDown";
 import RefreshIcon from "@material-ui/icons/Refresh";
 // import DownloadIcon from "@material-ui/icons/ArrowDownward";
@@ -135,8 +135,8 @@ export default function Record({ title }) {
 
 							<div className={classes.controls}>
 								<IconButton aria-label="previous">
-									<Tooltip title="Skip">
-										<SkipNextIcon
+									<Tooltip title="Info">
+										<InfoIcon
 											className={classes.controlIcon}
 										/>
 									</Tooltip>
