@@ -41,6 +41,11 @@ export default function Record() {
 	const vizRef = React.useRef();
 	const { state: userState } = React.useContext(UserContext);
 
+	const [shape, setShape] = React.useState(false);
+	const handleShape = () => {
+		setShape((preshape) => !preshape);
+	};
+
 	React.useEffect(() => {
 		recordLoadStimsAction();
 		recordGetDevicesAction();
@@ -80,9 +85,12 @@ export default function Record() {
 	return (
 		<>
 			<Card ref={vizRef} className={classes.root}>
-				<Worm {...{ width, height }} />
+				<Worm {...{ width, height, shape }} />
 				<CardContent>
-					<RecTitle userName={userState.selectedUser?.userName} />
+					<RecTitle
+						s={handleShape}
+						userName={userState.selectedUser?.userName}
+					/>
 
 					<div className={classes.cardaction}>
 						<StimContent stim={recordState.currentStim} />
@@ -140,9 +148,6 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "visible",
 		height: theme.spacing(90),
 		background: theme.palette.background.default,
-	},
-	worm: {
-		zIndex: -100,
 	},
 	cardaction: {
 		display: "flex",

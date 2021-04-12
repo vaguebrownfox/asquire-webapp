@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-const RecTitle = ({ userName }) => {
+const RecTitle = ({ userName, s }) => {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -33,9 +33,18 @@ const RecTitle = ({ userName }) => {
 				color="textSecondary"
 				components="div"
 				gutterBottom
+				onClick={() => s()}
 			>
 				{`Recording for `}
 				{bull}
+			</Typography>
+			<Typography
+				className={classes.title}
+				color="textSecondary"
+				components="div"
+				gutterBottom
+				onClick={() => s()}
+			>
 				{bull}
 			</Typography>
 			<Typography
@@ -43,6 +52,7 @@ const RecTitle = ({ userName }) => {
 				color="secondary"
 				components="div"
 				gutterBottom
+				onClick={() => s()}
 			>
 				{bull}
 				{` ${userName}`}

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 		// stroke: "black",
 	},
 }));
-const Worm = ({ width, height }) => {
+const Worm = ({ width, height, shape }) => {
 	const classes = useStyles();
 	const animRef = React.useRef();
 
@@ -81,27 +81,51 @@ const Worm = ({ width, height }) => {
 		<>
 			<div className={classes.root}>
 				<svg className={classes.visualizer}>
-					<g>
-						{/* <g transform="scale(1,-1)"> */}
-						{spectrum.bins &&
-							spectrum.bins.map((a, i) => {
-								const bw = width / spectrum.bins.length;
-								const x = bw * i;
-								const ynorm = a / 255;
-								const r = Math.round((ynorm * height) / 6);
-								const y = height - r;
-								return (
-									<circle
-										key={i}
-										className={classes.shape}
-										cx={x}
-										cy={y}
-										r={r}
-										fill={`hsl(${70 * ynorm}deg, 100%, 50%`}
-									/>
-								);
-							})}
-					</g>
+					{/* <g transform="scale(1,-1)"> */}
+					<rect
+						className={classes.shape}
+						x={0}
+						y={0}
+						width={4}
+						height={4}
+						fill={`hsl(${70 * 0}deg, 100%, 50%`}
+					/>
+					{spectrum.bins &&
+						spectrum.bins.map((a, i) => {
+							const bw = Math.round(width / spectrum.bins.length);
+							const x = bw * i;
+							const ynorm = a / 255;
+							const r = Math.round((ynorm * height) / 8);
+							const y = height;
+							return (
+								<>
+									{shape ? (
+										<circle
+											key={i}
+											className={classes.shape}
+											cx={x}
+											cy={y}
+											r={r}
+											fill={`hsl(${
+												70 * ynorm
+											}deg, 70%, 50%`}
+										/>
+									) : (
+										<rect
+											key={i}
+											className={classes.shape}
+											x={x}
+											y={height - r}
+											width={bw}
+											height={r}
+											fill={`hsl(${
+												70 * ynorm
+											}deg, 70%, 50%`}
+										/>
+									)}
+								</>
+							);
+						})}
 					{/* </g> */}
 				</svg>
 				{/* <p>{`h: ${height}px & w: ${width}px`}</p> */}
