@@ -195,7 +195,7 @@ const questionStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Question = ({ question, onSelect }) => {
+const Question = () => {
 	const classes = questionStyles();
 	const {
 		state: surveyState,
@@ -275,6 +275,7 @@ const Question = ({ question, onSelect }) => {
 													surveyState.currentQuestion
 														?.qno
 												}
+												key={i}
 												value={option}
 												color="primary"
 												control={<Radio />}
@@ -299,7 +300,7 @@ const Question = ({ question, onSelect }) => {
 							)}
 						</>
 					) : (
-						<Typography variant="h6" component="tbody">
+						<Typography variant="h6" component="div">
 							Done!
 						</Typography>
 					)}

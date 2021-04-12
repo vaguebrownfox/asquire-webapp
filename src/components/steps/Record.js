@@ -17,6 +17,8 @@ import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
 import RecDevices from "../pieces/RecDevices";
+import Worm from "../pieces/Worm";
+import useContainerDimensions from "../../hooks/useContainerDimensions";
 
 export default function Record() {
 	const classes = useStyles();
@@ -36,6 +38,7 @@ export default function Record() {
 		recordUploadAction,
 	} = React.useContext(RecordContext);
 
+	const vizRef = React.useRef();
 	const { state: userState } = React.useContext(UserContext);
 
 	React.useEffect(() => {
@@ -72,9 +75,12 @@ export default function Record() {
 		});
 	};
 
+	const { width, height } = useContainerDimensions(vizRef);
+
 	return (
 		<>
-			<Card className={classes.root}>
+			<Card ref={vizRef} className={classes.root}>
+				<Worm {...{ width, height }} />
 				<CardContent>
 					<RecTitle userName={userState.selectedUser?.userName} />
 
@@ -130,7 +136,13 @@ export default function Record() {
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		position: "relative",
+		overflow: "visible",
+		height: theme.spacing(90),
 		background: theme.palette.background.default,
+	},
+	worm: {
+		zIndex: -100,
 	},
 	cardaction: {
 		display: "flex",

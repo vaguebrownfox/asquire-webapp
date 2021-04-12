@@ -16,13 +16,15 @@ const useStyles = makeStyles((theme) => ({
 		alignContent: "flex-start",
 		padding: theme.spacing(0),
 	},
-
 	deviceSelect: {
 		maxWidth: theme.spacing(16),
 	},
 	buttonRefresh: {
 		textTransform: "none",
 		marginBottom: theme.spacing(4),
+	},
+	progress: {
+		minHeight: 34,
 	},
 }));
 const RecDevices = ({ recordState, handleRefresh }) => {
@@ -42,18 +44,22 @@ const RecDevices = ({ recordState, handleRefresh }) => {
 					<Typography
 						color="textSecondary"
 						variant="body2"
+						container="div"
 						gutterBottom
 						noWrap
+						style={{ zIndex: 100 }}
 					>
 						{`${recordState.inputDevice?.label}`}
 					</Typography>
 				</div>
 			</div>
-			{recordState.loading && (
-				<div className={classes.progress}>
+
+			<div className={classes.progress}>
+				{recordState.loading && (
 					<CircularProgress color="secondary" size={28} />
-				</div>
-			)}
+				)}
+			</div>
+
 			<IconButton
 				className={classes.buttonRefresh}
 				aria-label="refresh-devices"

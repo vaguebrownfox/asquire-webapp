@@ -1,6 +1,7 @@
 const BASIC_CACHE = "verycachemoneyofyou-mui";
 const DYNAMIC_CACHE = "dynamicboi-mui";
-const urlsToCache = ["index.html", "offline.html"];
+// const urlsToCache = ["index.html", "offline.html"];
+const urlsToCache = [];
 const self = this;
 
 // Install SW

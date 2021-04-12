@@ -1,3 +1,5 @@
+const { AudioContext, AnalyserNode } = require("standardized-audio-context");
+
 const SAMPLE_RATE = 48000; // Hz
 const SAMPLE_SIZE = 16; // bits
 
@@ -61,7 +63,7 @@ export const getAudioInputStream = async (device) => {
 			audio: {
 				autoGainControl: false, //(2) [true, false]
 				channelCount: 0, // {max: 2, min: 1}
-				deviceId: device.deviceId || "default",
+				deviceId: device?.deviceId || "default",
 				// groupId: null,
 				echoCancellation: false, //(2) [true, false]
 				latency: 0.01, //{max: 0.01, min: 0.01}
@@ -166,48 +168,22 @@ export const audioRecord = (audioStream) => {
 	});
 };
 
-// // For raw audio samples
-//
-// const context = new AudioContext();
-// console.info(audioStream);
+export const audioContext = new AudioContext();
+export const analyserNode = new AnalyserNode(audioContext, {
+	fftSize: 1024,
+	//   minDecibels: -111,
+	smoothingTimeConstant: 0.8,
+});
 
-// const source = context.createMediaStreamSource(audioStream);
-// const processor = context.createScriptProcessor(1024, 1, 1);
+export const setupContext = async () => {
+	const stream = await getAudioInputStream();
+	console.log("recorder ::context state", audioContext.state);
+	if (audioContext.state === "suspended") {
+		await audioContext.resume();
+	}
+	console.log("recorder ::context state", audioContext.state);
+	const source = audioContext.createMediaStreamSource(stream);
+	source.connect(analyserNode);
+};
 
-// source.connect(processor);
-// processor.connect(context.destination);
-
-// let audioChunks = [];
-// processor.onaudioprocess = (e) => {
-// 	console.info(e.inputBuffer.getChannelData(0).buffer);
-// 	// Raw audio samples
-// };
-
-// export const startAudioRecord = (audioStream) => {
-// 	let shouldStop = false;
-// 	let stopped = false;
-// 	const downloadLink = document.getElementById("download");
-// 	const stopButton = document.getElementById("stop");
-
-// 	const options = { mimeType: "audio/webm" };
-// 	const recordedChunks = [];
-// 	const mediaRecorder = new MediaRecorder(audioStream, options);
-
-// 	mediaRecorder.addEventListener("dataavailable", function (e) {
-// 		if (e.data.size > 0) {
-// 			recordedChunks.push(e.data);
-// 		}
-
-// 		if (shouldStop === true && stopped === false) {
-// 			mediaRecorder.stop();
-// 			stopped = true;
-// 		}
-// 	});
-
-// 	mediaRecorder.addEventListener("stop", function () {
-// 		downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
-// 		downloadLink.download = "acetest.wav";+
-// 	});
-
-// 	mediaRecorder.start();
-// };
+setupContext();
