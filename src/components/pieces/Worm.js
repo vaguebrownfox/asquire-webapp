@@ -92,7 +92,7 @@ const Worm = ({ width, height, shape }) => {
 					/>
 					{spectrum.bins &&
 						spectrum.bins.map((a, i) => {
-							const bw = Math.round(width / spectrum.bins.length);
+							const bw = Math.ceil(width / spectrum.bins.length);
 							const x = bw * i;
 							const ynorm = a / 255;
 							const r = Math.round((ynorm * height) / 8);

@@ -145,8 +145,8 @@ export default function Record() {
 const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "relative",
-		overflow: "visible",
-		height: theme.spacing(90),
+		overflow: "hidden",
+		height: theme.spacing(88),
 		background: theme.palette.background.default,
 	},
 	cardaction: {
