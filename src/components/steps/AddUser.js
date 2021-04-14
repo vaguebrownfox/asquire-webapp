@@ -6,23 +6,15 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import TextField from "@material-ui/core/TextField";
-import Divider from "@material-ui/core/Divider";
-import ProfileIcon from "@material-ui/icons/AccountCircle";
-import {
-	Checkbox,
-	CircularProgress,
-	FormControl,
-	FormControlLabel,
-	FormGroup,
-	FormHelperText,
-} from "@material-ui/core";
-
 import { components } from "../../App";
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
+
+// Pieces
+import UserList from "../pieces/UserList";
+import TextInput from "../pieces/TextInput";
 
 const AddUserComponent = () => {
 	const classes = useStyles();
@@ -51,14 +43,12 @@ const AddUserComponent = () => {
 	}, []);
 
 	const handleNext = async () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 		const auth = await userLoginAction(userState.selectedUser);
 		console.log("add user next :: ", auth);
 		auth && stepNextAction();
 	};
 
 	const handleBack = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
 	};
 
@@ -93,64 +83,25 @@ const AddUserComponent = () => {
 		<>
 			<Card className={classes.root} elevation={8}>
 				<CardContent>
-					<>
-						<Typography
-							className={classes.pos}
-							color="textSecondary"
-						>
-							Select user
-						</Typography>
-						<UserList
-							users={userState.allUsers}
-							error={userState.error}
-							onSelect={handleUserSelect}
-						/>
-					</>
+					<Typography className={classes.pos} color="textSecondary">
+						Select user
+					</Typography>
 
-					<form
-						className={classes.textInput}
-						noValidate
-						autoComplete="off"
-						onSubmit={(e) => {
-							e.preventDefault();
-							console.log("submit");
-							handleAddUser();
+					<UserList
+						users={userState.allUsers}
+						error={userState.error}
+						onSelect={handleUserSelect}
+					/>
+
+					<TextInput
+						{...{
+							added,
+							userState,
+							userName,
+							handleAddUser,
+							handleUserName,
 						}}
-					>
-						{userState.loading && (
-							<div className={classes.progress}>
-								<CircularProgress color="secondary" size={28} />
-							</div>
-						)}
-
-						{(!added || userState.allUsers.length < 1) && (
-							<>
-								<Typography
-									className={classes.pos}
-									color="textSecondary"
-								>
-									Or
-								</Typography>
-								<TextField
-									id="outlined-basic"
-									label="Enter New Username"
-									placeholder="only characters a-z"
-									variant="standard"
-									color="secondary"
-									value={userName}
-									onChange={handleUserName}
-								/>
-								<Button
-									className={classes.submitButton}
-									variant="contained"
-									color="secondary"
-									onClick={handleAddUser}
-								>
-									Add User
-								</Button>
-							</>
-						)}
-					</form>
+					/>
 				</CardContent>
 			</Card>
 			<div className={classes.actionsContainer}>
@@ -180,101 +131,16 @@ const AddUserComponent = () => {
 	);
 };
 
-const UserList = ({ users, error, onSelect }) => {
-	const classes = useStyles();
-	const [selectedUser, selectUser] = React.useState({});
-
-	React.useEffect(() => {
-		let userSelect = {};
-		users.forEach((u) => {
-			userSelect[u.userId] = false;
-		});
-		selectUser(userSelect);
-		return () => {
-			console.log("user list component cleanup");
-		};
-	}, [users]);
-
-	const handleChange = (e, user) => {
-		selectUser({ [e.target.value]: true });
-		onSelect(user);
-	};
-	return (
-		<div className={classes.userList}>
-			<FormControl component="fieldset" className={classes.formControl}>
-				<FormGroup>
-					{users.length > 0 &&
-						users.map((user, i) => {
-							return (
-								<FormControlLabel
-									key={i}
-									control={
-										<Checkbox
-											icon={<ProfileIcon />}
-											checkedIcon={<ProfileIcon />}
-											checked={
-												selectedUser[user?.userId] ||
-												false
-											}
-											onChange={(e) =>
-												handleChange(e, user)
-											}
-											name={user?.userName}
-											value={user?.userId}
-										/>
-									}
-									label={user.userName}
-								/>
-							);
-						})}
-				</FormGroup>
-			</FormControl>
-
-			{
-				<FormHelperText error component="div">
-					<div className={classes.helpertxt}>{error}</div>
-				</FormHelperText>
-			}
-
-			<Divider />
-		</div>
-	);
-};
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		background: theme.palette.primary.card,
 	},
-
-	title: {
-		fontSize: 14,
-	},
 	pos: {
 		marginBottom: 12,
-	},
-	userList: {
-		width: "100%",
-		maxWidth: 240,
-		marginLeft: "auto",
-		marginRight: "auto",
-	},
-	textInput: {
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		alignContent: "center",
-		marginTop: 32,
-		"& > *": {
-			margin: theme.spacing(1),
-			minWidth: "20ch",
-		},
 	},
 	submitButton: {
 		maxWidth: 120,
 		borderRadius: 18,
-	},
-	helpertxt: {
-		textAlign: "center",
 	},
 	button: {
 		marginTop: theme.spacing(1),
@@ -283,13 +149,6 @@ const useStyles = makeStyles((theme) => ({
 	actionsContainer: {
 		marginTop: theme.spacing(2),
 	},
-	progress: {},
 }));
 
-const AddUser = () => (
-	<>
-		<AddUserComponent />
-	</>
-);
-
-export default AddUser;
+export default AddUserComponent;

@@ -28,6 +28,7 @@ const typicalUser = {
 	surveyDone: false,
 	recordCount: 0,
 	recordingDone: false,
+	stimCount: 0,
 };
 
 // Reducer

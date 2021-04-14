@@ -1,6 +1,6 @@
 import React from "react";
 
-const useContainerDimensions = (containerRef) => {
+const useContainerDimensions = (containerRef, effect) => {
 	const getDimensions = () => ({
 		width: containerRef.current.offsetWidth,
 		height: containerRef.current.offsetHeight,
@@ -22,7 +22,7 @@ const useContainerDimensions = (containerRef) => {
 		return () => {
 			window.removeEventListener("resize", handleResize);
 		};
-	}, [containerRef]);
+	}, [containerRef, effect]);
 
 	React.useDebugValue("Viz Dimensions");
 

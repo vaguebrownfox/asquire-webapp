@@ -36,16 +36,23 @@ const recordReducer = (state, action) => {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
 		case "LOAD_STIMS":
+			let nostims0 = Object.keys(action.payload.stims).length;
+			let csno0 = action.payload.stimCount;
+			let csidx = csno0 ? csno0 + 1 : 0;
+
 			return {
 				...state,
-				stims: action.payload,
-				currentStim: action.payload[0],
+				stims: action.payload.stims,
+				currentStim: action.payload.stims[csno0 % nostims0],
 			};
 		case "NEXT_STIM":
-			let nostims = Object.keys(state.stims).length;
-			let csno = state.currentStim.sno;
+			let nostims1 = Object.keys(state.stims).length;
+			let csno1 = state.currentStim.sno;
 
-			return { ...state, currentStim: state.stims[(csno + 1) % nostims] };
+			return {
+				...state,
+				currentStim: state.stims[(csno1 + 1) % nostims1],
+			};
 		case "GET_DEVICES":
 			return {
 				...state,
@@ -111,13 +118,16 @@ const recordLoadAction = (dispatch) => {
 };
 
 const recordLoadStimsAction = (dispatch) => {
-	return async () => {
+	return async (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims();
 		console.log("record action log ::stims loading");
 
-		dispatch({ type: "LOAD_STIMS", payload: stims });
+		dispatch({
+			type: "LOAD_STIMS",
+			payload: { stims, stimCount: user.stimCount },
+		});
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

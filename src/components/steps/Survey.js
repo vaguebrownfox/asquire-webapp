@@ -81,16 +81,12 @@ const Survey = () => {
 		} else {
 			surveyLoadQuestionsAction();
 		}
-
-		console.info("survey component :: surveystate", surveyState);
 		return () => {
 			console.log("Survey component cleanup");
 		};
 	}, []);
 
 	const handleNext = async () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
 		const user = {
 			...userState.selectedUser,
 			surveyDone: true,
@@ -99,11 +95,10 @@ const Survey = () => {
 		await userUpdateAction(user);
 		await userUpdateCloud(user);
 		stepNextAction();
-		console.log("survey component :: surveystate", surveyState);
+		console.log("survey component :: user cloud update");
 	};
 
 	const handleBack = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
 	};
 

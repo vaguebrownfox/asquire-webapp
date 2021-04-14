@@ -16,7 +16,7 @@ import RecTitle from "../pieces/RecTitle";
 import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
-import RecDevices from "../pieces/RecDevices";
+// import RecDevices from "../pieces/RecDevices";
 import Worm from "../pieces/Worm";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 
@@ -39,7 +39,9 @@ export default function Record() {
 	} = React.useContext(RecordContext);
 
 	const vizRef = React.useRef();
-	const { state: userState } = React.useContext(UserContext);
+	const { state: userState, userUpdateAction } = React.useContext(
+		UserContext
+	);
 
 	const [shape, setShape] = React.useState(false);
 	const handleShape = () => {
@@ -47,7 +49,7 @@ export default function Record() {
 	};
 
 	React.useEffect(() => {
-		recordLoadStimsAction();
+		recordLoadStimsAction(userState.selectedUser);
 		recordGetDevicesAction();
 		return () => {
 			console.log("record component cleanup");
@@ -70,17 +72,23 @@ export default function Record() {
 		}
 	};
 
-	const handleRefresh = () => {
-		recordGetDevicesAction();
-	};
+	// const handleRefresh = () => {
+	// 	recordGetDevicesAction();
+	// };
 
 	const handleDone = () => {
+		const finishedStim = { ...recordState.currentStim };
 		recordUploadAction(userState.selectedUser).then(() => {
+			const user = {
+				...userState.selectedUser,
+				stimCount: finishedStim.sno + 1,
+			};
+			userUpdateAction(user);
 			recordNextStimAction();
 		});
 	};
 
-	const { width, height } = useContainerDimensions(vizRef);
+	const { width, height } = useContainerDimensions(vizRef, recordState);
 
 	return (
 		<>
