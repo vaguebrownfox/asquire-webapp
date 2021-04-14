@@ -73,7 +73,7 @@ const AboutProject = () => {
 
 	return (
 		<>
-			<Card className={classes.root}>
+			<Card className={classes.root} elevation={8}>
 				<CardContent>
 					<Typography
 						className={classes.title}
@@ -164,7 +164,7 @@ const AboutProject = () => {
 							color="inherit"
 							href="/consent"
 						>
-							Read Consent form
+							Read consent form
 						</Button>
 					</div>
 				</CardContent>

@@ -27,7 +27,7 @@ export default function Finish({ title }) {
 	const bull = <span className={classes.bullet}>•</span>;
 
 	return (
-		<Card className={classes.root}>
+		<Card className={classes.root} elevation={8}>
 			<CardContent>
 				<Typography
 					className={classes.title}

@@ -25,7 +25,7 @@ const questions = {
 	},
 	5: {
 		qno: 5,
-		question: "Are you a known case of Asthma?",
+		question: "Have you been diagnosed with Asthma?",
 		options: ["Yes", "No"],
 		nextQnos: [6, 19],
 	},

@@ -22,7 +22,7 @@ const StimContent = ({ stim }) => {
 
 			<CardMedia
 				className={classes.media}
-				image="https://miro.medium.com/max/1268/1*RTYreJ-PHBj2S33Eif2acA.jpeg"
+				image={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fdefault.jpeg?alt=media&token=027fb68e-9a70-4cbc-86de-b64cd7363a26`}
 				title="Stimulus image"
 			/>
 		</>

@@ -82,53 +82,44 @@ const Worm = ({ width, height, shape }) => {
 			<div className={classes.root}>
 				<svg className={classes.visualizer}>
 					{/* <g transform="scale(1,-1)"> */}
-					<rect
+					{/* <rect
 						className={classes.shape}
 						x={0}
 						y={0}
 						width={4}
 						height={4}
 						fill={`hsl(${70 * 0}deg, 100%, 50%`}
-					/>
+					/> */}
 					{spectrum.bins &&
 						spectrum.bins.map((a, i) => {
 							const bw = Math.ceil(width / spectrum.bins.length);
 							const x = bw * i;
 							const ynorm = a / 255;
-							const r = Math.round((ynorm * height) / 8);
+							const r = Math.round((ynorm * height) / 6);
 							const y = height;
-							return (
-								<>
-									{shape ? (
-										<circle
-											key={i}
-											className={classes.shape}
-											cx={x}
-											cy={y}
-											r={r}
-											fill={`hsl(${
-												70 * ynorm
-											}deg, 70%, 50%`}
-										/>
-									) : (
-										<rect
-											key={i}
-											className={classes.shape}
-											x={x}
-											y={height - r}
-											width={bw}
-											height={r}
-											fill={`hsl(${
-												70 * ynorm
-											}deg, 70%, 50%`}
-										/>
-									)}
-								</>
+							const draw = shape ? (
+								<circle
+									key={`${i}-circle`}
+									className={classes.shape}
+									cx={x}
+									cy={y - r}
+									r={r}
+									fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+								/>
+							) : (
+								<rect
+									key={`${i}-rect`}
+									className={classes.shape}
+									x={x}
+									y={height - r}
+									width={bw}
+									height={r}
+									fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+								/>
 							);
+							return draw;
 						})}
-					{/* </g> */}
 				</svg>
-				{/* <p>{`h: ${height}px & w: ${width}px`}</p> */}
 			</div>
 		</>
 	);

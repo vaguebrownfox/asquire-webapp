@@ -26,8 +26,9 @@ const initializeMedia = () => {
 	}
 };
 
+initializeMedia();
+
 export const getAudioInputDevices = async () => {
-	initializeMedia();
 	const audioDevices = await navigator.mediaDevices
 		.enumerateDevices()
 		.then((devices) => {
@@ -172,7 +173,7 @@ export const audioContext = new AudioContext();
 export const analyserNode = new AnalyserNode(audioContext, {
 	fftSize: 1024,
 	//   minDecibels: -111,
-	smoothingTimeConstant: 0.8,
+	// smoothingTimeConstant: 0.8,
 });
 
 export const setupContext = async () => {

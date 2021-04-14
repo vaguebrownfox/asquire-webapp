@@ -15,13 +15,13 @@ export const firebaseUserData = async (data) => {
 };
 
 export const firebaseSurvey = async () => {
-	const docRefSurvey = db.collection("content").doc("survey");
+	const docRefSurvey = db.collection("content2").doc("survey");
 	const survey = (await docRefSurvey.get()).data();
 	return survey;
 };
 
 export const firebaseStims = async () => {
-	const docRefSurvey = db.collection("content").doc("stimuli");
+	const docRefSurvey = db.collection("content2").doc("stimuli");
 	const stimuli = (await docRefSurvey.get()).data();
 	return stimuli;
 };

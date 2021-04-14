@@ -25,18 +25,72 @@ const useStyles = makeStyles((theme) => ({
 			cursor: "crosshair",
 		},
 	},
+	player: {
+		display: "none",
+	},
 }));
-const RecControl = ({ handleRecord, handleDone, isRecording, recDone }) => {
+const RecControl = ({
+	handleRecord,
+	handleDone,
+	isRecording,
+	recDone,
+	stim,
+}) => {
 	const classes = useStyles();
+	const infoRef = React.useRef();
+
+	const [play, setPlay] = React.useState(false);
+	const [instip, setInstip] = React.useState("Click! Listen to instruction");
+
+	const handlePlay = () => {
+		if (play) {
+			infoRef.current.pause();
+			setPlay(false);
+			setInstip("Paused");
+		} else {
+			setInstip("Click to pause..");
+			infoRef.current.play();
+			setPlay(true);
+		}
+	};
+
+	React.useEffect(() => {
+		console.log("effect control");
+		setInstip("Click! Listen to instruction");
+		const stopPlay = () => {
+			setPlay(false);
+			setInstip("Play again...");
+			console.log("play ended");
+		};
+		infoRef && infoRef.current?.addEventListener("ended", stopPlay);
+
+		return () => {
+			infoRef && infoRef.current?.removeEventListener("ended", stopPlay);
+		};
+	}, [stim]);
 
 	return (
 		<div className={classes.controls}>
-			<IconButton aria-label="previous">
-				<Tooltip title="Info">
+			<audio
+				ref={infoRef}
+				className={classes.player}
+				src={stim.audioDescriptionLink}
+				controls
+			/>
+			<IconButton
+				aria-label="info"
+				onClick={handlePlay}
+				disabled={isRecording}
+			>
+				<Tooltip title={instip} open={true} placement="top">
 					<InfoIcon className={classes.controlIcon} />
 				</Tooltip>
 			</IconButton>
-			<IconButton aria-label="play/pause" onClick={handleRecord}>
+			<IconButton
+				aria-label="play/pause"
+				onClick={handleRecord}
+				disabled={play}
+			>
 				<Tooltip title={`${isRecording ? "Stop" : "Start"} recording`}>
 					{isRecording ? (
 						<RecordStopIcon className={classes.controlIcon} />
@@ -48,7 +102,7 @@ const RecControl = ({ handleRecord, handleDone, isRecording, recDone }) => {
 			<IconButton
 				aria-label="next"
 				onClick={handleDone}
-				disabled={!recDone}
+				disabled={!recDone || play}
 			>
 				<Tooltip title="Done">
 					<DoneIcon className={classes.controlIcon} />

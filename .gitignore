@@ -29,3 +29,4 @@ firebaseConfig.js
 firebaseAdmin.js
 fbAdminConfig.json
 firebase-debug.log
+firebaseService.json

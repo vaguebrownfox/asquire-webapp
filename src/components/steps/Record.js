@@ -84,8 +84,10 @@ export default function Record() {
 
 	return (
 		<>
-			<Card ref={vizRef} className={classes.root}>
-				<Worm {...{ width, height, shape }} />
+			<Card ref={vizRef} className={classes.root} elevation={8}>
+				{recordState.isRecording && (
+					<Worm {...{ width, height, shape }} />
+				)}
 				<CardContent>
 					<RecTitle
 						s={handleShape}
@@ -100,12 +102,16 @@ export default function Record() {
 						<RecControl
 							isRecording={recordState.isRecording}
 							recDone={recordState.recDone}
+							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
 						/>
+						<p>
+							Please listen to the instructions before
+							recording...
+						</p>
 
 						{recordState.recDone && (
 							<audio
-								id="player"
 								className={classes.player}
 								src={recordState.playUrl}
 								controls
@@ -113,7 +119,7 @@ export default function Record() {
 						)}
 					</div>
 
-					<RecDevices {...{ recordState, handleRefresh }} />
+					{/* <RecDevices {...{ recordState, handleRefresh }} /> */}
 				</CardContent>
 			</Card>
 
@@ -146,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "relative",
 		overflow: "hidden",
-		height: theme.spacing(88),
+		height: theme.spacing(80),
 		background: theme.palette.background.default,
 	},
 	cardaction: {

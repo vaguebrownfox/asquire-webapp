@@ -128,6 +128,7 @@ const recordNextStimAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		dispatch({ type: "NEXT_STIM", payload: null });
+		dispatch({ type: "SECONDS", payload: "reset" });
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
