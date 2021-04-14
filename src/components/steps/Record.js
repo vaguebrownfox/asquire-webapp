@@ -105,18 +105,19 @@ export default function Record() {
 							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
 						/>
-						<p>
-							Please listen to the instructions before
-							recording...
+						<p className={classes.inshelp}>
+							*Please listen to the instructions before recording.
 						</p>
 
-						{recordState.recDone && (
-							<audio
-								className={classes.player}
-								src={recordState.playUrl}
-								controls
-							/>
-						)}
+						<div className={classes.playerDiv}>
+							{recordState.recDone && (
+								<audio
+									className={classes.player}
+									src={recordState.playUrl}
+									controls
+								/>
+							)}
+						</div>
 					</div>
 
 					{/* <RecDevices {...{ recordState, handleRefresh }} /> */}
@@ -152,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "relative",
 		overflow: "hidden",
-		height: theme.spacing(80),
+		// height: theme.spacing(80),
 		background: theme.palette.background.default,
 	},
 	cardaction: {
@@ -170,5 +171,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	player: {
 		background: theme.palette.background.default,
+	},
+	playerDiv: {
+		height: theme.spacing(8),
+	},
+	inshelp: {
+		color: theme.palette.secondary.main,
 	},
 }));

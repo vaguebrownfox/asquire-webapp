@@ -82,7 +82,7 @@ const RecControl = ({
 				onClick={handlePlay}
 				disabled={isRecording}
 			>
-				<Tooltip title={instip} open={true} placement="top">
+				<Tooltip title={instip} open={true} placement="bottom">
 					<InfoIcon className={classes.controlIcon} />
 				</Tooltip>
 			</IconButton>
