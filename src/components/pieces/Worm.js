@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { blue, red } from "@material-ui/core/colors";
 
 import { analyserNode } from "../../functions/recorder";
 
@@ -51,26 +50,25 @@ const Worm = ({ width, height, shape }) => {
 
 	const [spectrum, setSpectrum] = React.useState({});
 
-	const animate = () => {
-		const bufferLength = analyserNode.frequencyBinCount;
-		const dataArrayBuffer = new Uint8Array(bufferLength);
-		analyserNode.getByteFrequencyData(dataArrayBuffer);
-
-		let dataArray = [...dataArrayBuffer].slice(
-			0,
-			Math.floor(bufferLength / 3)
-		);
-
-		// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
-
-		setSpectrum({ bins: dataArray });
-
-		animRef.current = requestAnimationFrame(animate);
-	};
-
 	React.useEffect(() => {
-		animRef.current = requestAnimationFrame(animate);
+		const animate = () => {
+			const bufferLength = analyserNode.frequencyBinCount;
+			const dataArrayBuffer = new Uint8Array(bufferLength);
+			analyserNode.getByteFrequencyData(dataArrayBuffer);
 
+			let dataArray = [...dataArrayBuffer].slice(
+				0,
+				Math.floor(bufferLength / 3)
+			);
+
+			// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
+
+			setSpectrum({ bins: dataArray });
+
+			animRef.current = requestAnimationFrame(animate);
+		};
+		animRef.current = requestAnimationFrame(animate);
+		console.log("use effect worm");
 		return () => {
 			cancelAnimationFrame(animRef.current);
 			analyserNode.disconnect();
@@ -81,15 +79,6 @@ const Worm = ({ width, height, shape }) => {
 		<>
 			<div className={classes.root}>
 				<svg className={classes.visualizer}>
-					{/* <g transform="scale(1,-1)"> */}
-					{/* <rect
-						className={classes.shape}
-						x={0}
-						y={0}
-						width={4}
-						height={4}
-						fill={`hsl(${70 * 0}deg, 100%, 50%`}
-					/> */}
 					{spectrum.bins &&
 						spectrum.bins.map((a, i) => {
 							const bw = Math.ceil(width / spectrum.bins.length);

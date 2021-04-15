@@ -103,7 +103,7 @@ const BioData = () => {
 		return () => {
 			console.log("Bio data component cleanup");
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {
 		if (onNextHelper()) {

@@ -38,7 +38,6 @@ const recordReducer = (state, action) => {
 		case "LOAD_STIMS":
 			let nostims0 = Object.keys(action.payload.stims).length;
 			let csno0 = action.payload.stimCount;
-			let csidx = csno0 ? csno0 + 1 : 0;
 
 			return {
 				...state,

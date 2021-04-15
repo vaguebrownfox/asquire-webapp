@@ -77,7 +77,7 @@ export default function Contact() {
 							variant="caption"
 							gutterBottom
 						>
-							Email:&nbsp;&nbsp;&nbsp;&nbsp;
+							{bull}Email:&nbsp;&nbsp;&nbsp;&nbsp;
 						</Typography>
 						<Typography
 							// className={classes.title}
@@ -101,7 +101,7 @@ export default function Contact() {
 						variant="caption"
 						gutterBottom
 					>
-						Visit:&nbsp;&nbsp;&nbsp;&nbsp;
+						{bull}Visit:&nbsp;&nbsp;&nbsp;&nbsp;
 					</Typography>
 					<a href="https://spire.ee.iisc.ac.in/spire/">
 						spire.ee.iisc.ac.in/spire

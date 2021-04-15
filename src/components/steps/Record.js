@@ -16,7 +16,7 @@ import RecTitle from "../pieces/RecTitle";
 import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
-import RecDevices from "../pieces/RecDevices";
+// import RecDevices from "../pieces/RecDevices";
 import Worm from "../pieces/Worm";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 
@@ -54,7 +54,7 @@ export default function Record() {
 		return () => {
 			console.log("record component cleanup");
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = () => {
 		stepNextAction();
@@ -72,9 +72,9 @@ export default function Record() {
 		}
 	};
 
-	const handleRefresh = () => {
-		recordGetDevicesAction();
-	};
+	// const handleRefresh = () => {
+	// 	recordGetDevicesAction();
+	// };
 
 	const handleDone = () => {
 		const finishedStim = { ...recordState.currentStim };

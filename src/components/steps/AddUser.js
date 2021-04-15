@@ -40,7 +40,7 @@ const AddUserComponent = () => {
 		return () => {
 			console.log("Add user component cleanup");
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {
 		const auth = await userLoginAction(userState.selectedUser);

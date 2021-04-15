@@ -62,10 +62,11 @@ const RecControl = ({
 			setInstip("Play again...");
 			console.log("play ended");
 		};
-		infoRef && infoRef.current?.addEventListener("ended", stopPlay);
+		const infoRefE = infoRef.current;
+		infoRefE && infoRefE?.addEventListener("ended", stopPlay);
 
 		return () => {
-			infoRef && infoRef.current?.removeEventListener("ended", stopPlay);
+			infoRefE && infoRefE?.removeEventListener("ended", stopPlay);
 		};
 	}, [stim]);
 
