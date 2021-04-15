@@ -90,8 +90,8 @@ export const audioRecord = (audioStream) => {
 			rejectRecord("Stream not defined!");
 		}
 
-		const options = { mimeType: "audio/webm" };
-		const mediaRecorder = new MediaRecorder(audioStream, options);
+		// const options = { mimeType: "audio/webm" };
+		const mediaRecorder = new MediaRecorder(audioStream);
 
 		let recordedChunks = [];
 
@@ -130,7 +130,7 @@ export const audioRecord = (audioStream) => {
 
 				mediaRecorder.addEventListener("stop", () => {
 					const audioBlob = new Blob(recordedChunks, {
-						type: "audio/webm",
+						type: mediaRecorder.mimeType,
 					});
 
 					const audioUrl = URL.createObjectURL(audioBlob);
