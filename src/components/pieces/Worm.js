@@ -53,30 +53,28 @@ const Worm = ({ width, height, shape, stream }) => {
 
 	React.useEffect(() => {
 		let analyserNode;
-		const setAnalyserNode = async () => {
-			analyserNodeRef.current = await setupContext(stream);
-			analyserNode = analyserNodeRef.current;
+		analyserNodeRef.current = setupContext(stream);
+		analyserNode = analyserNodeRef.current;
 
-			const animate = () => {
-				const bufferLength = analyserNode.frequencyBinCount;
-				const dataArrayBuffer = new Uint8Array(bufferLength);
-				analyserNode.getByteFrequencyData(dataArrayBuffer);
+		const animate = () => {
+			const bufferLength = analyserNode.frequencyBinCount;
+			const dataArrayBuffer = new Uint8Array(bufferLength);
+			analyserNode.getByteFrequencyData(dataArrayBuffer);
 
-				let dataArray = [...dataArrayBuffer].slice(
-					0,
-					Math.floor(bufferLength / 3)
-				);
+			let dataArray = [...dataArrayBuffer].slice(
+				0,
+				Math.floor(bufferLength / 3)
+			);
 
-				// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
+			// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
 
-				setSpectrum({ bins: dataArray });
-
-				animRef.current = requestAnimationFrame(animate);
-			};
+			setSpectrum({ bins: dataArray });
 
 			animRef.current = requestAnimationFrame(animate);
 		};
-		setAnalyserNode();
+
+		animRef.current = requestAnimationFrame(animate);
+
 		console.log("use effect worm");
 
 		return () => {

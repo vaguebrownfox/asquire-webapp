@@ -169,7 +169,7 @@ export const audioRecord = (audioStream) => {
 	});
 };
 
-export const setupContext = async (stream) => {
+export const setupContext = (stream) => {
 	const audioContext = new AudioContext();
 	const analyserNode = new AnalyserNode(audioContext, {
 		fftSize: 1024,
@@ -179,9 +179,9 @@ export const setupContext = async (stream) => {
 
 	// const stream = await getAudioInputStream();
 	console.log("recorder ::context state", audioContext.state);
-	if (audioContext.state === "suspended") {
-		await audioContext.resume();
-	}
+	// if (audioContext.state === "suspended") {
+	// 	await audioContext.resume();
+	// }
 	console.log("recorder ::context state", audioContext.state);
 	const source = audioContext.createMediaStreamSource(stream);
 	source.connect(analyserNode);
