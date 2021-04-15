@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
 import { components } from "../../App";
+import { firebaseSetActive } from "../../functions/firestore";
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
@@ -51,7 +52,10 @@ export default function Record() {
 	React.useEffect(() => {
 		recordLoadStimsAction(userState.selectedUser);
 		recordGetDevicesAction();
+		firebaseSetActive(userState.selectedUser, "true");
+		console.log("record step effect");
 		return () => {
+			firebaseSetActive(userState.selectedUser, "false");
 			console.log("record component cleanup");
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps

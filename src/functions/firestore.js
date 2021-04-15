@@ -25,3 +25,18 @@ export const firebaseStims = async () => {
 	const stimuli = (await docRefSurvey.get()).data();
 	return stimuli;
 };
+
+export const activeQuery = db
+	.collection("active")
+	.where("online", "==", "true");
+
+export const firebaseSetActive = async (user, stat) => {
+	const docRefActive = db.collection("active").doc(user.userId);
+	const data = {
+		online: stat,
+	};
+	await docRefActive.set(data).catch((err) => {
+		console.log("fb firestore active set err :: ", err);
+		return null;
+	});
+};

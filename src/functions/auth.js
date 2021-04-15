@@ -22,6 +22,20 @@ export const firebaseSignIn = async (email, password) => {
 	return userCredential?.user || null;
 };
 
+// export const firebaseSignOut = async () => {
+// 	let f = false;
+// 	await auth
+// 		.signOut()
+// 		.then(() => {
+// 			f = true;
+// 		})
+// 		.catch((err) => {
+// 			console.log("fb signout error :: ", err);
+// 		});
+
+// 	return f;
+// };
+
 // helpers
 const getCreds = (email, password) => {
 	email = email + "@asquire.spire";

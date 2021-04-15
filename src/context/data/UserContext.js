@@ -8,7 +8,11 @@ import {
 	addUserToIdb,
 	updateUserInIdb,
 } from "../../functions/indexdb";
-import { firebaseSignIn, firebaseSignUp } from "../../functions/auth";
+import {
+	firebaseSignUp,
+	firebaseSignIn,
+	// firebaseSignOut,
+} from "../../functions/auth";
 import { firebaseUserData } from "../../functions/firestore";
 
 // Initial State
@@ -175,6 +179,30 @@ const userUpdateCloud = (dispatch) => {
 	};
 };
 
+// const userLogoutAction = (dispatch) => {
+// 	return async () => {
+// 		dispatch({ type: "SET_LOADING", payload: true });
+// 		let f = false;
+
+// 		firebaseSignIn = await firebaseSignOut();
+
+// 		if (!f) {
+// 			dispatch({
+// 				type: "ERROR",
+// 				payload: "Log out error",
+// 			});
+// 			setTimeout(() => {
+// 				dispatch({ type: "ERROR", payload: "" });
+// 			}, 5000);
+// 		} else {
+// 			dispatch({ type: "SELECT_USER", payload: null });
+// 		}
+
+// 		dispatch({ type: "SET_LOADING", payload: false });
+// 		return f;
+// 	};
+// };
+
 // Export
 export const { Context, Provider } = createDataContext(
 	userReducer,
@@ -186,6 +214,7 @@ export const { Context, Provider } = createDataContext(
 		userLoginAction,
 		userUpdateAction,
 		userUpdateCloud,
+		// userLogoutAction,
 	},
 	userInitialState
 );
