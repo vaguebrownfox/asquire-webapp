@@ -3,13 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import {
-	CircularProgress,
-	FormHelperText,
-	InputAdornment,
-	MenuItem,
-	TextField,
-} from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 
 import { components } from "../../App";
 // Context
@@ -191,7 +189,7 @@ const BioData = () => {
 							select
 							label="Gender"
 							color="secondary"
-							value={bio.gender || "x"}
+							value={bio.gender || ""}
 							onChange={(e) => handleInputs(fields[1], e)}
 							variant="outlined"
 							helperText="Select your gender"

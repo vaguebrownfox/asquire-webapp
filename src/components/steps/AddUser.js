@@ -43,9 +43,13 @@ const AddUserComponent = () => {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {
-		const auth = await userLoginAction(userState.selectedUser);
-		console.log("add user next :: ", auth);
-		auth && stepNextAction();
+		userLoginAction(userState.selectedUser)
+			.then((auth) => {
+				auth && stepNextAction();
+			})
+			.catch((err) => {
+				console.error("add user step ::next error", err);
+			});
 	};
 
 	const handleBack = () => {

@@ -127,8 +127,12 @@ const Question = () => {
 							Done!
 						</Typography>
 					)}
-					<FormHelperText error>
-						<div className={classes.helpertxt}>{error}</div>
+					<FormHelperText
+						className={classes.helpertxt}
+						error
+						component="div"
+					>
+						{error}
 					</FormHelperText>
 					{/* <Button
 						type="submit"
@@ -150,19 +154,17 @@ const Question = () => {
 							</Tooltip>
 						</IconButton>
 						{!surveyState.surveyDone && (
-							<button
-								submit
-								className={classes.nextButton}
+							<IconButton
+								aria-label="next"
+								type="submit"
 								onClick={handleNextQuestion}
 							>
-								<IconButton aria-label="next">
-									<Tooltip title="Next question">
-										<SkipNextIcon
-											className={classes.controlIcon}
-										/>
-									</Tooltip>
-								</IconButton>
-							</button>
+								<Tooltip title="Next question">
+									<SkipNextIcon
+										className={classes.controlIcon}
+									/>
+								</Tooltip>
+							</IconButton>
 						)}
 					</div>
 				</FormControl>

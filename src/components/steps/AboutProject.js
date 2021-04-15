@@ -62,12 +62,10 @@ const AboutProject = () => {
 	} = React.useContext(StepContext);
 
 	const handleNext = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep + 1);
 		stepNextAction();
 	};
 
 	const handleBack = () => {
-		// setActiveStep((prevActiveStep) => prevActiveStep - 1);
 		stepPreviousAction();
 	};
 
