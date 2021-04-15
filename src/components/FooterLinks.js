@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const makeActionStyles = makeStyles((theme) => ({
 	root: {
-		color: grey[500],
+		color: grey[700],
 		"&$selected": {
 			color: theme.palette.secondary.main,
 		},
@@ -56,7 +56,7 @@ export default function LabelBottomNavigation() {
 				href="/contact"
 			/>
 			<BottomNavigationAction
-				label="Home Page"
+				label="Home"
 				value="homepage"
 				classes={actionClasses}
 				icon={<HomeIcon />}

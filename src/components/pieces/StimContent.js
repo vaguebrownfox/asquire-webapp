@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CardMedia, Typography } from "@material-ui/core";
+import { CardMedia, CircularProgress, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
@@ -16,6 +16,11 @@ const StimContent = ({ stim }) => {
 
 	return (
 		<>
+			{!stim?.description && (
+				<div className={classes.progress}>
+					<CircularProgress color="secondary" size={28} />
+				</div>
+			)}
 			<Typography variant="h6" color="textPrimary" gutterBottom>
 				{stim.description}
 			</Typography>

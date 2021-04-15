@@ -16,7 +16,7 @@ import RecTitle from "../pieces/RecTitle";
 import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
-// import RecDevices from "../pieces/RecDevices";
+import RecDevices from "../pieces/RecDevices";
 import Worm from "../pieces/Worm";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 
@@ -72,9 +72,9 @@ export default function Record() {
 		}
 	};
 
-	// const handleRefresh = () => {
-	// 	recordGetDevicesAction();
-	// };
+	const handleRefresh = () => {
+		recordGetDevicesAction();
+	};
 
 	const handleDone = () => {
 		const finishedStim = { ...recordState.currentStim };
@@ -106,16 +106,15 @@ export default function Record() {
 						<StimContent stim={recordState.currentStim} />
 
 						<Timer seconds={recordState.seconds} />
-
+						<p className={classes.inshelp}>
+							*Please listen to the instructions before recording.
+						</p>
 						<RecControl
 							isRecording={recordState.isRecording}
 							recDone={recordState.recDone}
 							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
 						/>
-						<p className={classes.inshelp}>
-							*Please listen to the instructions before recording.
-						</p>
 
 						<div className={classes.playerDiv}>
 							{recordState.recDone && (
@@ -179,6 +178,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	player: {
 		background: theme.palette.background.default,
+		transform: "scale(0.8)",
 	},
 	playerDiv: {
 		height: theme.spacing(8),
