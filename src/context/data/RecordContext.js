@@ -8,6 +8,8 @@ import {
 	getAudioOutputDevices,
 	getAudioInputStream,
 	audioRecord,
+	createAudioBuffer,
+	audioBufferToWaveBlob,
 } from "../../functions/recorder";
 import { firebaseUserAudio } from "../../functions/storage";
 
@@ -192,12 +194,18 @@ const recordStartAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		if (!recorder) {
-			recorder = await audioRecord(inputStream).catch(() => null);
+			recorder = await audioRecord(inputStream).catch((e) => {
+				console.log("audioRecord error", e);
+				return null;
+			});
 		}
 		if (!recorder) {
 			return null;
 		}
-		const isRecStart = await recorder.startRecord().catch(() => null);
+		const isRecStart = await recorder.startRecord().catch((e) => {
+			console.log("audioRecord start error", e);
+			return null;
+		});
 		console.log("record action log:: start record", isRecStart);
 
 		if (isRecStart) {
@@ -228,6 +236,11 @@ const recordStopAction = (dispatch) => {
 			return null;
 		}
 		audio = await recorder.stopRecord().catch(() => null);
+		const audioBuffer = await createAudioBuffer(audio.audioUrl);
+		let wavBlob = await audioBufferToWaveBlob(audioBuffer);
+		audio.wavBlob = wavBlob;
+
+		console.log("audio wav blob ", wavBlob);
 
 		if (audio) {
 			dispatch({ type: "SET_REC_STATE", payload: false });

@@ -5,10 +5,10 @@ const storageRef = stor.ref();
 
 export const firebaseUserAudio = (user, audio) => {
 	const userAudioRef = storageRef.child(DATA_FOLDER);
-	const filename = `webapp-${user.userId}-recId-asquire.mka`;
+	const filename = `webapp-${user.userId}-${user.stimCount}-asquire.wav`;
 	userAudioRef
 		.child(filename)
-		.put(audio.audioBlob)
+		.put(audio.wavBlob)
 		.then((snapshot) => {
 			console.log(
 				"Uploaded a blob or file!  bytes:",

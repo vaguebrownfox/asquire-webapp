@@ -67,9 +67,9 @@ export const getAudioInputStream = async (device) => {
 				deviceId: device?.deviceId || "default",
 				// groupId: null,
 				echoCancellation: false, //(2) [true, false]
-				latency: 0.01, //{max: 0.01, min: 0.01}
+				latency: 0, //{max: 0.01, min: 0.01}
 				noiseSuppression: false, //(2) [true, false]
-				sampleRate: SAMPLE_RATE, //{max: 48000, min: 48000}
+				sampleRate: SAMPLE_RATE, //{max: 48000, min: 8000}
 				sampleSize: SAMPLE_SIZE, //{max: 16, min: 16}
 			},
 			video: false,
@@ -92,6 +92,13 @@ export const audioRecord = (audioStream) => {
 
 		// const options = { mimeType: "audio/webm" };
 		const mediaRecorder = new MediaRecorder(audioStream);
+
+		mediaRecorder.addEventListener("error", (e) => {
+			console.log("recorder Error: ", e);
+		});
+		mediaRecorder.addEventListener("error", (w) => {
+			console.log("recorder Warning: ", w);
+		});
 
 		let recordedChunks = [];
 
@@ -121,51 +128,91 @@ export const audioRecord = (audioStream) => {
 
 		const stopRecord = () => {
 			return new Promise((resolveStop, rejectStop) => {
-				try {
-					mediaRecorder.stop();
-				} catch (error) {
-					console.log("stop failed rec.js", error);
-					rejectStop(false);
-				}
-
 				mediaRecorder.addEventListener("stop", () => {
 					const audioBlob = new Blob(recordedChunks, {
 						type: mediaRecorder.mimeType,
 					});
 
 					const audioUrl = URL.createObjectURL(audioBlob);
-					const audio = new Audio(audioUrl);
 
-					const playAudio = () => {
-						return new Promise((resolvePlay, rejectPlay) => {
-							audio.play().catch((err) => {
-								console.log("recorder:: audio play fail", err);
-								rejectPlay(false);
-							});
+					// const audio = new Audio(audioUrl);
 
-							audio.addEventListener("ended", (e) => {
-								resolvePlay(true);
-							});
-						});
-					};
+					// const playAudio = () => {
+					// 	return new Promise((resolvePlay, rejectPlay) => {
+					// 		audio.play().catch((err) => {
+					// 			console.log("recorder:: audio play fail", err);
+					// 			rejectPlay(false);
+					// 		});
 
-					const pauseAudio = () => {
-						audio.pause().catch((err) => {
-							console.log("recorder:: audio play fail", err);
-						});
-					};
+					// 		audio.addEventListener("ended", (e) => {
+					// 			resolvePlay(true);
+					// 		});
+					// 	});
+					// };
+
+					// const pauseAudio = () => {
+					// 	audio.pause().catch((err) => {
+					// 		console.log("recorder:: audio play fail", err);
+					// 	});
+					// };
 
 					resolveStop({
 						audioUrl,
-						audioBlob,
-						playAudio,
-						pauseAudio,
+						// audioBlob,
+						// playAudio,
+						// pauseAudio,
 					});
 				});
+
+				try {
+					mediaRecorder.stop();
+				} catch (error) {
+					console.log("stop failed rec.js", error);
+					rejectStop(false);
+				}
 			});
 		};
 
 		resolveRecord({ startRecord, stopRecord });
+	});
+};
+
+export const createAudioBuffer = async (audioUrl) => {
+	const arrayBuffer = await (await fetch(audioUrl)).arrayBuffer();
+	let audioBuffer = null;
+
+	try {
+		audioBuffer = await new AudioContext().decodeAudioData(arrayBuffer);
+	} catch (e) {
+		alert(
+			`Sorry, your browser doesn't support a crucial feature needed to allow you to record using your device's microphone. 
+			You should use Chrome or Firefox if you want the best audio support, and ensure you're using the *latest version* 
+			of your browser of choice. Chrome and Firefox update automatically, but you may need to completely close down the browser
+			and potentially restart your device to 'force' it to update itself to the latest version.`
+		);
+	}
+
+	return audioBuffer;
+};
+
+export const audioBufferToWaveBlob = async (audioBuffer) => {
+	return new Promise(function (resolve, reject) {
+		var worker = new Worker("./workers/wavWorker.js");
+
+		worker.addEventListener("message", function (e) {
+			var blob = new Blob([e.data.buffer], { type: "audio/wav" });
+			resolve(blob);
+		});
+
+		let pcmArrays = [];
+		for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+			pcmArrays.push(audioBuffer.getChannelData(i));
+		}
+
+		worker.postMessage({
+			pcmArrays,
+			config: { sampleRate: audioBuffer.sampleRate },
+		});
 	});
 };
 
