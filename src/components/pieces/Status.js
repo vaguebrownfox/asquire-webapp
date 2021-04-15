@@ -52,7 +52,7 @@ export default function Status() {
 		<Card className={classes.root}>
 			<CardContent className={classes.content}>
 				<Grid container spacing={2}>
-					<Grid item className={classes.item} md={4} xs={12}>
+					{/* <Grid item className={classes.item} md={4} xs={12}>
 						<Paper
 							className={classes.span}
 							elevation={3}
@@ -77,7 +77,7 @@ export default function Status() {
 								users recorded so far
 							</Typography>
 						</Paper>
-					</Grid>
+					</Grid> */}
 					<Grid item className={classes.item} md={4} xs={12}>
 						<Paper
 							className={classes.span}
@@ -103,7 +103,7 @@ export default function Status() {
 							</Typography>
 						</Paper>
 					</Grid>
-					<Grid item className={classes.item} md={4} xs={12}>
+					{/* <Grid item className={classes.item} md={4} xs={12}>
 						<Paper
 							className={classes.span}
 							variant="outlined"
@@ -126,7 +126,7 @@ export default function Status() {
 								recordings required
 							</Typography>
 						</Paper>
-					</Grid>
+					</Grid> */}
 				</Grid>
 			</CardContent>
 		</Card>
