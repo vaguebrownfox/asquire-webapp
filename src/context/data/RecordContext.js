@@ -236,11 +236,6 @@ const recordStopAction = (dispatch) => {
 			return null;
 		}
 		audio = await recorder.stopRecord().catch(() => null);
-		const audioBuffer = await createAudioBuffer(audio.audioUrl);
-		let wavBlob = await audioBufferToWaveBlob(audioBuffer);
-		audio.wavBlob = wavBlob;
-
-		console.log("audio wav blob ", wavBlob);
 
 		if (audio) {
 			dispatch({ type: "SET_REC_STATE", payload: false });
@@ -258,6 +253,13 @@ const recordUploadAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		if (audio) {
+			// Convert to wav format
+			const audioBuffer = await createAudioBuffer(audio.audioUrl);
+			let wavBlob = await audioBufferToWaveBlob(audioBuffer);
+			audio.wavBlob = wavBlob;
+
+			console.log("audio wav blob ", wavBlob);
+
 			firebaseUserAudio(user, audio);
 			dispatch({ type: "SET_REC_DONE", payload: false });
 		} else {
