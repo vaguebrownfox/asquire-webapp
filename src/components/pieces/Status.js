@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	content: {
 		display: "flex",
-		justifyContent: "space-around",
+		justifyContent: "center",
 	},
 	span: {
 		display: "flex",
