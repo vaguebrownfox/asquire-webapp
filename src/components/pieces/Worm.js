@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { analyserNode } from "../../functions/recorder";
+import { setupContext } from "../../functions/recorder";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -44,13 +44,17 @@ const useStyles = makeStyles((theme) => ({
 		// stroke: "black",
 	},
 }));
-const Worm = ({ width, height, shape }) => {
+const Worm = ({ width, height, shape, stream }) => {
 	const classes = useStyles();
 	const animRef = React.useRef();
+	const analyserNodeRef = React.useRef(null);
 
 	const [spectrum, setSpectrum] = React.useState({});
 
-	React.useEffect(() => {
+	React.useEffect(async () => {
+		analyserNodeRef.current = await setupContext(stream);
+		const analyserNode = analyserNodeRef.current;
+
 		const animate = () => {
 			const bufferLength = analyserNode.frequencyBinCount;
 			const dataArrayBuffer = new Uint8Array(bufferLength);

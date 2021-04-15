@@ -94,7 +94,14 @@ export default function Record() {
 		<>
 			<Card ref={vizRef} className={classes.root} elevation={8}>
 				{recordState.isRecording && (
-					<Worm {...{ width, height, shape }} />
+					<Worm
+						{...{
+							width,
+							height,
+							shape,
+							stream: recordState.inputStream,
+						}}
+					/>
 				)}
 				<CardContent>
 					<RecTitle

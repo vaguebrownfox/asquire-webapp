@@ -1,24 +1,13 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { CircularProgress } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import AsqAppBar from "./components/AsqAppBar";
 import FooterLinks from "./components/FooterLinks";
 import StepperNav from "./components/StepperNav";
 
-// import AboutProject from "./components/steps/AboutProject";
-// import AddUser from "./components/steps/AddUser";
-// import Survey from "./components/steps/Survey";
-// import BioData from "./components/steps/BioData";
-// import Record from "./components/steps/Record";
-
-// import About from "./components/static/About";
-// import Consent from "./components/static/Consent";
-// import Contact from "./components/static/Contact";
-// import Feedback from "./components/static/Feedback";
-
-// Context
+// Context Provider
 import { Provider as AppProvider } from "./context/data/AppContext";
 import { Provider as StepProvider } from "./context/data/StepContext";
 import { Provider as UserProvider } from "./context/data/UserContext";
@@ -37,8 +26,6 @@ const About = React.lazy(() => import("./components/static/About"));
 const Consent = React.lazy(() => import("./components/static/Consent"));
 const Contact = React.lazy(() => import("./components/static/Contact"));
 const Feedback = React.lazy(() => import("./components/static/Feedback"));
-
-// import { components } from "./components/steps/components";
 
 export const components = [
 	{
