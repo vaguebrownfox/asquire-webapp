@@ -7,6 +7,7 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Context
 import { Context as StepContext } from "../context/data/StepContext";
@@ -17,7 +18,6 @@ import Finish from "./steps/Finish";
 
 export default function VerticalLinearStepper({ components }) {
 	const classes = useStyles();
-	// const [activeStep, setActiveStep] = React.useState(0);
 	const { state: stepState, stepSetAction } = React.useContext(StepContext);
 
 	React.useEffect(() => {
@@ -49,7 +49,18 @@ export default function VerticalLinearStepper({ components }) {
 								{item.title}
 							</Typography>
 						</StepLabel>
-						<StepContent>{item.component}</StepContent>
+						<StepContent>
+							<React.Suspense
+								fallback={
+									<CircularProgress
+										color="secondary"
+										size={28}
+									/>
+								}
+							>
+								{item.component}
+							</React.Suspense>
+						</StepContent>
 					</Step>
 				))}
 			</Stepper>

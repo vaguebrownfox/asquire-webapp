@@ -1,20 +1,22 @@
 import "./App.css";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
 
 import AsqAppBar from "./components/AsqAppBar";
 import FooterLinks from "./components/FooterLinks";
 import StepperNav from "./components/StepperNav";
 
-import AboutProject from "./components/steps/AboutProject";
-import AddUser from "./components/steps/AddUser";
-import Survey from "./components/steps/Survey";
-import BioData from "./components/steps/BioData";
-import Record from "./components/steps/Record";
+// import AboutProject from "./components/steps/AboutProject";
+// import AddUser from "./components/steps/AddUser";
+// import Survey from "./components/steps/Survey";
+// import BioData from "./components/steps/BioData";
+// import Record from "./components/steps/Record";
 
-import About from "./components/static/About";
-import Consent from "./components/static/Consent";
-import Contact from "./components/static/Contact";
-import Feedback from "./components/static/Feedback";
+// import About from "./components/static/About";
+// import Consent from "./components/static/Consent";
+// import Contact from "./components/static/Contact";
+// import Feedback from "./components/static/Feedback";
 
 // Context
 import { Provider as AppProvider } from "./context/data/AppContext";
@@ -23,12 +25,25 @@ import { Provider as UserProvider } from "./context/data/UserContext";
 import { Provider as SurveyProvider } from "./context/data/SurveyContext";
 import { Provider as RecordProvider } from "./context/data/RecordContext";
 
+// Steps
+const Welcome = React.lazy(() => import("./components/steps/Welcome"));
+const AddUser = React.lazy(() => import("./components/steps/AddUser"));
+const Survey = React.lazy(() => import("./components/steps/Survey"));
+const BioData = React.lazy(() => import("./components/steps/BioData"));
+const Record = React.lazy(() => import("./components/steps/Record"));
+
+// Static
+const About = React.lazy(() => import("./components/static/About"));
+const Consent = React.lazy(() => import("./components/static/Consent"));
+const Contact = React.lazy(() => import("./components/static/Contact"));
+const Feedback = React.lazy(() => import("./components/static/Feedback"));
+
 // import { components } from "./components/steps/components";
 
 export const components = [
 	{
 		title: "Welcome!",
-		component: <AboutProject />,
+		component: <Welcome />,
 	},
 	{
 		title: "Select User",
@@ -60,43 +75,52 @@ const App = () => {
 							<UserProvider>
 								<SurveyProvider>
 									<RecordProvider>
-										<Switch>
-											{/* Home Page */}
-											<Route
-												path="/"
-												exact
-												render={(props) => (
-													<StepperNav
-														{...{
-															components,
-															...props,
-														}}
-													/>
-												)}
-											/>
+										<React.Suspense
+											fallback={
+												<CircularProgress
+													color="secondary"
+													size={28}
+												/>
+											}
+										>
+											<Switch>
+												{/* Home Page */}
+												<Route
+													path="/"
+													exact
+													render={(props) => (
+														<StepperNav
+															{...{
+																components,
+																...props,
+															}}
+														/>
+													)}
+												/>
 
-											{/* Static Pages */}
-											<Route
-												path="/about"
-												exact
-												component={About}
-											/>
-											<Route
-												path="/consent"
-												exact
-												component={Consent}
-											/>
-											<Route
-												path="/contact"
-												exact
-												component={Contact}
-											/>
-											<Route
-												path="/feedback"
-												exact
-												component={Feedback}
-											/>
-										</Switch>
+												{/* Static Pages */}
+												<Route
+													path="/about"
+													exact
+													component={About}
+												/>
+												<Route
+													path="/consent"
+													exact
+													component={Consent}
+												/>
+												<Route
+													path="/contact"
+													exact
+													component={Contact}
+												/>
+												<Route
+													path="/feedback"
+													exact
+													component={Feedback}
+												/>
+											</Switch>
+										</React.Suspense>
 									</RecordProvider>
 								</SurveyProvider>
 							</UserProvider>
