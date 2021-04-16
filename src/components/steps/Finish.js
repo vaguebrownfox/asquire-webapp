@@ -3,10 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import { IconButton, Tooltip } from "@material-ui/core";
+import RecordStartIcon from "@material-ui/icons/Mic";
+import RecordStopIcon from "@material-ui/icons/MicOff";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 275,
+		minWidth: 256,
 		background: theme.palette.background.default,
 	},
 	bullet: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Finish({ title }) {
+export default function Finish() {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
 
@@ -37,6 +40,22 @@ export default function Finish({ title }) {
 					{bull}
 					{"Thank you for taking part in out project!"}
 				</Typography>
+
+				<IconButton
+					aria-label="play/pause"
+					onClick={handleRecord}
+					disabled={play}
+				>
+					<Tooltip
+						title={`${isRecording ? "Stop" : "Start"} recording`}
+					>
+						{isRecording ? (
+							<RecordStopIcon className={classes.controlIcon} />
+						) : (
+							<RecordStartIcon className={classes.controlIcon} />
+						)}
+					</Tooltip>
+				</IconButton>
 			</CardContent>
 		</Card>
 	);
