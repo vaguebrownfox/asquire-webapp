@@ -14,7 +14,7 @@ import { Context as StepContext } from "../context/data/StepContext";
 
 // Pieces
 import Status from "./pieces/Status";
-import Finish from "./steps/Finish";
+const Finish = React.lazy(() => import("./steps/Finish"));
 
 export default function VerticalLinearStepper({ components }) {
 	const classes = useStyles();
@@ -67,7 +67,14 @@ export default function VerticalLinearStepper({ components }) {
 
 			{stepState.activeStep === components.length && (
 				<Paper square elevation={0} className={classes.resetContainer}>
-					<Finish />
+					<React.Suspense
+						fallback={
+							<CircularProgress color="secondary" size={28} />
+						}
+					>
+						<Finish />
+					</React.Suspense>
+
 					<Button onClick={handleReset} className={classes.button}>
 						Yay!
 					</Button>

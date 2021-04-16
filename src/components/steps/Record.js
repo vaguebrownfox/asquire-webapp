@@ -39,6 +39,7 @@ export default function Record() {
 		recordStartAction,
 		recordStopAction,
 		recordUploadAction,
+		recordResetAction,
 	} = React.useContext(RecordContext);
 
 	const timeoutRef = React.useRef();
@@ -57,6 +58,7 @@ export default function Record() {
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
 		return () => {
+			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps

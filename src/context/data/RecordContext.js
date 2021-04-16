@@ -37,6 +37,8 @@ const recordReducer = (state, action) => {
 	switch (action.type) {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
+		case "REC_RESET":
+			return { ...recordInitialState };
 		case "LOAD_STIMS":
 			let nostims0 = Object.keys(action.payload.stims).length;
 			let csno0 = action.payload.stimCount;
@@ -247,6 +249,22 @@ const recordStopAction = (dispatch) => {
 	};
 };
 
+const recordResetAction = (dispatch) => {
+	return async () => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		console.log("record reset log");
+		if (recorder) {
+			audio = await recorder.stopRecord().catch(() => null);
+			dispatch({ type: "REC_RESET", payload: null });
+			clearInterval(interval);
+			recorder = null;
+		}
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
 const recordUploadAction = (dispatch) => {
 	return async (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
@@ -283,6 +301,8 @@ export const { Context, Provider } = createDataContext(
 		recordStopAction,
 
 		recordUploadAction,
+
+		recordResetAction,
 	},
 	recordInitialState
 );

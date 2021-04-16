@@ -3,18 +3,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { Button, IconButton, Tooltip } from "@material-ui/core";
+import { FormHelperText, IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Adjust";
 import RecordStopIcon from "@material-ui/icons/Album";
 
-import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
-import FaceIcon from "@material-ui/icons/Face";
+import BlurOn from "@material-ui/icons/BlurOn";
+import LockIcon from "@material-ui/icons/Lock";
 import PlayIcon from "@material-ui/icons/PlayArrowRounded";
 
 // Context
 import { Context as RecordContext } from "../../context/data/RecordContext";
 import { Context as VoiceContext } from "../../context/data/VoiceContext";
+import { Context as UserContext } from "../../context/data/UserContext";
 
 import Timer from "../pieces/Timer";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	chip: {
 		transform: "scale(1.2)",
+		color: theme.palette.grey[800],
+	},
+	msg: {
+		height: theme.spacing(2),
 	},
 	recButton: {
 		borderWidth: 4,
@@ -105,22 +110,35 @@ export default function Finish() {
 		recordGetDevicesAction,
 		recordStartAction,
 		recordStopAction,
+		recordResetAction,
 	} = React.useContext(RecordContext);
 	const { state: voiceState, voiceTransformAction } = React.useContext(
 		VoiceContext
 	);
-
+	const { state: userState } = React.useContext(UserContext);
 	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
 	const playerRef = React.useRef();
 
 	const [play, setPlay] = React.useState(false);
+	const [msg, setMsg] = React.useState("");
 
-	const handleRecord = () => {
+	const handleRecord = async () => {
+		if (!recordState.inputStream) {
+			await recordGetDevicesAction();
+		}
+		if (play) {
+			playerRef.current.pause();
+			setPlay(false);
+		}
+
 		if (recordState.isRecording) {
 			clearInterval(timeoutRef.current);
 			recordStopAction();
 		} else {
+			!recordState.inputStream && setMsg("click again");
+			recordState.inputStream && setMsg("");
+
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
@@ -135,22 +153,36 @@ export default function Finish() {
 				playerRef.current.pause();
 				setPlay(false);
 			} else {
+				setMsg("processing...");
 				await voiceTransformAction(recordState.playUrl, type);
+				setMsg("");
 				playerRef.current.play();
 				playerRef.current.addEventListener("ended", () => {
 					setPlay(false);
 				});
 				setPlay(true);
 			}
+		} else {
+			setMsg("Record your voice before transformation!");
+			setTimeout(() => {
+				setMsg("");
+			}, 7 * 1000);
 		}
 	};
 
 	React.useEffect(() => {
-		recordGetDevicesAction();
 		return () => {
 			console.log("voice cleanup");
+			recordResetAction();
 		};
 	}, []);
+
+	// React.useLayoutEffect(() => {
+	// 	recordGetDevicesAction();
+	// 	return () => {
+	// 		console.log("voice cleanup layout");
+	// 	};
+	// }, []);
 
 	const { width, height } = useContainerDimensions(vizRef, recordState);
 
@@ -202,6 +234,15 @@ export default function Finish() {
 				</IconButton>
 				<Timer seconds={recordState.seconds} />
 
+				<FormHelperText
+					className={classes.msg}
+					error
+					style={{ textAlign: "center" }}
+					components="p"
+				>
+					{`${msg}`}
+				</FormHelperText>
+
 				<audio
 					ref={playerRef}
 					className={classes.player}
@@ -211,17 +252,29 @@ export default function Finish() {
 
 				<div className={classes.chipDiv}>
 					{voiceState.txDetes.map((v, i) => (
-						<Chip
-							key={i}
-							className={classes.chip}
-							disabled={recordState.isRecording}
-							color="secondary"
-							label={v.name}
-							onClick={() => handleTransform(v.key)}
-							onDelete={() => handleTransform(v.key)}
-							// avatar={<Avatar>{v.name[0]}</Avatar>}
-							deleteIcon={<PlayIcon />}
-						/>
+						<Tooltip key={i} title={v.description}>
+							<Chip
+								className={classes.chip}
+								disabled={
+									recordState.isRecording ||
+									i >= userState.selectedUser.stimCount
+								}
+								icon={
+									i >= userState.selectedUser.stimCount ? (
+										<LockIcon />
+									) : (
+										<BlurOn />
+									)
+								}
+								color="secondary"
+								variant="outlined"
+								label={v.name}
+								onClick={() => handleTransform(v.key)}
+								onDelete={() => handleTransform(v.key)}
+								// avatar={<Avatar>{v.name[0]}</Avatar>}
+								deleteIcon={<PlayIcon />}
+							/>
+						</Tooltip>
 					))}
 				</div>
 			</CardContent>

@@ -5,7 +5,7 @@ import createDataContext from "../createDataContext";
 const stepInitialState = {
 	loading: false,
 	previousStep: 0,
-	activeStep: 5,
+	activeStep: 0,
 };
 
 // Reducer
