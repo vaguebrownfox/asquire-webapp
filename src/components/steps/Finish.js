@@ -7,9 +7,17 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 
+// Context
+import { Context as RecordContext } from "../../context/data/RecordContext";
+import { Context as VoiceContext } from "../../context/data/VoiceContext";
+import Timer from "../pieces/Timer";
+import useContainerDimensions from "../../hooks/useContainerDimensions";
+import Worm from "../pieces/Worm";
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		minWidth: 256,
+		position: "relative",
 		background: theme.palette.background.default,
 	},
 	bullet: {
@@ -23,39 +31,102 @@ const useStyles = makeStyles((theme) => ({
 	pos: {
 		marginBottom: 12,
 	},
+	controlIcon: {
+		height: theme.spacing(8),
+		width: theme.spacing(8),
+		margin: theme.spacing(2),
+	},
+	controlIconAction: {
+		height: theme.spacing(8),
+		width: theme.spacing(8),
+		margin: theme.spacing(2),
+		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
+	},
+	"@keyframes zoomies": {
+		"0%": {
+			transform: "scale(1)",
+		},
+		"50%": {
+			transform: "scale(1.1)",
+		},
+		"100%": {
+			transform: "scale(1)",
+		},
+	},
 }));
 
 export default function Finish() {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
+	const {
+		state: recordState,
+		recordGetDevicesAction,
+		recordStartAction,
+		recordStopAction,
+	} = React.useContext(RecordContext);
+
+	const timeoutRef = React.useRef();
+	const vizRef = React.useRef();
+
+	const handleRecord = () => {
+		if (recordState.isRecording) {
+			clearInterval(timeoutRef.current);
+			recordStopAction();
+		} else {
+			recordStartAction(recordState.inputStream);
+			timeoutRef.current = setTimeout(() => {
+				recordStopAction();
+			}, 11 * 1000);
+		}
+	};
+
+	React.useEffect(() => {
+		recordGetDevicesAction();
+		return () => {
+			console.log("voice cleanup");
+		};
+	}, []);
+
+	const { width, height } = useContainerDimensions(vizRef, recordState);
 
 	return (
-		<Card className={classes.root} elevation={8}>
+		<Card ref={vizRef} className={classes.root} elevation={8}>
+			{recordState.isRecording && (
+				<Worm
+					{...{
+						width,
+						height,
+						shape: "circle",
+						stream: recordState.inputStream,
+					}}
+				/>
+			)}
 			<CardContent>
 				<Typography
 					className={classes.title}
 					color="textSecondary"
 					gutterBottom
 				>
-					{bull}
-					{"Thank you for taking part in out project!"}
+					{
+						"Thank you for taking part in out project! Here's something fun!"
+					}
 				</Typography>
 
-				<IconButton
-					aria-label="play/pause"
-					onClick={handleRecord}
-					disabled={play}
-				>
+				<IconButton aria-label="record" onClick={handleRecord}>
 					<Tooltip
-						title={`${isRecording ? "Stop" : "Start"} recording`}
+						title={`${
+							recordState.isRecording ? "Stop" : "Start"
+						} recording`}
 					>
-						{isRecording ? (
-							<RecordStopIcon className={classes.controlIcon} />
+						{recordState.isRecording ? (
+							<RecordStopIcon
+								className={classes.controlIconAction}
+							/>
 						) : (
 							<RecordStartIcon className={classes.controlIcon} />
 						)}
 					</Tooltip>
 				</IconButton>
+				<Timer seconds={recordState.seconds} />
 			</CardContent>
 		</Card>
 	);

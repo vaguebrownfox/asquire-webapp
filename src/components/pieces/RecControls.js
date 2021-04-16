@@ -25,6 +25,23 @@ const useStyles = makeStyles((theme) => ({
 			cursor: "crosshair",
 		},
 	},
+	controlIconAction: {
+		height: 38,
+		width: 38,
+
+		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
+	},
+	"@keyframes zoomies": {
+		"0%": {
+			transform: "scale(1)",
+		},
+		"50%": {
+			transform: "scale(1.1)",
+		},
+		"100%": {
+			transform: "scale(1)",
+		},
+	},
 	player: {
 		display: "none",
 	},
@@ -86,13 +103,13 @@ const RecControl = ({
 				</Tooltip>
 			</IconButton>
 			<IconButton
-				aria-label="play/pause"
+				aria-label="record"
 				onClick={handleRecord}
 				disabled={play}
 			>
 				<Tooltip title={`${isRecording ? "Stop" : "Start"} recording`}>
 					{isRecording ? (
-						<RecordStopIcon className={classes.controlIcon} />
+						<RecordStopIcon className={classes.controlIconAction} />
 					) : (
 						<RecordStartIcon className={classes.controlIcon} />
 					)}

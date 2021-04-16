@@ -41,6 +41,7 @@ export default function Record() {
 		recordUploadAction,
 	} = React.useContext(RecordContext);
 
+	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
 	const { state: userState, userUpdateAction } = React.useContext(
 		UserContext
@@ -70,9 +71,13 @@ export default function Record() {
 
 	const handleRecord = () => {
 		if (recordState.isRecording) {
+			clearInterval(timeoutRef.current);
 			recordStopAction();
 		} else {
 			recordStartAction(recordState.inputStream);
+			timeoutRef.current = setTimeout(() => {
+				recordStopAction();
+			}, 31000);
 		}
 	};
 
