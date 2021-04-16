@@ -2,13 +2,16 @@
 import createDataContext from "../createDataContext";
 
 // functions
-import { audioRecord } from "../../functions/recorder";
+import {
+	createAudioBuffer,
+	audioBufferToWaveBlob,
+} from "../../functions/recorder";
+import { anonymousTransform } from "../../voice/anonymous";
 
 // Initial State
 const voiceInitialState = {
 	loading: false,
-	isRecording: false,
-	recordDone: false,
+	playUrl: "",
 };
 
 // Reducer
@@ -16,6 +19,8 @@ const voiceReducer = (state, action) => {
 	switch (action.type) {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
+		case "SET_PLY_URL":
+			return { ...state, playUrl: action.payload };
 		default:
 			return state;
 	}
@@ -32,50 +37,19 @@ const voiceLoadAction = (dispatch) => {
 	};
 };
 
-let recorder = null;
-let interval = null;
-
-const voiceRecordStartAction = (dispatch) => {
-	return async (inputStream) => {
+const voiceTransformAction = (dispatch) => {
+	return async (audioUrl) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("voice action log");
-		if (!recorder) {
-			recorder = await audioRecord(inputStream).catch((e) => {
-				console.log("audioRecord error", e);
-				return null;
-			});
-		}
-		if (!recorder) {
-			return null;
-		}
-		const isRecStart = await recorder.startRecord().catch((e) => {
-			console.log("audioRecord start error", e);
-			return null;
-		});
+		console.log("voice transform action log");
+		const audioBuffer = await createAudioBuffer(audioUrl);
+		const outputAudioBuffer = await anonymousTransform(audioBuffer);
+		const outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
 
-		if (isRecStart) {
-			console.log("record action log:: start record");
-			dispatch({ type: "SET_REC_DONE", payload: false });
-			dispatch({ type: "SET_REC_STATE", payload: true });
-			dispatch({ type: "SET_PLY_STATE", payload: false });
-			dispatch({ type: "SECONDS", payload: "reset" });
-			interval = setInterval(() => {
-				dispatch({ type: "SECONDS", payload: "up" });
-			}, 1000);
-		} else {
-			dispatch({ type: "SET_REC_STATE", payload: false });
-		}
+		let voiceUrl = URL.createObjectURL(outputWavBlob);
+		dispatch({ type: "SET_PLY_URL", payload: voiceUrl });
 
-		dispatch({ type: "SET_LOADING", payload: false });
-	};
-};
-
-const voiceRecordStopAction = (dispatch) => {
-	return () => {
-		dispatch({ type: "SET_LOADING", payload: true });
-
-		console.log("voice action log");
+		console.log("voice transform action log ::op buff", outputAudioBuffer);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
@@ -86,8 +60,7 @@ export const { Context, Provider } = createDataContext(
 	voiceReducer,
 	{
 		voiceLoadAction,
-		voiceRecordStartAction,
-		voiceRecordStopAction,
+		voiceTransformAction,
 	},
 	voiceInitialState
 );

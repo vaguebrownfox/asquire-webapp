@@ -3,13 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { IconButton, Tooltip } from "@material-ui/core";
+import { Button, IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 
 // Context
 import { Context as RecordContext } from "../../context/data/RecordContext";
 import { Context as VoiceContext } from "../../context/data/VoiceContext";
+
 import Timer from "../pieces/Timer";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 import Worm from "../pieces/Worm";
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	pos: {
 		marginBottom: 12,
+	},
+	player: {
+		width: "100%",
 	},
 	controlIcon: {
 		height: theme.spacing(8),
@@ -63,6 +67,9 @@ export default function Finish() {
 		recordStartAction,
 		recordStopAction,
 	} = React.useContext(RecordContext);
+	const { state: voiceState, voiceTransformAction } = React.useContext(
+		VoiceContext
+	);
 
 	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
@@ -76,6 +83,13 @@ export default function Finish() {
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
 			}, 11 * 1000);
+		}
+	};
+
+	const handleTransform = () => {
+		console.log("transforming");
+		if (recordState.playUrl !== "") {
+			voiceTransformAction(recordState.playUrl);
 		}
 	};
 
@@ -127,6 +141,22 @@ export default function Finish() {
 					</Tooltip>
 				</IconButton>
 				<Timer seconds={recordState.seconds} />
+
+				{recordState.recDone && (
+					<audio
+						className={classes.player}
+						src={voiceState.playUrl}
+						controls
+					/>
+				)}
+
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={handleTransform}
+				>
+					Transform
+				</Button>
 			</CardContent>
 		</Card>
 	);
