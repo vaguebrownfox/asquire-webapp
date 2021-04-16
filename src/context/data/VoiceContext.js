@@ -6,7 +6,7 @@ import {
 	createAudioBuffer,
 	audioBufferToWaveBlob,
 } from "../../functions/recorder";
-import { anonymousTransform } from "../../voice/anonymous";
+import transforms from "../../voice";
 
 // Initial State
 const voiceInitialState = {
@@ -38,18 +38,23 @@ const voiceLoadAction = (dispatch) => {
 };
 
 const voiceTransformAction = (dispatch) => {
-	return async (audioUrl) => {
+	return async (audioUrl, type) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("voice transform action log");
 		const audioBuffer = await createAudioBuffer(audioUrl);
-		const outputAudioBuffer = await anonymousTransform(audioBuffer);
-		const outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
 
+		const outputAudioBuffer = await transforms[type](audioBuffer);
+		switch (type) {
+			case "anonymous":
+				break;
+
+			default:
+				break;
+		}
+
+		const outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
 		let voiceUrl = URL.createObjectURL(outputWavBlob);
 		dispatch({ type: "SET_PLY_URL", payload: voiceUrl });
-
-		console.log("voice transform action log ::op buff", outputAudioBuffer);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

@@ -4,8 +4,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { Button, IconButton, Tooltip } from "@material-ui/core";
-import RecordStartIcon from "@material-ui/icons/Mic";
-import RecordStopIcon from "@material-ui/icons/MicOff";
+import RecordStartIcon from "@material-ui/icons/Adjust";
+import RecordStopIcon from "@material-ui/icons/Album";
 
 // Context
 import { Context as RecordContext } from "../../context/data/RecordContext";
@@ -33,17 +33,31 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: 12,
 	},
 	player: {
-		width: "100%",
+		width: 0,
+		height: 0,
+	},
+	recButton: {
+		borderWidth: 4,
+		borderColor: theme.palette.secondary.main,
+		borderStyle: "dotted",
+		margin: theme.spacing(2),
+	},
+	recButtonAction: {
+		borderWidth: 4,
+		borderColor: theme.palette.secondary.main,
+		borderStyle: "dotted",
+		margin: theme.spacing(2),
+		animation: `$spin 8000ms  infinite linear`,
 	},
 	controlIcon: {
 		height: theme.spacing(8),
 		width: theme.spacing(8),
-		margin: theme.spacing(2),
+		margin: theme.spacing(1),
 	},
 	controlIconAction: {
 		height: theme.spacing(8),
 		width: theme.spacing(8),
-		margin: theme.spacing(2),
+		margin: theme.spacing(1),
 		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
 	},
 	"@keyframes zoomies": {
@@ -55,6 +69,14 @@ const useStyles = makeStyles((theme) => ({
 		},
 		"100%": {
 			transform: "scale(1)",
+		},
+	},
+	"@keyframes spin": {
+		from: {
+			transform: "rotate(0deg)",
+		},
+		to: {
+			transform: "rotate(360deg)",
 		},
 	},
 }));
@@ -73,6 +95,9 @@ export default function Finish() {
 
 	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
+	const playerRef = React.useRef();
+
+	const [play, setPlay] = React.useState(false);
 
 	const handleRecord = () => {
 		if (recordState.isRecording) {
@@ -82,21 +107,37 @@ export default function Finish() {
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
-			}, 11 * 1000);
+			}, 21 * 1000);
 		}
 	};
 
-	const handleTransform = () => {
+	const handleTransform = async (type) => {
 		console.log("transforming");
 		if (recordState.playUrl !== "") {
-			voiceTransformAction(recordState.playUrl);
+			if (play) {
+				playerRef.current.pause();
+				setPlay(false);
+			} else {
+				await voiceTransformAction(recordState.playUrl, type);
+				playerRef.current.play();
+				playerRef.current.addEventListener("ended", () => {
+					setPlay(false);
+				});
+				setPlay(true);
+			}
 		}
 	};
 
 	React.useEffect(() => {
 		recordGetDevicesAction();
+		const stopPlay = () => {
+			setPlay(false);
+		};
+		const playerRefE = playerRef.current;
+		playerRefE && playerRefE?.addEventListener("ended", stopPlay);
 		return () => {
 			console.log("voice cleanup");
+			// playerRefE && playerRefE?.removeEventListener("ended", stopPlay);
 		};
 	}, []);
 
@@ -125,7 +166,15 @@ export default function Finish() {
 					}
 				</Typography>
 
-				<IconButton aria-label="record" onClick={handleRecord}>
+				<IconButton
+					aria-label="record"
+					className={
+						recordState.isRecording
+							? classes.recButtonAction
+							: classes.recButton
+					}
+					onClick={handleRecord}
+				>
 					<Tooltip
 						title={`${
 							recordState.isRecording ? "Stop" : "Start"
@@ -144,6 +193,7 @@ export default function Finish() {
 
 				{recordState.recDone && (
 					<audio
+						ref={playerRef}
 						className={classes.player}
 						src={voiceState.playUrl}
 						controls
@@ -153,9 +203,18 @@ export default function Finish() {
 				<Button
 					variant="contained"
 					color="secondary"
-					onClick={handleTransform}
+					disabled={recordState.isRecording}
+					onClick={() => handleTransform("anon")}
 				>
-					Transform
+					Anon
+				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					disabled={recordState.isRecording}
+					onClick={() => handleTransform("troll")}
+				>
+					Troll
 				</Button>
 			</CardContent>
 		</Card>
