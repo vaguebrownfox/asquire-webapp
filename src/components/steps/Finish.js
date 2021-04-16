@@ -175,7 +175,7 @@ export default function Finish() {
 			console.log("voice cleanup");
 			recordResetAction();
 		};
-	}, []);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	// React.useLayoutEffect(() => {
 	// 	recordGetDevicesAction();

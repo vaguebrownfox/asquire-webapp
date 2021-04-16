@@ -2,7 +2,7 @@ const { anonymousTransform } = require("./anonymous");
 const { trollTransform } = require("./troll");
 const { underwaterTransform } = require("./underwater");
 
-const txDetes = [
+export const txDetes = [
 	{
 		name: "Anon",
 		key: "anon",
@@ -19,12 +19,8 @@ const txDetes = [
 		description: "Talking under water",
 	},
 ];
-
-module.exports = {
-	transforms: {
-		anon: anonymousTransform,
-		maelstrom: trollTransform,
-		underwater: underwaterTransform,
-	},
-	txDetes,
+export const transforms = {
+	anon: anonymousTransform,
+	maelstrom: trollTransform,
+	underwater: underwaterTransform,
 };

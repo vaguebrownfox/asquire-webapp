@@ -1,6 +1,6 @@
 const { OfflineAudioContext } = require("standardized-audio-context");
 
-async function trollTransform(audioBuffer) {
+export const trollTransform = async (audioBuffer) => {
 	let ctx = new OfflineAudioContext(
 		audioBuffer.numberOfChannels,
 		audioBuffer.length,
@@ -84,6 +84,4 @@ async function trollTransform(audioBuffer) {
 	// fire.start(0);
 	let outputAudioBuffer = await ctx.startRendering();
 	return outputAudioBuffer;
-}
-
-module.exports = { trollTransform };
+};

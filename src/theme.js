@@ -39,6 +39,17 @@ const theme = createMuiTheme({
 			active: {},
 			completed: {},
 		},
+		MuiStepLabel: {
+			label: {
+				"&$completed": {
+					color: grey[800],
+				},
+				"&$active": {
+					color: grey[900],
+				},
+				color: grey[800],
+			},
+		},
 	},
 });
 

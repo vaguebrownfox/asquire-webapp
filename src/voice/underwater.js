@@ -1,7 +1,7 @@
 // const { OfflineAudioContext } = require("standardized-audio-context");
 const Tuna = require("tunajs");
 
-async function underwaterTransform(audioBuffer) {
+export const underwaterTransform = async (audioBuffer) => {
 	let ctx = new OfflineAudioContext(
 		audioBuffer.numberOfChannels,
 		audioBuffer.length,
@@ -11,7 +11,7 @@ async function underwaterTransform(audioBuffer) {
 	let source = ctx.createBufferSource();
 	source.buffer = audioBuffer;
 
-	let compressor1 = ctx.createDynamicsCompressor();
+	// let compressor1 = ctx.createDynamicsCompressor();
 	let compressor2 = ctx.createDynamicsCompressor();
 	let inputGain = ctx.createGain();
 	inputGain.gain.value = 0.5;
@@ -50,6 +50,4 @@ async function underwaterTransform(audioBuffer) {
 	source.start(0);
 	underwater.start(0);
 	return await ctx.startRendering();
-}
-
-module.exports = { underwaterTransform };
+};

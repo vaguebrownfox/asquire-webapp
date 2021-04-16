@@ -1,6 +1,9 @@
 const { OfflineAudioContext } = require("standardized-audio-context");
 
-async function anonymousTransform(audioBuffer, distortionAmount = 100) {
+export const anonymousTransform = async (
+	audioBuffer,
+	distortionAmount = 100
+) => {
 	let ctx = new OfflineAudioContext(
 		audioBuffer.numberOfChannels,
 		audioBuffer.length,
@@ -79,6 +82,4 @@ async function anonymousTransform(audioBuffer, distortionAmount = 100) {
 	source.start(0);
 	let outputAudioBuffer = await ctx.startRendering();
 	return outputAudioBuffer;
-}
-
-module.exports = { anonymousTransform };
+};
