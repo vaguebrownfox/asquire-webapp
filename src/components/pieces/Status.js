@@ -78,7 +78,7 @@ export default function Status() {
 							</Typography>
 						</Paper>
 					</Grid> */}
-					<Grid item className={classes.item} md={4} xs={12}>
+					<Grid item className={classes.item} md={12} xs={12}>
 						<Paper
 							className={classes.span}
 							elevation={3}
@@ -99,7 +99,9 @@ export default function Status() {
 								component="div"
 								gutterBottom
 							>
-								users currently recording
+								{`user${
+									users?.length === 1 ? "" : "s"
+								} currently recording`}
 							</Typography>
 						</Paper>
 					</Grid>

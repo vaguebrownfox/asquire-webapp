@@ -63,7 +63,7 @@ export const getAudioInputStream = async (device) => {
 		.getUserMedia({
 			audio: {
 				autoGainControl: false, //(2) [true, false]
-				channelCount: 0, // {max: 2, min: 1}
+				channelCount: 1, // {max: 2, min: 1}
 				deviceId: device?.deviceId || "default",
 				// groupId: null,
 				echoCancellation: false, //(2) [true, false]
@@ -197,9 +197,9 @@ export const createAudioBuffer = async (audioUrl) => {
 
 export const audioBufferToWaveBlob = async (audioBuffer) => {
 	return new Promise(function (resolve, reject) {
-		var worker = new Worker("./workers/wavWorker.js");
+		var makeWav = new Worker("./workers/wavWorker.js");
 
-		worker.addEventListener("message", function (e) {
+		makeWav.addEventListener("message", function (e) {
 			var blob = new Blob([e.data.buffer], { type: "audio/wav" });
 			resolve(blob);
 		});
@@ -209,7 +209,7 @@ export const audioBufferToWaveBlob = async (audioBuffer) => {
 			pcmArrays.push(audioBuffer.getChannelData(i));
 		}
 
-		worker.postMessage({
+		makeWav.postMessage({
 			pcmArrays,
 			config: { sampleRate: audioBuffer.sampleRate },
 		});
@@ -220,7 +220,7 @@ export const setupContext = async (stream) => {
 	const audioContext = new AudioContext();
 	const analyserNode = new AnalyserNode(audioContext, {
 		fftSize: 1024,
-		//   minDecibels: -111,
+		// minDecibels: -111,
 		// smoothingTimeConstant: 0.8,
 	});
 
