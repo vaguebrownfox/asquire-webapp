@@ -1,7 +1,7 @@
 import { db } from "./firebase";
 
 export const firebaseUserData = async (data) => {
-	const userDocRef = db.collection("users").doc(data.userId);
+	const userDocRef = db.collection("usersV2").doc(data.userId);
 
 	data = await userDocRef
 		.set(data)

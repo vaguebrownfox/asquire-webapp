@@ -1,5 +1,5 @@
 import { stor } from "./firebase";
-const DATA_FOLDER = "data0x0cTest";
+const DATA_FOLDER = "data0x0cTest2";
 
 const storageRef = stor.ref();
 

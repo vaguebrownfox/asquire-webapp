@@ -32,7 +32,6 @@ export const getAudioInputDevices = async () => {
 	const audioDevices = await navigator.mediaDevices
 		.enumerateDevices()
 		.then((devices) => {
-			console.log("recorder", devices);
 			devices = devices.filter((d) => d.kind === "audioinput");
 			return devices;
 		})
