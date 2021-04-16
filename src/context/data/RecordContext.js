@@ -278,11 +278,14 @@ export const { Context, Provider } = createDataContext(
 		recordLoadAction,
 		recordLoadStimsAction,
 		recordNextStimAction,
+
 		recordGetDevicesAction,
 		recordSetInputAction,
 		recordSetOutputAction,
+
 		recordStartAction,
 		recordStopAction,
+
 		recordUploadAction,
 	},
 	recordInitialState
