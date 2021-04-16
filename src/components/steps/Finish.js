@@ -7,6 +7,11 @@ import { Button, IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Adjust";
 import RecordStopIcon from "@material-ui/icons/Album";
 
+import Avatar from "@material-ui/core/Avatar";
+import Chip from "@material-ui/core/Chip";
+import FaceIcon from "@material-ui/icons/Face";
+import PlayIcon from "@material-ui/icons/PlayArrowRounded";
+
 // Context
 import { Context as RecordContext } from "../../context/data/RecordContext";
 import { Context as VoiceContext } from "../../context/data/VoiceContext";
@@ -17,7 +22,6 @@ import Worm from "../pieces/Worm";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 256,
 		position: "relative",
 		background: theme.palette.background.default,
 	},
@@ -35,6 +39,19 @@ const useStyles = makeStyles((theme) => ({
 	player: {
 		width: 0,
 		height: 0,
+	},
+	chipDiv: {
+		display: "flex",
+		justifyContent: "center",
+		flexWrap: "wrap",
+		"& > *": {
+			marginRight: theme.spacing(4),
+			marginLeft: theme.spacing(4),
+			marginBottom: theme.spacing(2),
+		},
+	},
+	chip: {
+		transform: "scale(1.2)",
 	},
 	recButton: {
 		borderWidth: 4,
@@ -130,14 +147,8 @@ export default function Finish() {
 
 	React.useEffect(() => {
 		recordGetDevicesAction();
-		const stopPlay = () => {
-			setPlay(false);
-		};
-		const playerRefE = playerRef.current;
-		playerRefE && playerRefE?.addEventListener("ended", stopPlay);
 		return () => {
 			console.log("voice cleanup");
-			// playerRefE && playerRefE?.removeEventListener("ended", stopPlay);
 		};
 	}, []);
 
@@ -191,31 +202,28 @@ export default function Finish() {
 				</IconButton>
 				<Timer seconds={recordState.seconds} />
 
-				{recordState.recDone && (
-					<audio
-						ref={playerRef}
-						className={classes.player}
-						src={voiceState.playUrl}
-						controls
-					/>
-				)}
+				<audio
+					ref={playerRef}
+					className={classes.player}
+					src={voiceState.playUrl}
+					controls
+				/>
 
-				<Button
-					variant="contained"
-					color="secondary"
-					disabled={recordState.isRecording}
-					onClick={() => handleTransform("anon")}
-				>
-					Anon
-				</Button>
-				<Button
-					variant="contained"
-					color="secondary"
-					disabled={recordState.isRecording}
-					onClick={() => handleTransform("troll")}
-				>
-					Troll
-				</Button>
+				<div className={classes.chipDiv}>
+					{voiceState.txDetes.map((v, i) => (
+						<Chip
+							key={i}
+							className={classes.chip}
+							disabled={recordState.isRecording}
+							color="secondary"
+							label={v.name}
+							onClick={() => handleTransform(v.key)}
+							onDelete={() => handleTransform(v.key)}
+							// avatar={<Avatar>{v.name[0]}</Avatar>}
+							deleteIcon={<PlayIcon />}
+						/>
+					))}
+				</div>
 			</CardContent>
 		</Card>
 	);

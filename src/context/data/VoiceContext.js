@@ -6,12 +6,13 @@ import {
 	createAudioBuffer,
 	audioBufferToWaveBlob,
 } from "../../functions/recorder";
-import transforms from "../../voice";
+import { transforms, txDetes } from "../../voice";
 
 // Initial State
 const voiceInitialState = {
 	loading: false,
 	playUrl: "",
+	txDetes,
 };
 
 // Reducer
@@ -44,13 +45,6 @@ const voiceTransformAction = (dispatch) => {
 		const audioBuffer = await createAudioBuffer(audioUrl);
 
 		const outputAudioBuffer = await transforms[type](audioBuffer);
-		switch (type) {
-			case "anonymous":
-				break;
-
-			default:
-				break;
-		}
 
 		const outputWavBlob = await audioBufferToWaveBlob(outputAudioBuffer);
 		let voiceUrl = URL.createObjectURL(outputWavBlob);
