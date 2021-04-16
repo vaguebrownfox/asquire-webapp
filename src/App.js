@@ -8,7 +8,7 @@ import FooterLinks from "./components/FooterLinks";
 import StepperNav from "./components/StepperNav";
 
 // Context Provider
-import { Provider as AppProvider } from "./context/data/AppContext";
+// import { Provider as AppProvider } from "./context/data/AppContext";
 import { Provider as StepProvider } from "./context/data/StepContext";
 import { Provider as UserProvider } from "./context/data/UserContext";
 import { Provider as SurveyProvider } from "./context/data/SurveyContext";
@@ -57,62 +57,60 @@ const App = () => {
 				<Router>
 					<AsqAppBar title="Asquire" />
 
-					<AppProvider>
-						<StepProvider>
-							<UserProvider>
-								<SurveyProvider>
-									<RecordProvider>
-										<React.Suspense
-											fallback={
-												<CircularProgress
-													color="secondary"
-													size={28}
-												/>
-											}
-										>
-											<Switch>
-												{/* Home Page */}
-												<Route
-													path="/"
-													exact
-													render={(props) => (
-														<StepperNav
-															{...{
-																components,
-																...props,
-															}}
-														/>
-													)}
-												/>
+					<StepProvider>
+						<UserProvider>
+							<SurveyProvider>
+								<RecordProvider>
+									<React.Suspense
+										fallback={
+											<CircularProgress
+												color="secondary"
+												size={28}
+											/>
+										}
+									>
+										<Switch>
+											{/* Home Page */}
+											<Route
+												path="/"
+												exact
+												render={(props) => (
+													<StepperNav
+														{...{
+															components,
+															...props,
+														}}
+													/>
+												)}
+											/>
 
-												{/* Static Pages */}
-												<Route
-													path="/about"
-													exact
-													component={About}
-												/>
-												<Route
-													path="/consent"
-													exact
-													component={Consent}
-												/>
-												<Route
-													path="/contact"
-													exact
-													component={Contact}
-												/>
-												<Route
-													path="/feedback"
-													exact
-													component={Feedback}
-												/>
-											</Switch>
-										</React.Suspense>
-									</RecordProvider>
-								</SurveyProvider>
-							</UserProvider>
-						</StepProvider>
-					</AppProvider>
+											{/* Static Pages */}
+											<Route
+												path="/about"
+												exact
+												component={About}
+											/>
+											<Route
+												path="/consent"
+												exact
+												component={Consent}
+											/>
+											<Route
+												path="/contact"
+												exact
+												component={Contact}
+											/>
+											<Route
+												path="/feedback"
+												exact
+												component={Feedback}
+											/>
+										</Switch>
+									</React.Suspense>
+								</RecordProvider>
+							</SurveyProvider>
+						</UserProvider>
+					</StepProvider>
 
 					<FooterLinks />
 				</Router>

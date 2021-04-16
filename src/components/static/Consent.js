@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 		transform: "scale(0.8)",
 	},
 	title: {
-		// fontSize: 14,
 		marginBottom: theme.spacing(4),
 	},
 	pos: {
@@ -44,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Consent() {
 	const classes = useStyles();
-	// const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<Card className={classes.root}>

@@ -123,7 +123,6 @@ const recordLoadStimsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims();
-		console.log("record action log ::stims loading");
 
 		dispatch({
 			type: "LOAD_STIMS",
@@ -255,15 +254,12 @@ const recordUploadAction = (dispatch) => {
 		if (audio) {
 			// Convert to wav format
 			const audioBuffer = await createAudioBuffer(audio.audioUrl);
-			let wavBlob = await audioBufferToWaveBlob(audioBuffer);
-			audio.wavBlob = wavBlob;
-
-			console.log("audio wav blob ", wavBlob);
+			audio.wavBlob = await audioBufferToWaveBlob(audioBuffer);
 
 			firebaseUserAudio(user, audio);
 			dispatch({ type: "SET_REC_DONE", payload: false });
 		} else {
-			console.log("record action log:: audio not defined");
+			console.error("record action log:: audio not defined");
 			throw new Error("Upload error");
 		}
 

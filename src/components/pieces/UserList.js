@@ -31,9 +31,7 @@ const UserList = ({ users, error, onSelect }) => {
 			userSelect[u.userId] = false;
 		});
 		selectUser(userSelect);
-		return () => {
-			console.log("user list component cleanup");
-		};
+		return () => {};
 	}, [users]);
 
 	const handleChange = (e, user) => {

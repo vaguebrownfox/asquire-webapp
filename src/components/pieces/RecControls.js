@@ -55,12 +55,10 @@ const RecControl = ({
 	};
 
 	React.useEffect(() => {
-		console.log("effect control");
 		setInstip("Click! Listen to instruction");
 		const stopPlay = () => {
 			setPlay(false);
 			setInstip("Play again...");
-			console.log("play ended");
 		};
 		const infoRefE = infoRef.current;
 		infoRefE && infoRefE?.addEventListener("ended", stopPlay);

@@ -31,7 +31,6 @@ const DeviceList = ({ type, devices, iconStart, iconEnd }) => {
 	};
 
 	const handleSelect = (dev) => {
-		console.log("Record component :: device list", dev);
 		switch (type) {
 			case "input":
 				recordSetInputAction(dev);

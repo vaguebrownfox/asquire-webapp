@@ -75,7 +75,6 @@ const Worm = ({ width, height, shape, stream }) => {
 			};
 
 			animRef.current = requestAnimationFrame(animate);
-			console.log("use effect worm", analyserNode);
 		};
 		setAnalyserNode();
 

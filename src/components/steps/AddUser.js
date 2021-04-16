@@ -37,9 +37,7 @@ const AddUserComponent = () => {
 
 	React.useEffect(() => {
 		userGetAllAction();
-		return () => {
-			console.log("Add user component cleanup");
-		};
+		return () => {};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {

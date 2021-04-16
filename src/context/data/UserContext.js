@@ -54,7 +54,6 @@ const userReducer = (state, action) => {
 };
 
 // Actions
-
 const userLoadAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "SET_LOADING", payload: true });
@@ -96,14 +95,12 @@ const userAddAction = (dispatch) => {
 		};
 
 		let uAuth = await firebaseSignUp(user.userId, user.userName); // firebase sign up
-		console.log("user action log:: fb sign up", uAuth);
 		uAuth && (user = await addUserToIdb(user));
 
 		if (uAuth && user) {
 			dispatch({ type: "ADD_USER", payload: user });
 
 			dispatch({ type: "ERROR", payload: "" });
-			console.log("user action log:: add user", user);
 			res = true;
 		} else {
 			dispatch({
@@ -126,7 +123,6 @@ const userSelectAction = (dispatch) => {
 	return (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("user action log :: select user");
 		dispatch({ type: "SELECT_USER", payload: user });
 
 		dispatch({ type: "SET_LOADING", payload: false });
@@ -162,8 +158,6 @@ const userUpdateAction = (dispatch) => {
 		user = await updateUserInIdb(user);
 		user && dispatch({ type: "SELECT_USER", payload: user });
 
-		console.log("user update action log");
-
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
 };
@@ -172,8 +166,7 @@ const userUpdateCloud = (dispatch) => {
 	return async (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		const data = await firebaseUserData(user);
-		console.log("user action log :: fb firestore", data);
+		await firebaseUserData(user);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

@@ -32,7 +32,6 @@ const Question = () => {
 	const handleRadioChange = (event) => {
 		let selectedAnswer = event.target.value;
 		setValue(selectedAnswer);
-		console.log("survey component question :: select", event.target.value);
 	};
 
 	const handleNextQuestion = () => {
@@ -41,7 +40,6 @@ const Question = () => {
 				...surveyState.currentQuestion,
 				answer: value,
 			};
-			console.log("survey component :: next ques", surveyState);
 			surveyNextQuestionAction(answeredQuestion);
 			setError("");
 		} else {
@@ -50,7 +48,6 @@ const Question = () => {
 		setValue("");
 	};
 	const handlePreviousQuestion = () => {
-		console.info("survey component :: prev ques", surveyState);
 		surveyPreviousQuestionAction();
 	};
 

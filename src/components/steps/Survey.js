@@ -81,9 +81,7 @@ const Survey = () => {
 		} else {
 			surveyLoadQuestionsAction();
 		}
-		return () => {
-			console.log("Survey component cleanup");
-		};
+		return () => {};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {

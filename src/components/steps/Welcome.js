@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
 	subtitle: {
 		fontWeight: "bold",
 	},
-	pos: {
-		marginBottom: 12,
-	},
 	consentbutton: {
 		textTransform: "none",
 		marginTop: theme.spacing(1),

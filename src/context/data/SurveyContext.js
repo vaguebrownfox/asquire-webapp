@@ -67,7 +67,6 @@ const surveyReducer = (state, action) => {
 };
 
 // Actions
-
 const surveyAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "SET_LOADING", payload: true });
@@ -83,7 +82,6 @@ const surveyLoadQuestionsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const questions = await firebaseSurvey();
-		console.log("survey action log: loading questions");
 
 		dispatch({ type: "LOAD_QUESTIONS", payload: questions });
 

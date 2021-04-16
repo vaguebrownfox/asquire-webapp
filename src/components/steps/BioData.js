@@ -10,6 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
 import { components } from "../../App";
+
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
@@ -98,9 +99,7 @@ const BioData = () => {
 				stepSetAction(1);
 			}
 		}
-		return () => {
-			console.log("Bio data component cleanup");
-		};
+		return () => {};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = async () => {
@@ -114,7 +113,6 @@ const BioData = () => {
 
 			stepNextAction();
 		}
-		console.info("bio data component next :: bio ", bio);
 	};
 
 	const handleBack = () => {
@@ -132,7 +130,6 @@ const BioData = () => {
 				break;
 			case fields[1]: // gender
 				data = r_gender.test(data) ? data : bio["gender"] || "";
-				console.log("handle inputh data", data);
 				break;
 			case fields[2]: // height
 				data = r_digit.test(data) ? data : bio["height"] || "";

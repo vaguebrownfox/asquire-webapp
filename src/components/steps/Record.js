@@ -17,8 +17,10 @@ import RecTitle from "../pieces/RecTitle";
 import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
-// import RecDevices from "../pieces/RecDevices";
 import Worm from "../pieces/Worm";
+// import RecDevices from "../pieces/RecDevices";
+
+// Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 
 export default function Record() {
@@ -53,10 +55,8 @@ export default function Record() {
 		recordLoadStimsAction(userState.selectedUser);
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
-		console.log("record step effect");
 		return () => {
 			firebaseSetActive(userState.selectedUser, "false");
-			console.log("record component cleanup");
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -82,7 +82,10 @@ export default function Record() {
 
 	const handleDone = () => {
 		const finishedStim = { ...recordState.currentStim };
-		recordUploadAction(userState.selectedUser).then(() => {
+		recordUploadAction({
+			...userState.selectedUser,
+			stimTag: finishedStim.tag,
+		}).then(() => {
 			const user = {
 				...userState.selectedUser,
 				stimCount: finishedStim.sno + 1,
@@ -171,7 +174,6 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "relative",
 		overflow: "hidden",
-		// height: theme.spacing(80),
 		background: theme.palette.background.default,
 	},
 	cardaction: {
