@@ -91,6 +91,7 @@ export const audioRecord = (audioStream) => {
 
 		// const options = { mimeType: "audio/webm" };
 		const mediaRecorder = new MediaRecorder(audioStream);
+		console.log("media recorder", mediaRecorder);
 
 		mediaRecorder.addEventListener("error", (e) => {
 			console.log("recorder Error: ", e);

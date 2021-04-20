@@ -13,6 +13,7 @@ import {
 } from "../../functions/recorder";
 import { firebaseUserAudio } from "../../functions/storage";
 
+import { batch } from "react-redux";
 // Initial State
 const recordInitialState = {
 	loading: false,
@@ -211,10 +212,13 @@ const recordStartAction = (dispatch) => {
 
 		if (isRecStart) {
 			console.log("record action log:: start record");
-			dispatch({ type: "SET_REC_DONE", payload: false });
-			dispatch({ type: "SET_REC_STATE", payload: true });
-			dispatch({ type: "SET_PLY_STATE", payload: false });
-			dispatch({ type: "SECONDS", payload: "reset" });
+			batch(() => {
+				dispatch({ type: "SET_REC_DONE", payload: false });
+				dispatch({ type: "SET_REC_STATE", payload: true });
+				dispatch({ type: "SET_PLY_STATE", payload: false });
+				dispatch({ type: "SECONDS", payload: "reset" });
+			});
+
 			interval = setInterval(() => {
 				dispatch({ type: "SECONDS", payload: "up" });
 			}, 1000);
@@ -239,9 +243,12 @@ const recordStopAction = (dispatch) => {
 		audio = await recorder.stopRecord().catch(() => null);
 
 		if (audio) {
-			dispatch({ type: "SET_REC_STATE", payload: false });
-			dispatch({ type: "SET_REC_DONE", payload: true });
-			dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
+			batch(() => {
+				dispatch({ type: "SET_REC_STATE", payload: false });
+				dispatch({ type: "SET_REC_DONE", payload: true });
+				dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
+			});
+
 			clearInterval(interval);
 		}
 

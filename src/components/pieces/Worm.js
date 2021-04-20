@@ -49,7 +49,67 @@ const Worm = ({ width, height, shape, stream }) => {
 	const animRef = React.useRef();
 	const analyserNodeRef = React.useRef(null);
 
-	const [spectrum, setSpectrum] = React.useState({});
+	const [spectrum, setSpectrum] = React.useState({ bins: [] });
+
+	const drawBin = (a, i) => {
+		const bw = Math.ceil(width / spectrum.bins.length);
+		const x = bw * i;
+		const ynorm = a / 255;
+		const r = Math.round((ynorm * height) / 6);
+		const y = height;
+		const draw = shape ? (
+			<circle
+				key={i}
+				className={classes.shape}
+				cx={x}
+				cy={y - r}
+				r={r}
+				fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+			/>
+		) : (
+			<rect
+				key={i}
+				className={classes.shape}
+				x={x}
+				y={height - r}
+				width={bw}
+				height={r}
+				fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+			/>
+		);
+		return draw;
+	};
+	const drawBinCB = React.useCallback(
+		(a, i) => {
+			const bw = Math.ceil(width / spectrum.bins.length);
+			const x = bw * i;
+			const ynorm = a / 255;
+			const r = Math.round((ynorm * height) / 6);
+			const y = height;
+			const draw = shape ? (
+				<circle
+					key={i}
+					className={classes.shape}
+					cx={x}
+					cy={y - r}
+					r={r}
+					fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+				/>
+			) : (
+				<rect
+					key={i}
+					className={classes.shape}
+					x={x}
+					y={height - r}
+					width={bw}
+					height={r}
+					fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
+				/>
+			);
+			return draw;
+		},
+		[spectrum]
+	);
 
 	React.useEffect(() => {
 		let analyserNode;
@@ -58,23 +118,26 @@ const Worm = ({ width, height, shape, stream }) => {
 			analyserNode = analyserNodeRef.current;
 
 			const animate = () => {
-				const bufferLength = analyserNode.frequencyBinCount;
-				const dataArrayBuffer = new Uint8Array(bufferLength);
-				analyserNode.getByteFrequencyData(dataArrayBuffer);
-
-				let dataArray = [...dataArrayBuffer].slice(
-					0,
-					Math.floor(bufferLength / 3)
-				);
-
-				// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
-
-				setSpectrum({ bins: dataArray });
-
 				animRef.current = requestAnimationFrame(animate);
+
+				if (analyserNode) {
+					const bufferLength = analyserNode.frequencyBinCount;
+					const dataArrayBuffer = new Uint8Array(bufferLength);
+					analyserNode.getByteFrequencyData(dataArrayBuffer);
+
+					// let dataArray = [...dataArrayBuffer].slice(
+					// 	0,
+					// 	Math.floor(bufferLength / 3)
+					// );
+
+					// dataArray = dataArray.map((d) => (d < 255 / 70 ? 0 : d));
+
+					setSpectrum({ bins: [...dataArrayBuffer] });
+				}
 			};
 
 			animRef.current = requestAnimationFrame(animate);
+			console.log("worm effect");
 		};
 		setAnalyserNode();
 
@@ -88,35 +151,7 @@ const Worm = ({ width, height, shape, stream }) => {
 		<>
 			<div className={classes.root}>
 				<svg className={classes.visualizer}>
-					{spectrum.bins &&
-						spectrum.bins.map((a, i) => {
-							const bw = Math.ceil(width / spectrum.bins.length);
-							const x = bw * i;
-							const ynorm = a / 255;
-							const r = Math.round((ynorm * height) / 6);
-							const y = height;
-							const draw = shape ? (
-								<circle
-									key={`${i}-circle`}
-									className={classes.shape}
-									cx={x}
-									cy={y - r}
-									r={r}
-									fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
-								/>
-							) : (
-								<rect
-									key={`${i}-rect`}
-									className={classes.shape}
-									x={x}
-									y={height - r}
-									width={bw}
-									height={r}
-									fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
-								/>
-							);
-							return draw;
-						})}
+					{spectrum.bins && spectrum.bins.map(drawBinCB)}
 				</svg>
 			</div>
 		</>
