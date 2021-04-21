@@ -26,7 +26,8 @@ firebaseConfig.js
 
 .firebase/hosting.YnVpbGQ.cache
 
-firebaseAdmin.js
+# firebaseAdminFunctions.js
+firebaseServiceConfig.json
 fbAdminConfig.json
 firebase-debug.log
-firebaseService.json
+fetch

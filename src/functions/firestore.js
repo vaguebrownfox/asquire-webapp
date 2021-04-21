@@ -21,7 +21,7 @@ export const firebaseSurvey = async () => {
 };
 
 export const firebaseStims = async () => {
-	const docRefSurvey = db.collection("content2").doc("stimuli");
+	const docRefSurvey = db.collection("content2").doc("stimuli2");
 	const stimuli = (await docRefSurvey.get()).data();
 	return stimuli;
 };
