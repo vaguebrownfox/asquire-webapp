@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "none",
 	},
 }));
+
 const RecControl = ({
 	handleRecord,
 	handleDone,
@@ -120,7 +121,7 @@ const RecControl = ({
 				onClick={handleDone}
 				disabled={!recDone || play}
 			>
-				<Tooltip title="Done">
+				<Tooltip open={recDone} title="Done? Next task >>">
 					<DoneIcon className={classes.controlIcon} />
 				</Tooltip>
 			</IconButton>

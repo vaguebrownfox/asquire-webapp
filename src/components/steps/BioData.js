@@ -180,6 +180,13 @@ const BioData = () => {
 							color="secondary"
 							value={bio.age || ""}
 							onChange={(e) => handleInputs(fields[0], e)}
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="start">
+										years
+									</InputAdornment>
+								),
+							}}
 						/>
 						<TextField
 							id="bio-input-gender"
