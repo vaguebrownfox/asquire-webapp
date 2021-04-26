@@ -82,6 +82,7 @@ export const getAudioInputStream = async (device) => {
 		})
 		.catch((err) => {
 			console.error("asq::recorder:: get input devices error", err);
+			alert("Microphone access denied or browser not supported");
 			return null;
 		});
 
@@ -225,8 +226,9 @@ export const setupContext = async (stream) => {
 	const audioContext = new AudioContext();
 	const analyserNode = new AnalyserNode(audioContext, {
 		fftSize: 1024,
-		// minDecibels: -111,
-		// smoothingTimeConstant: 0.8,
+		minDecibels: -100,
+		maxDecibels: 0,
+		smoothingTimeConstant: 0.8,
 	});
 
 	// const stream = await getAudioInputStream();

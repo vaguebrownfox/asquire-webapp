@@ -77,7 +77,7 @@ const Worm = ({ width, height, shape, analyserNode }) => {
 			);
 			return draw;
 		},
-		[spectrum]
+		[spectrum] // eslint-disable-line react-hooks/exhaustive-deps
 	);
 
 	React.useEffect(() => {
@@ -108,9 +108,8 @@ const Worm = ({ width, height, shape, analyserNode }) => {
 
 		return () => {
 			cancelAnimationFrame(animRef.current);
-			analyserNode.disconnect();
 		};
-	}, [analyserNode]);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>

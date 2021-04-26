@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	msg: {
 		height: theme.spacing(2),
+		marginBottom: theme.spacing(2),
 	},
 	recButton: {
 		borderWidth: 4,
@@ -103,6 +104,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const sampleAudioPath = "/impulse/breath.WAV";
+
 export default function Finish() {
 	const classes = useStyles();
 	const {
@@ -148,25 +151,28 @@ export default function Finish() {
 
 	const handleTransform = async (type) => {
 		console.log("transforming");
+		let url;
 		if (recordState.playUrl !== "") {
-			if (play) {
-				playerRef.current.pause();
-				setPlay(false);
-			} else {
-				setMsg("processing...");
-				await voiceTransformAction(recordState.playUrl, type);
-				setMsg("");
-				playerRef.current.play();
-				playerRef.current.addEventListener("ended", () => {
-					setPlay(false);
-				});
-				setPlay(true);
-			}
+			url = recordState.playUrl;
 		} else {
+			url = sampleAudioPath;
 			setMsg("Record your voice before transformation!");
 			setTimeout(() => {
 				setMsg("");
 			}, 7 * 1000);
+		}
+		if (play) {
+			playerRef.current.pause();
+			setPlay(false);
+		} else {
+			setMsg("processing...");
+			await voiceTransformAction(url, type);
+			setMsg("");
+			playerRef.current.play();
+			playerRef.current.addEventListener("ended", () => {
+				setPlay(false);
+			});
+			setPlay(true);
 		}
 	};
 
@@ -176,13 +182,6 @@ export default function Finish() {
 			recordResetAction();
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-	// React.useLayoutEffect(() => {
-	// 	recordGetDevicesAction();
-	// 	return () => {
-	// 		console.log("voice cleanup layout");
-	// 	};
-	// }, []);
 
 	const { width, height } = useContainerDimensions(vizRef, recordState);
 
@@ -194,7 +193,7 @@ export default function Finish() {
 						width,
 						height,
 						shape: "circle",
-						stream: recordState.inputStream,
+						analyserNode: recordState.analyserNode,
 					}}
 				/>
 			)}

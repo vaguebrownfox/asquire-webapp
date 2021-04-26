@@ -58,6 +58,7 @@ export default function Record() {
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
 		return () => {
+			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
 		};

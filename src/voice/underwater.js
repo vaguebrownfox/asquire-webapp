@@ -25,7 +25,7 @@ export const underwaterTransform = async (audioBuffer) => {
 	);
 	underwater.loop = true;
 	let underwaterGain = ctx.createGain();
-	underwaterGain.gain.value = 0.2;
+	underwaterGain.gain.value = 0.5;
 
 	let tuna = new Tuna(ctx);
 	var effect = new tuna.WahWah({
