@@ -130,6 +130,7 @@ export default function Finish() {
 		if (!recordState.inputStream) {
 			await recordGetDevicesAction();
 		}
+
 		if (play) {
 			playerRef.current.pause();
 			setPlay(false);
@@ -138,14 +139,14 @@ export default function Finish() {
 		if (recordState.isRecording) {
 			clearInterval(timeoutRef.current);
 			recordStopAction();
-		} else {
-			!recordState.inputStream && setMsg("click again");
-			recordState.inputStream && setMsg("");
-
+		} else if (recordState.inputStream) {
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
 			}, 21 * 1000);
+			recordState.inputStream && setMsg("");
+		} else {
+			setMsg("click again");
 		}
 	};
 

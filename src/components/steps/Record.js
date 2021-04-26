@@ -202,7 +202,10 @@ const useStyles = makeStyles((theme) => ({
 		transform: "scale(0.8)",
 	},
 	playerDiv: {
-		height: theme.spacing(8),
+		display: "flex",
+		alignItems: "flex-end",
+		height: theme.spacing(12),
+		paddingBottom: theme.spacing(2),
 	},
 	inshelp: {
 		color: theme.palette.secondary.main,

@@ -4,6 +4,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import { Avatar, CardActions, Tooltip } from "@material-ui/core";
 
 import { components } from "../../App";
 
@@ -47,6 +49,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 	actionsContainer: {
 		marginTop: theme.spacing(2),
+	},
+	avatar: {
+		width: theme.spacing(6),
+		height: theme.spacing(6),
+		background: theme.palette.background.default,
+		// borderWidth: 1,
+		// borderColor: theme.palette.primary.contrastText,
+	},
+	avalink: {
+		// borderWidth: 0,
+	},
+	avagroup: {
+		marginRight: theme.spacing(2),
 	},
 }));
 
@@ -163,9 +178,27 @@ const AboutProject = () => {
 						</Button>
 					</div>
 				</CardContent>
-				{/* <CardActions className={classes.cardactions}>
-					<Button size="small">Learn More</Button>
-				</CardActions> */}
+				<CardActions className={classes.cardactions}>
+					<AvatarGroup max={4} className={classes.avagroup}>
+						<Tooltip title="Chrome">
+							<Avatar
+								alt="Spire lab logo"
+								variant="circular"
+								src={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fchrome-logo.svg?alt=media&token=57d33dbf-6aa6-46ff-9c4f-063e70eb90b9`}
+								className={classes.avatar}
+							/>
+						</Tooltip>
+						<Tooltip title="Firefox">
+							<Avatar
+								alt="IISc logo"
+								variant="circular"
+								src={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Ffirefox-logo.png?alt=media&token=7a7c757d-3a5d-4fbc-8bed-3fa269173068`}
+								className={classes.avatar}
+								href="https://iisc.ac.in/"
+							/>
+						</Tooltip>
+					</AvatarGroup>
+				</CardActions>
 			</Card>
 			<div className={classes.actionsContainer}>
 				<div>

@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: theme.spacing(1),
 	},
 }));
+
+const imageDef = `https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fdefault.jpeg?alt=media&token=027fb68e-9a70-4cbc-86de-b64cd7363a26`;
+
 const StimContent = ({ stim }) => {
 	const classes = useStyles();
 
@@ -22,12 +25,11 @@ const StimContent = ({ stim }) => {
 				</div>
 			)}
 			<Typography variant="h6" color="textPrimary" gutterBottom>
-				{stim.description}
+				{stim?.description}
 			</Typography>
-
 			<CardMedia
 				className={classes.media}
-				image={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fdefault.jpeg?alt=media&token=027fb68e-9a70-4cbc-86de-b64cd7363a26`}
+				image={imageDef}
 				title="Stimulus image"
 			/>
 		</>

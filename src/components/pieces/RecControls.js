@@ -50,7 +50,7 @@ const RecControl = ({
 			<audio
 				ref={infoRef}
 				className={classes.player}
-				src={stim.audioDescriptionLink}
+				src={stim?.audioDescriptionLink}
 				controls
 			/>
 			<IconButton
