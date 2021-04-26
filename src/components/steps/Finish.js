@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const sampleAudioPath = "/impulse/breath.WAV";
+const sampleAudioPath = "/impulse/breath.wav";
 
 export default function Finish() {
 	const classes = useStyles();
