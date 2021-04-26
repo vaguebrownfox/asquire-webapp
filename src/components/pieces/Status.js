@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { activeQuery } from "../../functions/firestore";
+import { CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -36,10 +37,16 @@ const useStyles = makeStyles((theme) => ({
 	span: {
 		display: "flex",
 		justifyContent: "center",
+		alignItems: "center",
 		textDecoration: "none",
 		textTransform: "none",
 		width: "100%",
 		height: "100%",
+	},
+	progress: {
+		display: "flex",
+
+		alignItems: "center",
 	},
 }));
 
@@ -85,13 +92,21 @@ export default function Status() {
 							variant="outlined"
 							color="secondary"
 						>
-							<Button
-								className={classes.value}
-								color="secondary"
-								variant="text"
-							>
-								{users?.length}
-							</Button>
+							{users?.length ? (
+								<Button
+									className={classes.value}
+									color="secondary"
+									variant="text"
+								>
+									{users?.length}
+								</Button>
+							) : (
+								<CircularProgress
+									className={classes.progress}
+									color="secondary"
+									size={16}
+								/>
+							)}
 							<Typography
 								className={classes.key}
 								color="textPrimary"

@@ -113,7 +113,7 @@ export default function Record() {
 							width,
 							height,
 							shape,
-							stream: recordState.inputStream,
+							analyserNode: recordState.analyserNode,
 						}}
 					/>
 				)}

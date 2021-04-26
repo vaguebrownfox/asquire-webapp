@@ -1,8 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { setupContext } from "../../functions/recorder";
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "absolute",
@@ -44,41 +42,12 @@ const useStyles = makeStyles((theme) => ({
 		// stroke: "black",
 	},
 }));
-const Worm = ({ width, height, shape, stream }) => {
+const Worm = ({ width, height, shape, analyserNode }) => {
 	const classes = useStyles();
 	const animRef = React.useRef();
-	const analyserNodeRef = React.useRef(null);
 
 	const [spectrum, setSpectrum] = React.useState({ bins: [] });
 
-	const drawBin = (a, i) => {
-		const bw = Math.ceil(width / spectrum.bins.length);
-		const x = bw * i;
-		const ynorm = a / 255;
-		const r = Math.round((ynorm * height) / 6);
-		const y = height;
-		const draw = shape ? (
-			<circle
-				key={i}
-				className={classes.shape}
-				cx={x}
-				cy={y - r}
-				r={r}
-				fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
-			/>
-		) : (
-			<rect
-				key={i}
-				className={classes.shape}
-				x={x}
-				y={height - r}
-				width={bw}
-				height={r}
-				fill={`hsl(${70 * ynorm}deg, 70%, 50%`}
-			/>
-		);
-		return draw;
-	};
 	const drawBinCB = React.useCallback(
 		(a, i) => {
 			const bw = Math.ceil(width / spectrum.bins.length);
@@ -112,11 +81,7 @@ const Worm = ({ width, height, shape, stream }) => {
 	);
 
 	React.useEffect(() => {
-		let analyserNode;
 		const setAnalyserNode = async () => {
-			analyserNodeRef.current = await setupContext(stream);
-			analyserNode = analyserNodeRef.current;
-
 			const animate = () => {
 				animRef.current = requestAnimationFrame(animate);
 
@@ -145,7 +110,7 @@ const Worm = ({ width, height, shape, stream }) => {
 			cancelAnimationFrame(animRef.current);
 			analyserNode.disconnect();
 		};
-	}, [stream]);
+	}, [analyserNode]);
 
 	return (
 		<>

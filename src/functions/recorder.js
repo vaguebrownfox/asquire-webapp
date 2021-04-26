@@ -40,7 +40,11 @@ export const getAudioInputDevices = async () => {
 			return null;
 		});
 	const audioInputStream = await getAudioInputStream(audioDevices[0]);
-	return { audioDevices, audioInputStream };
+
+	let analyserNode = null;
+	audioInputStream && (analyserNode = await setupContext(audioInputStream));
+
+	return { audioDevices, audioInputStream, analyserNode };
 };
 
 export const getAudioOutputDevices = async () => {
@@ -80,6 +84,7 @@ export const getAudioInputStream = async (device) => {
 			console.error("asq::recorder:: get input devices error", err);
 			return null;
 		});
+
 	return audioStream;
 };
 

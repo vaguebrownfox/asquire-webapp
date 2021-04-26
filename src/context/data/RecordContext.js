@@ -64,6 +64,7 @@ const recordReducer = (state, action) => {
 				inputDevice: action.payload.inputDevices[0],
 				outputDevice: action.payload.outputDevices[0],
 				inputStream: action.payload.audioInputStream,
+				analyserNode: action.payload.analyserNode,
 			};
 		case "SET_INPUT_DEVICE":
 			return {
@@ -110,7 +111,6 @@ const recordReducer = (state, action) => {
 };
 
 // Actions
-
 const recordLoadAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "SET_LOADING", payload: true });
@@ -154,13 +154,21 @@ const recordGetDevicesAction = (dispatch) => {
 		const {
 			audioDevices: inputDevices,
 			audioInputStream,
+			analyserNode,
 		} = await getAudioInputDevices();
 		const outputDevices = await getAudioOutputDevices();
 
 		dispatch({
 			type: "GET_DEVICES",
-			payload: { inputDevices, outputDevices, audioInputStream },
+			payload: {
+				inputDevices,
+				outputDevices,
+				audioInputStream,
+				analyserNode,
+			},
 		});
+
+		console.log("record context ::get devices");
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
