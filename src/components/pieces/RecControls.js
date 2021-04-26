@@ -6,47 +6,6 @@ import RecordStopIcon from "@material-ui/icons/MicOff";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import DoneIcon from "@material-ui/icons/Done";
 
-const useStyles = makeStyles((theme) => ({
-	controls: {
-		display: "flex",
-		alignItems: "center",
-		width: "100%",
-		maxWidth: theme.spacing(64),
-		justifyContent: "space-evenly",
-		paddingLeft: theme.spacing(1),
-		paddingBottom: theme.spacing(1),
-	},
-	controlIcon: {
-		height: 38,
-		width: 38,
-
-		"&:hover": {
-			transform: "scale(1.1)",
-			cursor: "crosshair",
-		},
-	},
-	controlIconAction: {
-		height: 38,
-		width: 38,
-
-		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
-	},
-	"@keyframes zoomies": {
-		"0%": {
-			transform: "scale(1)",
-		},
-		"50%": {
-			transform: "scale(1.1)",
-		},
-		"100%": {
-			transform: "scale(1)",
-		},
-	},
-	player: {
-		display: "none",
-	},
-}));
-
 const RecControl = ({
 	handleRecord,
 	handleDone,
@@ -128,5 +87,46 @@ const RecControl = ({
 		</div>
 	);
 };
+
+const useStyles = makeStyles((theme) => ({
+	controls: {
+		display: "flex",
+		alignItems: "center",
+		width: "100%",
+		maxWidth: theme.spacing(64),
+		justifyContent: "space-evenly",
+		paddingLeft: theme.spacing(1),
+		paddingBottom: theme.spacing(1),
+	},
+	controlIcon: {
+		height: 38,
+		width: 38,
+
+		"&:hover": {
+			transform: "scale(1.1)",
+			cursor: "crosshair",
+		},
+	},
+	controlIconAction: {
+		height: 38,
+		width: 38,
+
+		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
+	},
+	"@keyframes zoomies": {
+		"0%": {
+			transform: "scale(1)",
+		},
+		"50%": {
+			transform: "scale(1.1)",
+		},
+		"100%": {
+			transform: "scale(1)",
+		},
+	},
+	player: {
+		display: "none",
+	},
+}));
 
 export default RecControl;
