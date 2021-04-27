@@ -7,7 +7,7 @@ export const USERS_STORE = "users";
 
 const idb = {
 	userIdb: openDB(IDB, VERSION, {
-		upgrade(db) {
+		upgrade(db, oldVersion, newVersion, transaction) {
 			db.createObjectStore(USERS_STORE);
 		},
 	}),
@@ -30,12 +30,16 @@ export const addUserToIdb = async (user) => {
 
 export const getAllUsersFromIdb = async () => {
 	const db = await idb.userIdb;
-	const users = await db.getAll(USERS_STORE);
+	const transaction = db.transaction(USERS_STORE, "readwrite");
+
+	// const users = await db.getAll(USERS_STORE);
+	const users = await transaction.store.getAll(); //.getAll(USERS_STORE);
 	return users;
 };
 
 export const updateUserInIdb = async (user) => {
 	const db = await idb.userIdb;
+
 	user = await db
 		.delete(USERS_STORE, user.userName)
 		.then(() => addUserToIdb(user))

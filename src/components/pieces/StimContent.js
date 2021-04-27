@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const imageDef = `https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fdefault.jpeg?alt=media&token=027fb68e-9a70-4cbc-86de-b64cd7363a26`;
-
+// const imageDef = `https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fdefault.jpeg?alt=media&token=027fb68e-9a70-4cbc-86de-b64cd7363a26`;
+const imageIns = `https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_images%2Fstim-image.png?alt=media&token=a7cb7276-2fc5-435f-9ce5-e8286c6da4bf`;
 const StimContent = ({ stim }) => {
 	const classes = useStyles();
 
@@ -29,7 +29,7 @@ const StimContent = ({ stim }) => {
 			</Typography>
 			<CardMedia
 				className={classes.media}
-				image={imageDef}
+				image={imageIns}
 				title="Stimulus image"
 			/>
 		</>

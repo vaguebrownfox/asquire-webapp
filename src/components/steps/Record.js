@@ -204,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
 	playerDiv: {
 		display: "flex",
 		alignItems: "flex-end",
-		height: theme.spacing(12),
+		height: theme.spacing(10),
 		paddingBottom: theme.spacing(2),
 	},
 	inshelp: {
