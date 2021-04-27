@@ -2,16 +2,18 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./firebaseServiceConfig.json");
 
 const {
+	DATABASE_URL,
 	CONTENT_COLLECTION,
 	STIM_DOC,
 	SURVEY_DOC,
+	STORAGE_BUCKET,
 	INSTRUCTION_AUDIO_FOLDER,
 } = require("./firebaseConfig");
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
-	databaseURL: "https://asquire-ch3oh.firebaseio.com",
-	storageBucket: "asquire-ch3oh.appspot.com",
+	databaseURL: DATABASE_URL,
+	storageBucket: STORAGE_BUCKET,
 });
 
 const db = admin.firestore();
@@ -19,7 +21,7 @@ const stor = admin.storage();
 const bucket = stor.bucket();
 
 const setSurveyQuestions = async () => {
-	const questionRef = db.collection(CONTENT_COLLECTION).doc(STIM_DOC);
+	const questionRef = db.collection(CONTENT_COLLECTION).doc(SURVEY_DOC);
 	const { questions } = require("../fetch/questions");
 
 	if (questions) {
@@ -31,7 +33,7 @@ const setSurveyQuestions = async () => {
 };
 
 const setStims = async () => {
-	const stimRef = db.collection(CONTENT_COLLECTION).doc(SURVEY_DOC);
+	const stimRef = db.collection(CONTENT_COLLECTION).doc(STIM_DOC);
 	const { stimulus } = require("../fetch/stimulus");
 
 	const data = await bucket.getFiles({ prefix: INSTRUCTION_AUDIO_FOLDER });

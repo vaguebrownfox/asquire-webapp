@@ -5,9 +5,9 @@ const { reverseTimeTransform } = require("./reverseTime");
 
 export const txDetes = [
 	{
-		name: "Anon",
+		name: "Anonymous",
 		key: "anon",
-		description: "Threaten someone?",
+		description: "Distorted voice",
 	},
 	{
 		name: "Maelstrom",

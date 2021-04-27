@@ -27,7 +27,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"serve": "serve -s build"
+		"serve": "serve -s build",
+		"admin": "node src/functions/firebaseAdminFunctions.js"
 	},
 	"eslintConfig": {
 		"extends": [

@@ -30,4 +30,4 @@ firebaseConfig.js
 firebaseServiceConfig.json
 fbAdminConfig.json
 firebase-debug.log
-fetch
+# fetch

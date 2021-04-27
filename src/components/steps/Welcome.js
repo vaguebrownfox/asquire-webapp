@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(2),
 	},
 	avatar: {
-		width: theme.spacing(6),
-		height: theme.spacing(6),
+		width: theme.spacing(4),
+		height: theme.spacing(4),
 		background: theme.palette.background.default,
 		// borderWidth: 1,
 		// borderColor: theme.palette.primary.contrastText,
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	avagroup: {
 		marginRight: theme.spacing(2),
+		marginLeft: theme.spacing(2),
 	},
 }));
 
@@ -203,6 +204,13 @@ const AboutProject = () => {
 							/>
 						</Tooltip>
 					</AvatarGroup>
+					<Typography
+						color="textSecondary"
+						variant="caption"
+						component="div"
+					>
+						Use Chrome or Firefox
+					</Typography>
 				</CardActions>
 			</Card>
 			<div className={classes.actionsContainer}>
