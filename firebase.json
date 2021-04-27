@@ -1,6 +1,5 @@
 {
 	"hosting": {
-		"site": "asquire-neon",
 		"public": "build",
 		"rewrites": [
 			{
