@@ -16,6 +16,8 @@ import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Button, ButtonGroup, Tooltip } from "@material-ui/core";
 
+import { spire_logo_url, iisc_logo_url } from "../functions/firebaseConfig";
+
 const useStyles = makeStyles((theme) => ({
 	grow: {
 		flexGrow: 1,
@@ -260,15 +262,16 @@ function AsqAppBar({ title, history }) {
 							<Avatar
 								alt="Spire lab logo"
 								variant="circular"
-								src="https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fspire_logo_sq.png?alt=media&token=ea586ef3-d9ea-420c-8c1b-db3130855672"
+								src={spire_logo_url}
 								className={classes.avatar}
+								href="https://spire.ee.iisc.ac.in/spire/index.php"
 							/>
 						</Tooltip>
 						<Tooltip title="IISc Bangalore">
 							<Avatar
 								alt="IISc logo"
 								variant="circular"
-								src="https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fiisc_logo_sq.png?alt=media&token=2440a351-e45b-4197-9bb3-eb342c0ac39a"
+								src={iisc_logo_url}
 								className={classes.avatar}
 								href="https://iisc.ac.in/"
 							/>

@@ -1,6 +1,12 @@
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
+const serviceAccount = require("./firebaseServiceConfig.json");
 
-var serviceAccount = require("./firebaseServiceConfig.json");
+const {
+	CONTENT_COLLECTION,
+	STIM_DOC,
+	SURVEY_DOC,
+	INSTRUCTION_AUDIO_FOLDER,
+} = require("./firebaseConfig");
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
@@ -13,28 +19,29 @@ const stor = admin.storage();
 const bucket = stor.bucket();
 
 const setSurveyQuestions = async () => {
-	const questionRef = db.collection("content2").doc("survey");
-	const { questions } = require("../fetch/questionsObj");
+	const questionRef = db.collection(CONTENT_COLLECTION).doc(STIM_DOC);
+	const { questions } = require("../fetch/questions");
 
 	if (questions) {
 		await questionRef.set(questions);
+		console.log("Done uploading questions");
+	} else {
+		console.log("Faled to upload questions");
 	}
-
-	console.log("Done uploading questions");
 };
 
 const setStims = async () => {
-	const stimRef = db.collection("content2").doc("stimuli2");
+	const stimRef = db.collection(CONTENT_COLLECTION).doc(SURVEY_DOC);
 	const { stimulus } = require("../fetch/stimulus");
 
-	const data = await bucket.getFiles({ prefix: "instructions_audio2/" });
+	const data = await bucket.getFiles({ prefix: INSTRUCTION_AUDIO_FOLDER });
 
 	let files = data[0];
 	let stimsUrls = {};
 
 	for (let file of files) {
 		let url = await file
-			.getSignedUrl({ action: "read", expires: "03-17-2025" })
+			.getSignedUrl({ action: "read", expires: "04-19-2025" })
 			.catch((err) => console.log("url error", err));
 
 		let name = file.name.replace(/^.*[\\\/]/, "").slice(0, -4);
@@ -53,5 +60,5 @@ const setStims = async () => {
 	}
 };
 
-// setSurveyQuestions();
+setSurveyQuestions();
 setStims();

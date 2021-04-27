@@ -1,11 +1,12 @@
 import { stor } from "./firebase";
-const DATA_FOLDER = "data0x0cTest2";
+import { AUDIO_DATA_FOLDER, PROJECT_ID } from "./firebaseConfig";
 
 const storageRef = stor.ref();
 
 export const firebaseUserAudio = (user, audio) => {
-	const userAudioRef = storageRef.child(DATA_FOLDER);
-	const filename = `webapp-${user.userId}-${user.stimTag}-${user.stimCount}-asquire.wav`;
+	const userAudioRef = storageRef.child(AUDIO_DATA_FOLDER);
+	const filename = `webapp-${user.userId}-${user.stimTag}-${user.stimCount}-${PROJECT_ID}.wav`;
+
 	userAudioRef
 		.child(filename)
 		.put(audio.wavBlob)

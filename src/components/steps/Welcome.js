@@ -9,6 +9,11 @@ import { Avatar, CardActions, Tooltip } from "@material-ui/core";
 
 import { components } from "../../App";
 
+import {
+	chrome_logo_url,
+	firefox_logo_url,
+} from "../../functions/firebaseConfig";
+
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
 
@@ -182,17 +187,17 @@ const AboutProject = () => {
 					<AvatarGroup max={4} className={classes.avagroup}>
 						<Tooltip title="Chrome">
 							<Avatar
-								alt="Spire lab logo"
+								alt="Chrome logo"
 								variant="circular"
-								src={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fchrome-logo.svg?alt=media&token=57d33dbf-6aa6-46ff-9c4f-063e70eb90b9`}
+								src={chrome_logo_url}
 								className={classes.avatar}
 							/>
 						</Tooltip>
 						<Tooltip title="Firefox">
 							<Avatar
-								alt="IISc logo"
+								alt="Firefox logo"
 								variant="circular"
-								src={`https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Ffirefox-logo.png?alt=media&token=7a7c757d-3a5d-4fbc-8bed-3fa269173068`}
+								src={firefox_logo_url}
 								className={classes.avatar}
 								href="https://iisc.ac.in/"
 							/>
