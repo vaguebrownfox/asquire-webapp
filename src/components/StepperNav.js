@@ -14,7 +14,8 @@ import { Context as StepContext } from "../context/data/StepContext";
 
 // Pieces
 import Status from "./pieces/Status";
-const Finish = React.lazy(() => import("./steps/Finish"));
+import Finish from "./steps/Finish";
+// const Finish = React.lazy(() => import("./steps/Finish"));
 
 export default function VerticalLinearStepper({ components }) {
 	const classes = useStyles();

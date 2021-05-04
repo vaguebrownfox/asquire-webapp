@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import { FormHelperText, IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Adjust";
 import RecordStopIcon from "@material-ui/icons/Album";
-
 import Chip from "@material-ui/core/Chip";
 import BlurOn from "@material-ui/icons/BlurOn";
 import LockIcon from "@material-ui/icons/Lock";
@@ -17,8 +16,8 @@ import { Context as RecordContext } from "../../context/data/RecordContext";
 import { Context as VoiceContext } from "../../context/data/VoiceContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 
-import Timer from "../pieces/Timer";
 import useContainerDimensions from "../../hooks/useContainerDimensions";
+import Timer from "../pieces/Timer";
 import Worm from "../pieces/Worm";
 
 const useStyles = makeStyles((theme) => ({
