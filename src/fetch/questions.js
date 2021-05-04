@@ -165,12 +165,24 @@ const questions = {
 		qno: 27,
 		question: "Any other health problems?",
 		options: ["Yes", "No"],
-		nextQnos: [28, -1],
+		nextQnos: [28, 29],
 	},
 	28: {
 		qno: 28,
 		question: "What health problems?",
 		options: [],
+		nextQnos: [29],
+	},
+	29: {
+		qno: 29,
+		question: "Are you currently COVID-19 positive?",
+		options: ["Yes", "No"],
+		nextQnos: [30],
+	},
+	30: {
+		qno: 30,
+		question: "Have you been COVID-19 positive in last 15 days?",
+		options: ["Yes", "No"],
 		nextQnos: [-1],
 	},
 };
