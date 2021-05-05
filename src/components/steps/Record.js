@@ -141,6 +141,7 @@ export default function Record() {
 						<div className={classes.playerDiv}>
 							{recordState.recDone && (
 								<audio
+									id="stim-player"
 									className={classes.player}
 									src={recordState.playUrl}
 									controls

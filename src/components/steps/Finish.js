@@ -25,11 +25,7 @@ const useStyles = makeStyles((theme) => ({
 		position: "relative",
 		background: theme.palette.background.default,
 	},
-	bullet: {
-		display: "inline-block",
-		margin: "0 2px",
-		transform: "scale(0.8)",
-	},
+
 	title: {
 		fontSize: 14,
 	},
@@ -39,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 	player: {
 		width: 0,
 		height: 0,
+		margin: theme.spacing(1),
 	},
 	chipDiv: {
 		display: "flex",
@@ -99,6 +96,15 @@ const useStyles = makeStyles((theme) => ({
 		},
 		to: {
 			transform: "rotate(360deg)",
+		},
+	},
+	bullet: {
+		display: "inline-block",
+		margin: "0 2px",
+		cursor: "crosshair",
+		transform: "scale(1.55)",
+		"&:hover": {
+			transform: "scale(2)",
 		},
 	},
 }));
@@ -186,6 +192,12 @@ export default function Finish() {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const { width, height } = useContainerDimensions(vizRef, recordState);
+	const [unlock, setUnlock] = React.useState(false);
+	const bull = (
+		<span className={classes.bullet} onClick={() => setUnlock(!unlock)}>
+			•
+		</span>
+	);
 
 	return (
 		<Card ref={vizRef} className={classes.root} elevation={8}>
@@ -245,6 +257,7 @@ export default function Finish() {
 				</FormHelperText>
 
 				<audio
+					id="transform-player"
 					ref={playerRef}
 					className={classes.player}
 					src={voiceState.playUrl}
@@ -252,31 +265,34 @@ export default function Finish() {
 				/>
 
 				<div className={classes.chipDiv}>
-					{voiceState.txDetes.map((v, i) => (
-						<Tooltip key={i} title={v.description}>
-							<Chip
-								className={classes.chip}
-								disabled={
-									recordState.isRecording ||
-									i >= userState.selectedUser.stimCount
-								}
-								icon={
-									i >= userState.selectedUser.stimCount ? (
-										<LockIcon />
-									) : (
-										<BlurOn />
-									)
-								}
-								color="secondary"
-								variant="outlined"
-								label={v.name}
-								onClick={() => handleTransform(v.key)}
-								onDelete={() => handleTransform(v.key)}
-								// avatar={<Avatar>{v.name[0]}</Avatar>}
-								deleteIcon={<PlayIcon />}
-							/>
-						</Tooltip>
-					))}
+					{voiceState.txDetes.map((v, i) => {
+						const a = unlock;
+						const b = recordState.isRecording;
+						const c = i >= userState.selectedUser.stimCount;
+						return (
+							<Tooltip key={i} title={v.description}>
+								<Chip
+									className={classes.chip}
+									disabled={b || (!a && c)}
+									icon={
+										i >= userState.selectedUser.stimCount &&
+										!unlock ? (
+											<LockIcon />
+										) : (
+											<BlurOn />
+										)
+									}
+									color="secondary"
+									variant="outlined"
+									label={v.name}
+									onClick={() => handleTransform(v.key)}
+									onDelete={() => handleTransform(v.key)}
+									// avatar={<Avatar>{v.name[0]}</Avatar>}
+									deleteIcon={<PlayIcon />}
+								/>
+							</Tooltip>
+						);
+					})}
 				</div>
 				<Typography
 					color="textSecondary"
@@ -287,6 +303,7 @@ export default function Finish() {
 						"::Record yourself saying something and click on any button!"
 					}
 				</Typography>
+				{bull}
 			</CardContent>
 		</Card>
 	);
