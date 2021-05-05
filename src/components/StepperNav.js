@@ -19,7 +19,11 @@ import Finish from "./steps/Finish";
 
 export default function VerticalLinearStepper({ components }) {
 	const classes = useStyles();
-	const { state: stepState, stepSetAction } = React.useContext(StepContext);
+	const {
+		state: stepState,
+		stepSetAction,
+		stepPreviousAction,
+	} = React.useContext(StepContext);
 
 	React.useEffect(() => {
 		return () => {
@@ -28,7 +32,11 @@ export default function VerticalLinearStepper({ components }) {
 	});
 
 	const handleReset = () => {
-		stepSetAction(0);
+		stepSetAction(1);
+	};
+
+	const handleBack = () => {
+		stepPreviousAction();
 	};
 
 	return (
@@ -68,13 +76,22 @@ export default function VerticalLinearStepper({ components }) {
 
 			{stepState.activeStep === components.length && (
 				<Paper square elevation={0} className={classes.resetContainer}>
-					<React.Suspense
+					{/* <React.Suspense
 						fallback={
 							<CircularProgress color="secondary" size={28} />
 						}
+					> */}
+					<Finish />
+					{/* </React.Suspense> */}
+					<Button
+						variant="contained"
+						color="secondary"
+						disabled={stepState.activeStep === 0}
+						onClick={handleBack}
+						className={classes.button}
 					>
-						<Finish />
-					</React.Suspense>
+						Back
+					</Button>
 
 					<Button onClick={handleReset} className={classes.button}>
 						Yay!
@@ -97,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 		iconColor: theme.palette.secondary.main,
 	},
 	button: {
-		marginTop: theme.spacing(1),
+		marginTop: theme.spacing(2),
 		marginRight: theme.spacing(1),
 	},
 	actionsContainer: {

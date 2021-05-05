@@ -164,13 +164,15 @@ export default function Finish() {
 		if (play) {
 			playerRef.current.pause();
 			setPlay(false);
+			setMsg("paused");
 		} else {
 			setMsg("processing...");
 			await voiceTransformAction(url, type);
-			setMsg("");
 			playerRef.current.play();
+			setMsg("playing...");
 			playerRef.current.addEventListener("ended", () => {
 				setPlay(false);
+				setMsg("");
 			});
 			setPlay(true);
 		}
@@ -276,6 +278,15 @@ export default function Finish() {
 						</Tooltip>
 					))}
 				</div>
+				<Typography
+					color="textSecondary"
+					variant="caption"
+					gutterBottom
+				>
+					{
+						"::Record yourself saying something and click on any button!"
+					}
+				</Typography>
 			</CardContent>
 		</Card>
 	);
