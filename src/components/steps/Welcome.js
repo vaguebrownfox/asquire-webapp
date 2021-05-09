@@ -114,10 +114,12 @@ const AboutProject = () => {
 							component="div"
 							paragraph
 						>
-							Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Aenean molestie dignissim erat, nec auctor
-							mauris porta sed. Mauris dui ante, pulvinar et
-							eleifend ac, sollicitudin ac massa.
+							Asquire data collection application is used to
+							collect data pertaining to sustained phonations,
+							breath and cough sounds. The voice data will be
+							utilised to analyze the sound characteristics using
+							data-driven and signal processing methods for
+							diagnosis and monitoring of asthmatic patients.
 						</Typography>
 					</div>
 					<div className={classes.subtitleDiv}>
@@ -136,10 +138,12 @@ const AboutProject = () => {
 							component="div"
 							paragraph
 						>
-							Quisque tristique ac nulla aliquam tempus. Donec in
-							vehicula nisl. Donec quis molestie augue. Ut
-							pellentesque accumsan nunc, vitae semper mi pulvinar
-							quis. Nunc luctus odio ac purus tempus varius.
+							Current clinical methods of diagnosis for asthma are
+							evidently tedious, expensive and time-consuming. The
+							motivation behind Asquire comes from developing a
+							diagnosis method that is easy, yet effective and
+							fast, using vocal sounds powered by machine learning
+							and signal processing techniques.
 						</Typography>
 					</div>
 					<div className={classes.subtitleDiv}>
@@ -158,10 +162,11 @@ const AboutProject = () => {
 							component="div"
 							paragraph
 						>
-							Donec quis molestie augue. Ut pellentesque accumsan
-							nunc, vitae semper mi pulvinar quis. Nunc luctus
-							odio ac purus tempus varius. Proin auctor nec diam
-							vitae maximus.
+							The performance of the said Machine learning tool is
+							proportional to the amount of voice data it is
+							trained on. Your voice will have a significant
+							impact on efficiency of the model and hence,
+							accuracy of the diagnosis.
 						</Typography>
 					</div>
 					<div className={classes.terms}>
