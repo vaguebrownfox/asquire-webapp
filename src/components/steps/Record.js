@@ -58,6 +58,11 @@ export default function Record() {
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
 		return () => {
+			const finishedStim = { ...recordState.currentStim };
+			recordUploadAction({
+				...userState.selectedUser,
+				stimTag: finishedStim.tag,
+			});
 			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
@@ -80,7 +85,7 @@ export default function Record() {
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
-			}, 31000);
+			}, 61000);
 		}
 	};
 
@@ -137,7 +142,6 @@ export default function Record() {
 							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
 						/>
-
 						<div className={classes.playerDiv}>
 							{recordState.recDone && (
 								<audio

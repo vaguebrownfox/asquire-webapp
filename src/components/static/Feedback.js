@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -41,19 +40,19 @@ export default function Feedback() {
 				>
 					Feedback
 				</Typography>
-				<Paper className={classes.form}>
-					<iframe
-						title="Feedback Form"
-						src="https://docs.google.com/forms/d/e/1FAIpQLSdh_oCUwF2IDFOFqs_0cxFXbK138EUxopobZK-yYWRdQOjjDA/viewform?embedded=true"
-						width="100%"
-						height="2000"
-						frameborder="0"
-						marginheight="0"
-						marginwidth="0"
-					>
-						Loading…
-					</iframe>
-				</Paper>
+				{/* <Paper className={classes.form}> */}
+				<iframe
+					title="Feedback Form"
+					src="https://docs.google.com/forms/d/e/1FAIpQLSdh_oCUwF2IDFOFqs_0cxFXbK138EUxopobZK-yYWRdQOjjDA/viewform?embedded=true"
+					width="100%"
+					height="2000"
+					frameborder="0"
+					marginheight="0"
+					marginwidth="0"
+				>
+					Loading…
+				</iframe>
+				{/* </Paper> */}
 				<Typography variant="body2" component="p">
 					{bull} Google form
 				</Typography>

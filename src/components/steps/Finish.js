@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { FormHelperText, IconButton, Tooltip } from "@material-ui/core";
+import { Button, FormHelperText, IconButton, Tooltip } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Adjust";
 import RecordStopIcon from "@material-ui/icons/Album";
 import Chip from "@material-ui/core/Chip";
@@ -25,9 +25,16 @@ const useStyles = makeStyles((theme) => ({
 		position: "relative",
 		background: theme.palette.background.default,
 	},
-
+	content: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+	},
 	title: {
 		fontSize: 14,
+	},
+	feedback: {
+		margin: theme.spacing(2),
 	},
 	pos: {
 		marginBottom: 12,
@@ -211,16 +218,25 @@ export default function Finish() {
 					}}
 				/>
 			)}
-			<CardContent>
+			<CardContent className={classes.content}>
 				<Typography
 					className={classes.title}
 					color="textSecondary"
 					gutterBottom
 				>
 					{
-						"Thank you for taking part in out project! Here's something fun!"
+						"Thank you for taking part in out project! Please give feedback. Here's something fun!"
 					}
 				</Typography>
+
+				<Button
+					className={classes.feedback}
+					variant="outlined"
+					color="secondary"
+					href="/feedback"
+				>
+					Give feedback!
+				</Button>
 
 				<IconButton
 					aria-label="record"

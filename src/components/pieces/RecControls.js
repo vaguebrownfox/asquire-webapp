@@ -5,6 +5,7 @@ import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import DoneIcon from "@material-ui/icons/Done";
+import RedoIcon from "@material-ui/icons/RefreshOutlined";
 
 const RecControl = ({
 	handleRecord,
@@ -67,9 +68,21 @@ const RecControl = ({
 				onClick={handleRecord}
 				disabled={play}
 			>
-				<Tooltip title={`${isRecording ? "Stop" : "Start"} recording`}>
+				<Tooltip
+					title={`${
+						isRecording ? "Stop" : recDone ? "Redo" : "Start"
+					} recording`}
+					open={!recDone}
+				>
 					{isRecording ? (
 						<RecordStopIcon className={classes.controlIconAction} />
+					) : recDone ? (
+						<Tooltip title="Redo recording" open={recDone}>
+							<RedoIcon
+								color="secondary"
+								className={classes.controlIconOlp}
+							/>
+						</Tooltip>
 					) : (
 						<RecordStartIcon className={classes.controlIcon} />
 					)}
@@ -106,6 +119,18 @@ const useStyles = makeStyles((theme) => ({
 			transform: "scale(1.1)",
 			cursor: "crosshair",
 		},
+	},
+	controlIconOlp: {
+		height: 38,
+		width: 38,
+
+		"&:hover": {
+			transform: "scale(1.1)",
+			cursor: "crosshair",
+		},
+	},
+	recbutton: {
+		position: "relative",
 	},
 	controlIconAction: {
 		height: 38,
