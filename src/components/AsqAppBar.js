@@ -159,7 +159,7 @@ function AsqAppBar({ title, history }) {
 				<p>Messages</p>
 			</MenuItem> */}
 
-			<MenuItem onClick={handleProfileMenuOpen}>
+			{/* <MenuItem onClick={handleProfileMenuOpen}>
 				<IconButton
 					aria-label="account of current user"
 					aria-controls="primary-search-account-menu"
@@ -169,8 +169,8 @@ function AsqAppBar({ title, history }) {
 					<AccountCircle />
 				</IconButton>
 				<p>Profile</p>
-			</MenuItem>
-			<MenuItem /*onClick={}*/>
+			</MenuItem> */}
+			<MenuItem>
 				<IconButton
 					aria-label="about"
 					aria-controls="about"
@@ -277,8 +277,8 @@ function AsqAppBar({ title, history }) {
 							/>
 						</Tooltip>
 					</AvatarGroup>
-					<div className={classes.sectionDesktop}>
-						{/* <Messages /> */}
+					{/* <div className={classes.sectionDesktop}>
+						<Messages />
 						<IconButton
 							edge="end"
 							aria-label="account of current user"
@@ -289,7 +289,7 @@ function AsqAppBar({ title, history }) {
 						>
 							<AccountCircle />
 						</IconButton>
-					</div>
+					</div> */}
 					<div className={classes.sectionMobile}>
 						<IconButton
 							aria-label="show more"
