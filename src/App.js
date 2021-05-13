@@ -56,10 +56,9 @@ const App = () => {
 		<div className="App">
 			<>
 				<Router>
-					<AsqAppBar title="Asquire" />
-
 					<StepProvider>
 						<UserProvider>
+							<AsqAppBar title="Asquire" />
 							<SurveyProvider>
 								<RecordProvider>
 									<VoiceProvider>

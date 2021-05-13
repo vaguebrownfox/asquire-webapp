@@ -33,6 +33,7 @@ const typicalUser = {
 	recordCount: 0,
 	recordingDone: false,
 	stimCount: 0,
+	completed: 0,
 };
 
 // Reducer

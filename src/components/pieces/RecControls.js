@@ -70,14 +70,17 @@ const RecControl = ({
 			>
 				<Tooltip
 					title={`${
-						isRecording ? "Stop" : recDone ? "Redo" : "Start"
+						isRecording ? "Stop" : recDone ? "" : "Start"
 					} recording`}
-					open={!recDone}
 				>
 					{isRecording ? (
 						<RecordStopIcon className={classes.controlIconAction} />
 					) : recDone ? (
-						<Tooltip title="Redo recording" open={recDone}>
+						<Tooltip
+							title="Redo recording?"
+							open={recDone}
+							placement="top"
+						>
 							<RedoIcon
 								color="secondary"
 								className={classes.controlIconOlp}

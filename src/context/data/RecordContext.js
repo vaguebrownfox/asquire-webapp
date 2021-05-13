@@ -29,6 +29,7 @@ const recordInitialState = {
 
 	stims: {},
 	currentStim: {},
+	stimCount: 0,
 
 	seconds: 0,
 };
@@ -56,6 +57,7 @@ const recordReducer = (state, action) => {
 			return {
 				...state,
 				currentStim: state.stims[(csno1 + 1) % nostims1],
+				stimCount: state.stimCount + 1,
 			};
 		case "GET_DEVICES":
 			return {

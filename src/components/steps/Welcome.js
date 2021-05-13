@@ -69,6 +69,12 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(2),
 		marginLeft: theme.spacing(2),
 	},
+	feedback: {
+		marginRight: "auto",
+		marginLeft: theme.spacing(4),
+		marginBottom: theme.spacing(1),
+		textTransform: "none",
+	},
 }));
 
 const AboutProject = () => {
@@ -216,6 +222,13 @@ const AboutProject = () => {
 					>
 						Use Chrome or Firefox
 					</Typography>
+					<Button
+						className={classes.feedback}
+						variant="outlined"
+						href="feedback"
+					>
+						Feedback
+					</Button>
 				</CardActions>
 			</Card>
 			<div className={classes.actionsContainer}>

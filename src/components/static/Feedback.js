@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		minHeight: "90vh",
 		background: theme.palette.primary.main,
-		padding: theme.spacing(4),
+		padding: theme.spacing(2),
 	},
 	bullet: {
 		display: "inline-block",

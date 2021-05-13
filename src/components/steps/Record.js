@@ -22,6 +22,7 @@ import Worm from "../pieces/Worm";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
+import { Typography } from "@material-ui/core";
 
 export default function Record() {
 	const classes = useStyles();
@@ -62,7 +63,7 @@ export default function Record() {
 			recordUploadAction({
 				...userState.selectedUser,
 				stimTag: finishedStim.tag,
-			});
+			}).catch((e) => console.log("upload failed"));
 			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
@@ -95,6 +96,7 @@ export default function Record() {
 
 	const handleDone = () => {
 		const finishedStim = { ...recordState.currentStim };
+		const completed = userState.selectedUser?.completed + 1;
 		recordUploadAction({
 			...userState.selectedUser,
 			stimTag: finishedStim.tag,
@@ -102,6 +104,7 @@ export default function Record() {
 			const user = {
 				...userState.selectedUser,
 				stimCount: finishedStim.sno + 1,
+				completed: completed,
 			};
 			userUpdateAction(user);
 			recordNextStimAction();
@@ -129,13 +132,19 @@ export default function Record() {
 						userName={userState.selectedUser?.userName}
 					/>
 
+					<Typography variant="caption" component="p">
+						{`Completed: ${userState.selectedUser?.completed || 0}`}
+					</Typography>
+
 					<div className={classes.cardaction}>
 						<StimContent stim={recordState.currentStim} />
 
 						<Timer seconds={recordState.seconds} />
-						<p className={classes.inshelp}>
+
+						<Typography className={classes.inshelp}>
 							*Please listen to the instructions before recording.
-						</p>
+						</Typography>
+
 						<RecControl
 							isRecording={recordState.isRecording}
 							recDone={recordState.recDone}
