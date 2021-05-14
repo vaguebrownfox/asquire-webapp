@@ -70,8 +70,12 @@ const RecControl = ({
 			>
 				<Tooltip
 					title={`${
-						isRecording ? "Stop" : recDone ? "" : "Start"
-					} recording`}
+						isRecording
+							? "Stop recording"
+							: recDone
+							? ""
+							: "Start recording"
+					}`}
 				>
 					{isRecording ? (
 						<RecordStopIcon className={classes.controlIconAction} />

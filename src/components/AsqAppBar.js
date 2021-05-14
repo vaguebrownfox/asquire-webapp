@@ -92,6 +92,12 @@ const useStyles = makeStyles((theme) => ({
 	avagroup: {
 		marginRight: theme.spacing(2),
 	},
+	avatarDiv: {
+		color: "inherit" /* blue colors for links too */,
+		textDecoration: "none" /* no underline */,
+		borderRadius: "50%",
+		borderColor: theme.palette.secondary.dark,
+	},
 }));
 
 function AsqAppBar({ title, history }) {
@@ -258,24 +264,36 @@ function AsqAppBar({ title, history }) {
 
 					<div className={classes.grow} />
 					<AvatarGroup max={4} className={classes.avagroup}>
-						<Tooltip title="Spire Lab">
-							<Avatar
-								alt="Spire lab logo"
-								variant="circular"
-								src={spire_logo_url}
-								className={classes.avatar}
-								href="https://spire.ee.iisc.ac.in/spire/index.php"
-							/>
-						</Tooltip>
-						<Tooltip title="IISc Bangalore">
-							<Avatar
-								alt="IISc logo"
-								variant="circular"
-								src={iisc_logo_url}
-								className={classes.avatar}
-								href="https://iisc.ac.in/"
-							/>
-						</Tooltip>
+						<a
+							className={classes.avatarDiv}
+							href="https://spire.ee.iisc.ac.in/spire/index.php"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Tooltip title="Spire Lab">
+								<Avatar
+									alt="Spire lab logo"
+									variant="circular"
+									src={spire_logo_url}
+									className={classes.avatar}
+								/>
+							</Tooltip>
+						</a>
+						<a
+							className={classes.avatarDiv}
+							href="https://iisc.ac.in/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Tooltip title="IISc Bangalore">
+								<Avatar
+									alt="IISc logo"
+									variant="circular"
+									src={iisc_logo_url}
+									className={classes.avatar}
+								/>
+							</Tooltip>
+						</a>
 					</AvatarGroup>
 					{/* <div className={classes.sectionDesktop}>
 						<Messages />
