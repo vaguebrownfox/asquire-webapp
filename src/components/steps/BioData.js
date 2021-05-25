@@ -11,6 +11,8 @@ import TextField from "@material-ui/core/TextField";
 
 import { components } from "../../App";
 
+import BioTitle from "../../components/pieces/BioTitle";
+
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(2),
 		marginRight: theme.spacing(1),
 	},
 	actionsContainer: {
@@ -85,9 +88,8 @@ const BioData = () => {
 		stepPreviousAction,
 		stepSetAction,
 	} = React.useContext(StepContext);
-	const { state: userState, userUpdateAction } = React.useContext(
-		UserContext
-	);
+	const { state: userState, userUpdateAction } =
+		React.useContext(UserContext);
 	const [bio, setBio] = React.useState({});
 	const [error, setError] = React.useState({ field: "", isErr: false });
 
@@ -163,6 +165,7 @@ const BioData = () => {
 	return (
 		<>
 			<Card className={classes.root} elevation={8}>
+				<BioTitle userName={userState?.selectedUser?.userName} />
 				<CardContent>
 					<form
 						className={classes.textInput}
@@ -253,6 +256,16 @@ const BioData = () => {
 						<CircularProgress color="secondary" size={28} />
 					</div>
 				)}
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={handleNext}
+					className={classes.button}
+				>
+					{stepState.activeStep === components.length - 1
+						? "Finish"
+						: "Next"}
+				</Button>
 			</Card>
 			<div className={classes.actionsContainer}>
 				<div>
@@ -262,16 +275,6 @@ const BioData = () => {
 						className={classes.button}
 					>
 						Back
-					</Button>
-					<Button
-						variant="contained"
-						color="secondary"
-						onClick={handleNext}
-						className={classes.button}
-					>
-						{stepState.activeStep === components.length - 1
-							? "Finish"
-							: "Next"}
 					</Button>
 				</div>
 			</div>
