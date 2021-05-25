@@ -45,9 +45,8 @@ export default function Record() {
 
 	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
-	const { state: userState, userUpdateAction } = React.useContext(
-		UserContext
-	);
+	const { state: userState, userUpdateAction } =
+		React.useContext(UserContext);
 
 	const [shape, setShape] = React.useState(false);
 	const handleShape = () => {
@@ -133,7 +132,9 @@ export default function Record() {
 					/>
 
 					<Typography variant="caption" component="p">
-						{`Completed: ${userState.selectedUser?.completed || 0}`}
+						{`Completed: ${
+							userState.selectedUser?.completed || 0
+						}/ `}
 					</Typography>
 
 					<div className={classes.cardaction}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton, Tooltip } from "@material-ui/core";
+import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStopIcon from "@material-ui/icons/MicOff";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
@@ -59,48 +59,52 @@ const RecControl = ({
 				onClick={handlePlay}
 				disabled={isRecording}
 			>
-				<Tooltip title={instip} open={true} placement="bottom">
+				<Tooltip title={instip} arrow open={true} placement="bottom">
 					<InfoIcon className={classes.controlIcon} />
 				</Tooltip>
 			</IconButton>
-			<IconButton
-				aria-label="record"
-				onClick={handleRecord}
-				disabled={play}
-			>
-				<Tooltip
-					title={`${
-						isRecording
-							? "Stop recording"
-							: recDone
-							? ""
-							: "Start recording"
-					}`}
+			<div className={classes.controlIconRec}>
+				<IconButton
+					aria-label="record"
+					onClick={handleRecord}
+					disabled={play}
 				>
-					{isRecording ? (
-						<RecordStopIcon className={classes.controlIconAction} />
-					) : recDone ? (
-						<Tooltip
-							title="Redo recording?"
-							open={recDone}
-							placement="top"
-						>
+					<Tooltip
+						title={`${
+							isRecording
+								? "Stop recording"
+								: recDone
+								? "Redo recording?"
+								: "Start recording"
+						}`}
+						arrow
+					>
+						{isRecording ? (
+							<RecordStopIcon
+								className={classes.controlIconAction}
+							/>
+						) : recDone ? (
 							<RedoIcon
 								color="secondary"
 								className={classes.controlIconOlp}
 							/>
-						</Tooltip>
-					) : (
-						<RecordStartIcon className={classes.controlIcon} />
-					)}
-				</Tooltip>
-			</IconButton>
+						) : (
+							<RecordStartIcon className={classes.controlIcon} />
+						)}
+					</Tooltip>
+				</IconButton>
+				{recDone && (
+					<Typography color="secondary" variant="caption">
+						Redo recording?
+					</Typography>
+				)}
+			</div>
 			<IconButton
 				aria-label="next"
 				onClick={handleDone}
 				disabled={!recDone || play}
 			>
-				<Tooltip open={recDone} title="Done? Next task >>">
+				<Tooltip open={recDone} arrow title="Done? Next task >>">
 					<DoneIcon className={classes.controlIcon} />
 				</Tooltip>
 			</IconButton>
@@ -111,7 +115,7 @@ const RecControl = ({
 const useStyles = makeStyles((theme) => ({
 	controls: {
 		display: "flex",
-		alignItems: "center",
+		alignItems: "flex-start",
 		width: "100%",
 		maxWidth: theme.spacing(64),
 		justifyContent: "space-evenly",
@@ -158,6 +162,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	player: {
 		display: "none",
+	},
+	controlIconRec: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
 	},
 }));
 
