@@ -8,6 +8,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
+import { IconButton } from "@material-ui/core";
+import PhotoCamera from "@material-ui/icons/Check";
 
 const useStyles = makeStyles((theme) => ({
 	userList: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const UserList = ({ users, error, onSelect }) => {
+const UserList = ({ users, error, onSelect, wait }) => {
 	const classes = useStyles();
 	const [selectedUser, selectUser] = React.useState({});
 
@@ -49,6 +51,7 @@ const UserList = ({ users, error, onSelect }) => {
 									key={i}
 									control={
 										<Checkbox
+											disabled={wait}
 											icon={<ProfileIcon />}
 											checkedIcon={<ProfileIcon />}
 											checked={

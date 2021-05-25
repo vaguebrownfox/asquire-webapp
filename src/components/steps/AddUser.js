@@ -40,8 +40,8 @@ const AddUserComponent = () => {
 		return () => {};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const handleNext = async () => {
-		userLoginAction(userState.selectedUser)
+	const handleNext = async (user) => {
+		userLoginAction(user)
 			.then((auth) => {
 				auth && stepNextAction();
 			})
@@ -79,18 +79,22 @@ const AddUserComponent = () => {
 
 	const handleUserSelect = (user) => {
 		userSelectAction(user);
+		handleNext(user);
 	};
+
+	const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<>
 			<Card className={classes.root} elevation={8}>
 				<CardContent>
 					<Typography className={classes.pos} color="textSecondary">
-						Select user
+						Select User
 					</Typography>
 
 					<UserList
 						users={userState.allUsers}
+						wait={userState.loading}
 						error={userState.error}
 						onSelect={handleUserSelect}
 					/>
@@ -104,6 +108,19 @@ const AddUserComponent = () => {
 							handleUserName,
 						}}
 					/>
+					<Typography
+						className={classes.inst}
+						variant="body2"
+						component="p"
+						color="textPrimary"
+					>
+						{bull} Enter your name and click <b>ADD USER</b>. <br />
+						{bull} <b>Username</b> will be used to save your
+						progress. <br />
+						{bull} You can record for your <b>family and friends</b>{" "}
+						the same app.
+						<br />
+					</Typography>
 				</CardContent>
 			</Card>
 			<div className={classes.actionsContainer}>
@@ -115,7 +132,7 @@ const AddUserComponent = () => {
 					>
 						Back
 					</Button>
-					{userState.allUsers.length > 0 && (
+					{/* {userState.allUsers.length > 0 && (
 						<Button
 							variant="contained"
 							color="secondary"
@@ -126,7 +143,7 @@ const AddUserComponent = () => {
 								? "Finish"
 								: "Next"}
 						</Button>
-					)}
+					)} */}
 				</div>
 			</div>
 		</>
@@ -139,6 +156,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 	pos: {
 		marginBottom: 12,
+	},
+	inst: {
+		marginTop: 12,
+		marginBottom: 12,
+	},
+	bullet: {
+		display: "inline-block",
+		margin: "0 2px",
+		transform: "scale(2)",
+		color: theme.palette.secondary.main,
+		"&:hover": {
+			transform: "scale(2.5)",
+		},
 	},
 	submitButton: {
 		maxWidth: 120,
