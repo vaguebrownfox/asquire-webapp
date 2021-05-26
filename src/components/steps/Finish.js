@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 	},
 	title: {
-		fontSize: 14,
+		// fontSize: 14,
 	},
 	feedback: {
 		margin: theme.spacing(2),
@@ -127,9 +127,8 @@ export default function Finish() {
 		recordStopAction,
 		recordResetAction,
 	} = React.useContext(RecordContext);
-	const { state: voiceState, voiceTransformAction } = React.useContext(
-		VoiceContext
-	);
+	const { state: voiceState, voiceTransformAction } =
+		React.useContext(VoiceContext);
 	const { state: userState } = React.useContext(UserContext);
 	const timeoutRef = React.useRef();
 	const vizRef = React.useRef();
@@ -222,11 +221,11 @@ export default function Finish() {
 				<Typography
 					className={classes.title}
 					color="textSecondary"
+					variant="h6"
 					gutterBottom
 				>
-					{
-						"Thank you for taking part in out project! Please give feedback. Here's something fun!"
-					}
+					Thank you for taking part in out project! <br />
+					<b>Please give feedback...</b>
 				</Typography>
 
 				<Button
@@ -237,7 +236,14 @@ export default function Finish() {
 				>
 					Give feedback!
 				</Button>
-
+				<Typography
+					className={classes.title}
+					color="textSecondary"
+					variant="body1"
+					gutterBottom
+				>
+					Here's something fun!
+				</Typography>
 				<IconButton
 					aria-label="record"
 					className={
@@ -284,14 +290,14 @@ export default function Finish() {
 					{voiceState.txDetes.map((v, i) => {
 						const a = unlock;
 						const b = recordState.isRecording;
-						const c = i >= userState.selectedUser.stimCount;
+						const c = i >= userState.selectedUser.completed;
 						return (
 							<Tooltip key={i} title={v.description}>
 								<Chip
 									className={classes.chip}
 									disabled={b || (!a && c)}
 									icon={
-										i >= userState.selectedUser.stimCount &&
+										i >= userState.selectedUser.completed &&
 										!unlock ? (
 											<LockIcon />
 										) : (
@@ -303,7 +309,6 @@ export default function Finish() {
 									label={v.name}
 									onClick={() => handleTransform(v.key)}
 									onDelete={() => handleTransform(v.key)}
-									// avatar={<Avatar>{v.name[0]}</Avatar>}
 									deleteIcon={<PlayIcon />}
 								/>
 							</Tooltip>
@@ -316,10 +321,10 @@ export default function Finish() {
 					gutterBottom
 				>
 					{
-						"::Record yourself saying something and click on any button!"
+						"::Record yourself saying something and click on any button! "
 					}
+					{bull}
 				</Typography>
-				{bull}
 			</CardContent>
 		</Card>
 	);

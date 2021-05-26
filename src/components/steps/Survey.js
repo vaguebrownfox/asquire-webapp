@@ -14,6 +14,7 @@ import { Context as SurveyContext } from "../../context/data/SurveyContext";
 
 // Pieces
 import Question from "../pieces/Question";
+import { Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -104,7 +105,9 @@ const Survey = () => {
 		<>
 			<Card className={classes.root} elevation={8}>
 				<CardContent>
-					<Question question={surveyState.currentQuestion} />
+					{/* <Slide in={surveyState.surveyAnim}> */}
+					<Question anim={surveyState.surveyAnim} />
+					{/* </Slide> */}
 					{userState.loading && (
 						<div className={classes.progress}>
 							<CircularProgress color="secondary" size={28} />

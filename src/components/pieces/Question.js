@@ -17,8 +17,9 @@ import SkipNextIcon from "@material-ui/icons/ArrowForwardRounded";
 
 // Context
 import { Context as SurveyContext } from "../../context/data/SurveyContext";
+import { Grow, Slide, Zoom } from "@material-ui/core";
 
-const Question = () => {
+const Question = ({ anim }) => {
 	const classes = questionStyles();
 	const {
 		state: surveyState,
@@ -65,11 +66,16 @@ const Question = () => {
 				>
 					{!surveyState.surveyDone ? (
 						<>
-							<FormLabel color="secondary" component="label">
-								<Typography color="textPrimary" variant="h6">
-									{surveyState.currentQuestion?.question}
-								</Typography>
-							</FormLabel>
+							<Slide direction="down" in={anim}>
+								<FormLabel color="secondary" component="label">
+									<Typography
+										color="textPrimary"
+										variant="h6"
+									>
+										{surveyState.currentQuestion?.question}
+									</Typography>
+								</FormLabel>
+							</Slide>
 							{surveyState.loading && (
 								<div className={classes.progress}>
 									<CircularProgress
@@ -80,43 +86,56 @@ const Question = () => {
 							)}
 							{surveyState.currentQuestion?.options.length >
 								0 && (
-								<RadioGroup
-									className={classes.ansinput}
-									aria-label="quiz"
-									name="quiz"
-									value={value}
-									onChange={handleRadioChange}
+								<Slide
+									direction="left"
+									in={anim}
+									style={{ transitionDelay: "100ms" }}
 								>
-									{surveyState.currentQuestion?.options.map(
-										(option, i) => (
-											<FormControlLabel
-												id={
-													option +
-													surveyState.currentQuestion
-														?.qno
-												}
-												key={i}
-												value={option}
-												color="primary"
-												control={<Radio />}
-												label={option}
-											/>
-										)
-									)}
-								</RadioGroup>
+									<RadioGroup
+										className={classes.ansinput}
+										aria-label="quiz"
+										name="quiz"
+										value={value}
+										onChange={handleRadioChange}
+									>
+										{surveyState.currentQuestion?.options.map(
+											(option, i) => (
+												<FormControlLabel
+													id={
+														option +
+														surveyState
+															.currentQuestion
+															?.qno
+													}
+													key={i}
+													value={option}
+													color="primary"
+													control={<Radio />}
+													label={option}
+												/>
+											)
+										)}
+									</RadioGroup>
+								</Slide>
 							)}
+
 							{surveyState.currentQuestion?.options.length ===
 								0 && (
-								<TextField
-									className={classes.ansinput}
-									id="survey-question-answer"
-									label="Answer"
-									placeholder="Enter your answer"
-									variant="outlined"
-									color="secondary"
-									value={value}
-									onChange={handleRadioChange}
-								/>
+								<Grow
+									in={anim}
+									style={{ transitionDelay: "100ms" }}
+								>
+									<TextField
+										className={classes.ansinput}
+										id="survey-question-answer"
+										label="Answer"
+										placeholder="Enter your answer"
+										variant="outlined"
+										color="secondary"
+										value={value}
+										onChange={handleRadioChange}
+									/>
+								</Grow>
 							)}
 						</>
 					) : (
@@ -124,6 +143,7 @@ const Question = () => {
 							Done!
 						</Typography>
 					)}
+
 					<FormHelperText
 						className={classes.helpertxt}
 						error
@@ -131,14 +151,7 @@ const Question = () => {
 					>
 						{error}
 					</FormHelperText>
-					{/* <Button
-						type="submit"
-						variant="outlined"
-						color="primary"
-						className={classes.button}
-					>
-						Check Answer
-					</Button> */}
+
 					<div className={classes.controls}>
 						<IconButton
 							aria-label="previous"

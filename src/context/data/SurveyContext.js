@@ -10,6 +10,7 @@ const surveyInitialState = {
 	nextQuestion: null, // {}
 	answeredQuestions: null, // [{}]
 	surveyDone: false,
+	surveyAnim: true,
 };
 
 // Reducer
@@ -46,6 +47,11 @@ const surveyReducer = (state, action) => {
 					surveyDone: true,
 				};
 			}
+		case "SUR_ANIM":
+			return {
+				...state,
+				surveyAnim: action.payload,
+			};
 		case "PREVIOUS_QUESTION":
 			const pQs = state.previousQuestions.slice();
 
@@ -93,6 +99,8 @@ const surveyNextQuestionAction = (dispatch) => {
 	return (answeredQuestion) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
+		dispatch({ type: "SUR_ANIM", payload: false });
+
 		let nQ;
 		if (
 			answeredQuestion.nextQnos.length === 1 ||
@@ -107,7 +115,10 @@ const surveyNextQuestionAction = (dispatch) => {
 			answeredQuestion,
 			nextQuestionNo: nQ,
 		};
-		dispatch({ type: "NEXT_QUESTION", payload });
+		setTimeout(() => {
+			dispatch({ type: "NEXT_QUESTION", payload });
+			dispatch({ type: "SUR_ANIM", payload: true });
+		}, 500);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

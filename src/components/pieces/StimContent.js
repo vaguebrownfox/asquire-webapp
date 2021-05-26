@@ -28,13 +28,11 @@ const StimContent = ({ stim, anim }) => {
 
 	return (
 		<>
-			<Fade in={anim}>
-				<CardMedia
-					className={classes.media}
-					image={stim_image_url}
-					title="Stimulus image"
-				/>
-			</Fade>
+			<CardMedia
+				className={classes.media}
+				image={stim_image_url}
+				title="Stimulus image"
+			/>
 			{!stim?.description && (
 				<div className={classes.progress}>
 					<CircularProgress color="secondary" size={28} />
