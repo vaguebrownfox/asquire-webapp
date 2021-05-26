@@ -10,7 +10,6 @@ import HomeIcon from "@material-ui/icons/HomeRounded";
 import AboutIcon from "@material-ui/icons/InfoRounded";
 import ContactIcon from "@material-ui/icons/MailOutlineRounded";
 import ConsentIcon from "@material-ui/icons/NotesRounded";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
@@ -108,9 +107,9 @@ function AsqAppBar({ title, history }) {
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-	const handleProfileMenuOpen = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
+	// const handleProfileMenuOpen = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
 
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);

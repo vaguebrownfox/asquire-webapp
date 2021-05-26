@@ -8,8 +8,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
-import { IconButton } from "@material-ui/core";
-import PhotoCamera from "@material-ui/icons/Check";
 
 const useStyles = makeStyles((theme) => ({
 	userList: {
