@@ -30,7 +30,7 @@ const StimContent = ({ stim }) => {
 				</div>
 			)}
 			<Typography variant="h6" color="textPrimary" gutterBottom>
-				{stim?.description}
+				<b>{stim?.description}</b>
 			</Typography>
 		</>
 	);

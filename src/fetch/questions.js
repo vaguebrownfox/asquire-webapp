@@ -145,7 +145,7 @@ const questions = {
 	},
 	24: {
 		qno: 24,
-		question: "Area you a known case of diabetes?",
+		question: "Are you a known case of diabetes?",
 		options: ["Yes", "No"],
 		nextQnos: [25, 26],
 	},

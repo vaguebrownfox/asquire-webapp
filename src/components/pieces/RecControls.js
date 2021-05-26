@@ -6,7 +6,7 @@ import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
-import DoneIcon from "@material-ui/icons/NavigateNextRounded";
+import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
 import { red } from "@material-ui/core/colors";
 
 const RecControl = ({
@@ -42,84 +42,105 @@ const RecControl = ({
 		};
 		const infoRefE = infoRef.current;
 		infoRefE && infoRefE?.addEventListener("ended", stopPlay);
+		infoRefE && infoRefE?.addEventListener("pause", stopPlay);
+		infoRefE && infoRefE?.addEventListener("seeking", () => setPlay(true));
 
 		return () => {
 			infoRefE && infoRefE?.removeEventListener("ended", stopPlay);
+			infoRefE && infoRefE?.removeEventListener("pause", stopPlay);
 		};
 	}, [stim]);
 
 	return (
-		<div className={classes.controls}>
-			<audio
-				ref={infoRef}
-				className={classes.player}
-				src={stim?.audioDescriptionLink}
-				controls
-			/>
-			<IconButton
-				aria-label="info"
-				onClick={handlePlay}
-				disabled={isRecording}
-			>
-				<Tooltip title={instip} arrow open={true} placement="bottom">
-					<InfoIcon className={classes.controlIcon} />
-				</Tooltip>
-			</IconButton>
-			<div className={classes.controlIconRec}>
+		<div className={classes.root}>
+			<div className={classes.controls}>
 				<IconButton
-					aria-label="record"
-					onClick={handleRecord}
-					color="secondary"
-					disabled={play}
+					aria-label="info"
+					onClick={handlePlay}
+					disabled={isRecording}
 				>
 					<Tooltip
-						title={`${
-							isRecording
-								? "Stop recording"
-								: recDone
-								? "Redo recording?"
-								: "Start recording"
-						}`}
+						title={instip}
 						arrow
+						open={true}
+						placement="bottom"
 					>
-						{isRecording ? (
-							<RecordStopIcon
-								classes={{ root: classes.recIcon }}
-								fontSize="large"
-							/>
-						) : recDone ? (
-							<RecordStartIcon
-								classes={{ root: classes.recIcon }}
-								fontSize="large"
-							/>
-						) : (
-							<RecordStartIcon
-								classes={{ root: classes.recIcon }}
-								fontSize="large"
-							/>
-						)}
+						<InfoIcon className={classes.controlIcon} />
 					</Tooltip>
 				</IconButton>
-				{recDone && (
-					<Typography color="secondary" variant="caption">
-						Redo recording?
-					</Typography>
-				)}
+				<div className={classes.controlIconRec}>
+					<IconButton
+						aria-label="record"
+						onClick={handleRecord}
+						color="secondary"
+						disabled={play}
+					>
+						<Tooltip
+							title={`${
+								isRecording
+									? "Stop recording"
+									: recDone
+									? "Redo recording?"
+									: "Start recording"
+							}`}
+							arrow
+						>
+							{isRecording ? (
+								<RecordStopIcon
+									classes={{ root: classes.recIcon }}
+									fontSize="large"
+								/>
+							) : recDone ? (
+								<RecordStartIcon
+									classes={{ root: classes.recIcon }}
+									fontSize="large"
+								/>
+							) : (
+								<RecordStartIcon
+									classes={{ root: classes.recIcon }}
+									fontSize="large"
+								/>
+							)}
+						</Tooltip>
+					</IconButton>
+					{recDone && (
+						<Typography color="secondary" variant="caption">
+							Redo recording?
+						</Typography>
+					)}
+				</div>
+				<IconButton
+					aria-label="next"
+					onClick={handleDone}
+					disabled={!recDone || play}
+				>
+					<Tooltip open={recDone} arrow title="Done? Next task >>">
+						<DoneIcon className={classes.controlIcon} />
+					</Tooltip>
+				</IconButton>
 			</div>
-			<IconButton
-				aria-label="next"
-				onClick={handleDone}
-				disabled={!recDone || play}
-			>
-				<Tooltip open={recDone} arrow title="Done? Next task >>">
-					<DoneIcon className={classes.controlIcon} />
-				</Tooltip>
-			</IconButton>
+			{play && (
+				<Typography variant="body2" color="textPrimary" component="p">
+					<b>Listen to the instructions</b>
+				</Typography>
+			)}
+			<audio
+				ref={infoRef}
+				className={classes.playerShow}
+				src={stim?.audioDescriptionLink}
+				controls={play}
+			/>
 		</div>
 	);
 };
 
 const useStyles = makeStyles((theme) => ({
+	root: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		width: "100%",
+	},
 	controls: {
 		display: "flex",
 		alignItems: "flex-start",
@@ -131,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	recIcon: {
 		background: theme.palette.primary,
-		boxShadow: "0 3px 5px 2px rgba(255, 0, 0, .5)",
+		boxShadow: "0 0 7px 3px rgba(255, 0, 0, .5)",
 		borderRadius: "50%",
 		// color: red[900],
 	},
@@ -173,7 +194,11 @@ const useStyles = makeStyles((theme) => ({
 			transform: "scale(1)",
 		},
 	},
-	player: {
+	playerShow: {
+		// display: "none",
+		transform: "scale(0.8)",
+	},
+	playerHide: {
 		display: "none",
 	},
 	controlIconRec: {

@@ -12,7 +12,7 @@ const Timer = ({ seconds }) => {
 
 	return (
 		<Typography variant="h6" className={classes.timer} gutterBottom>
-			{time(seconds)}
+			<b>{time(seconds)}</b>
 		</Typography>
 	);
 };

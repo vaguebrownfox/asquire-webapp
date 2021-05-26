@@ -49,10 +49,6 @@ export const components = [
 		title: "Record your voice!",
 		component: <Record />,
 	},
-	{
-		title: "Record your voice!",
-		component: <Record />,
-	},
 ];
 
 const App = () => {

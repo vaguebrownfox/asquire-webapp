@@ -144,7 +144,7 @@ export default function Record() {
 						>
 							{`Completed: ${
 								userState.selectedUser?.completed || 0
-							}/ ${recordState.totalStimCount}`}
+							}/${recordState.totalStimCount}`}
 						</Typography>
 					) : (
 						<Typography
@@ -153,7 +153,7 @@ export default function Record() {
 							style={{ color: green[900] }}
 							gutterBottom
 						>
-							{`You have submitted all the recordings!`}
+							{`Done! You have finished all the tasks.`}
 						</Typography>
 					)}
 
@@ -174,12 +174,21 @@ export default function Record() {
 						/>
 						<div className={classes.playerDiv}>
 							{recordState.recDone && (
-								<audio
-									id="stim-player"
-									className={classes.player}
-									src={recordState.playUrl}
-									controls
-								/>
+								<>
+									<Typography
+										variant="body2"
+										color="textPrimary"
+										component="p"
+									>
+										<b>Play recorded audio</b>
+									</Typography>
+									<audio
+										id="stim-player"
+										className={classes.player}
+										src={recordState.playUrl}
+										controls
+									/>
+								</>
 							)}
 						</div>
 					</div>
@@ -203,9 +212,7 @@ export default function Record() {
 						onClick={handleNext}
 						className={classes.button}
 					>
-						{stepState.activeStep === components.length - 1
-							? "Finish"
-							: "Exit"}
+						Exit
 					</Button>
 				</div>
 			</div>
@@ -238,9 +245,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	playerDiv: {
 		display: "flex",
-		alignItems: "flex-end",
+		flexDirection: "column",
+		alignItems: "center",
 		height: theme.spacing(10),
 		paddingBottom: theme.spacing(2),
+		paddingTop: theme.spacing(2),
 	},
 	inshelp: {
 		color: theme.palette.secondary.main,
