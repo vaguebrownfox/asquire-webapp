@@ -1,11 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, Tooltip, Typography } from "@material-ui/core";
-import RecordStartIcon from "@material-ui/icons/Mic";
-import RecordStopIcon from "@material-ui/icons/MicOff";
+
+// import RecordStartIcon from "@material-ui/icons/Mic";
+import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
+import RecordStopIcon from "@material-ui/icons/StopRounded";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
-import DoneIcon from "@material-ui/icons/Done";
-import RedoIcon from "@material-ui/icons/RefreshOutlined";
+import DoneIcon from "@material-ui/icons/NavigateNextRounded";
+import { red } from "@material-ui/core/colors";
 
 const RecControl = ({
 	handleRecord,
@@ -67,6 +69,7 @@ const RecControl = ({
 				<IconButton
 					aria-label="record"
 					onClick={handleRecord}
+					color="secondary"
 					disabled={play}
 				>
 					<Tooltip
@@ -81,15 +84,19 @@ const RecControl = ({
 					>
 						{isRecording ? (
 							<RecordStopIcon
-								className={classes.controlIconAction}
+								classes={{ root: classes.recIcon }}
+								fontSize="large"
 							/>
 						) : recDone ? (
-							<RedoIcon
-								color="secondary"
-								className={classes.controlIconOlp}
+							<RecordStartIcon
+								classes={{ root: classes.recIcon }}
+								fontSize="large"
 							/>
 						) : (
-							<RecordStartIcon className={classes.controlIcon} />
+							<RecordStartIcon
+								classes={{ root: classes.recIcon }}
+								fontSize="large"
+							/>
 						)}
 					</Tooltip>
 				</IconButton>
@@ -121,6 +128,12 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "space-evenly",
 		paddingLeft: theme.spacing(1),
 		paddingBottom: theme.spacing(1),
+	},
+	recIcon: {
+		background: theme.palette.primary,
+		boxShadow: "0 3px 5px 2px rgba(255, 0, 0, .5)",
+		borderRadius: "50%",
+		// color: red[900],
 	},
 	controlIcon: {
 		height: 38,

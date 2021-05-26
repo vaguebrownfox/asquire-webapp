@@ -185,16 +185,14 @@ export const audioRecord = (audioStream) => {
 
 export const createAudioBuffer = async (audioUrl) => {
 	const arrayBuffer = await (await fetch(audioUrl)).arrayBuffer();
+
 	let audioBuffer = null;
 
 	try {
 		audioBuffer = await new AudioContext().decodeAudioData(arrayBuffer);
 	} catch (e) {
 		alert(
-			`Sorry, your browser doesn't support a crucial feature needed to allow you to record using your device's microphone. 
-			You should use Chrome or Firefox if you want the best audio support, and ensure you're using the *latest version* 
-			of your browser of choice. Chrome and Firefox update automatically, but you may need to completely close down the browser
-			and potentially restart your device to 'force' it to update itself to the latest version.`
+			`Sorry, your browser doesn't support a crucial feature needed to allow you to record using your device's microphone. You should use Chrome or Firefox if you want the best audio support, and ensure you're using the *latest version* your browser of choice.`
 		);
 	}
 
@@ -211,8 +209,12 @@ export const audioBufferToWaveBlob = async (audioBuffer) => {
 		});
 
 		let pcmArrays = [];
-		for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
-			pcmArrays.push(audioBuffer.getChannelData(i));
+		if (audioBuffer) {
+			for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+				pcmArrays.push(audioBuffer.getChannelData(i));
+			}
+		} else {
+			return reject({ error: "audio blob not defined" });
 		}
 
 		makeWav.postMessage({

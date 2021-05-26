@@ -23,7 +23,6 @@ import Worm from "../pieces/Worm";
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 import { Typography } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 
 export default function Record() {
 	const classes = useStyles();
@@ -79,11 +78,9 @@ export default function Record() {
 	};
 
 	const handleRecord = () => {
-		clearInterval(timeoutRef.current);
 		if (recordState.isRecording) {
-			timeoutRef.current = setTimeout(() => {
-				recordStopAction();
-			}, 250);
+			clearInterval(timeoutRef.current);
+			recordStopAction();
 		} else {
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
@@ -128,34 +125,17 @@ export default function Record() {
 						}}
 					/>
 				)}
-
 				<CardContent>
 					<RecTitle
 						s={handleShape}
 						userName={userState.selectedUser?.userName}
 					/>
 
-					{userState.selectedUser?.completed <
-						recordState.totalStimCount || recordState.loading ? (
-						<Typography
-							variant="caption"
-							component="p"
-							gutterBottom
-						>
-							{`Completed: ${
-								userState.selectedUser?.completed || 0
-							}/ ${recordState.totalStimCount}`}
-						</Typography>
-					) : (
-						<Typography
-							variant="caption"
-							component="p"
-							style={{ color: green[900] }}
-							gutterBottom
-						>
-							{`You have submitted all the recordings!`}
-						</Typography>
-					)}
+					<Typography variant="caption" component="p">
+						{`Completed: ${
+							userState.selectedUser?.completed || 0
+						}/ `}
+					</Typography>
 
 					<div className={classes.cardaction}>
 						<StimContent stim={recordState.currentStim} />
@@ -163,7 +143,7 @@ export default function Record() {
 						<Timer seconds={recordState.seconds} />
 
 						<Typography className={classes.inshelp}>
-							*Please listen to instructions before recording.
+							*Please listen to the instructions before recording.
 						</Typography>
 
 						<RecControl
@@ -205,7 +185,7 @@ export default function Record() {
 					>
 						{stepState.activeStep === components.length - 1
 							? "Finish"
-							: "Exit"}
+							: "Next"}
 					</Button>
 				</div>
 			</div>

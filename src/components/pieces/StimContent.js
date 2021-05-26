@@ -6,8 +6,8 @@ import { stim_image_url } from "../../functions/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
 	media: {
-		height: 255,
-		width: 255,
+		height: 200,
+		width: 200,
 		margin: theme.spacing(2),
 		marginTop: theme.spacing(0),
 		borderRadius: theme.spacing(1),
@@ -19,6 +19,11 @@ const StimContent = ({ stim }) => {
 
 	return (
 		<>
+			<CardMedia
+				className={classes.media}
+				image={stim_image_url}
+				title="Stimulus image"
+			/>
 			{!stim?.description && (
 				<div className={classes.progress}>
 					<CircularProgress color="secondary" size={28} />
@@ -27,11 +32,6 @@ const StimContent = ({ stim }) => {
 			<Typography variant="h6" color="textPrimary" gutterBottom>
 				{stim?.description}
 			</Typography>
-			<CardMedia
-				className={classes.media}
-				image={stim_image_url}
-				title="Stimulus image"
-			/>
 		</>
 	);
 };

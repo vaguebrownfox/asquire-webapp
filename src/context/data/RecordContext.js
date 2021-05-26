@@ -29,7 +29,7 @@ const recordInitialState = {
 
 	stims: {},
 	currentStim: {},
-	stimCount: 0,
+	totalStimCount: 0,
 
 	seconds: 0,
 };
@@ -48,16 +48,16 @@ const recordReducer = (state, action) => {
 			return {
 				...state,
 				stims: action.payload.stims,
+				totalStimCount: nostims0,
 				currentStim: action.payload.stims[csno0 % nostims0],
 			};
 		case "NEXT_STIM":
-			let nostims1 = Object.keys(state.stims).length;
 			let csno1 = state.currentStim.sno;
 
 			return {
 				...state,
-				currentStim: state.stims[(csno1 + 1) % nostims1],
-				stimCount: state.stimCount + 1,
+				currentStim: state.stims[(csno1 + 1) % state.totalStimCount],
+				// stimCount: state.stimCount + 1,
 			};
 		case "GET_DEVICES":
 			return {
@@ -127,7 +127,10 @@ const recordLoadStimsAction = (dispatch) => {
 	return async (user) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		const stims = await firebaseStims();
+		const stims = await firebaseStims().catch(() => {
+			console.log("Failed to load stimuli, refresh page!");
+			dispatch({ type: "SET_LOADING", payload: false });
+		});
 
 		dispatch({
 			type: "LOAD_STIMS",
@@ -250,6 +253,7 @@ const recordStopAction = (dispatch) => {
 			console.log("record action log:: recorder not defined");
 			return null;
 		}
+
 		audio = await recorder.stopRecord().catch(() => null);
 
 		if (audio) {
