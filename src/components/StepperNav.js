@@ -84,8 +84,7 @@ export default function VerticalLinearStepper({ components }) {
 					<Finish />
 					{/* </React.Suspense> */}
 					<Button
-						variant="contained"
-						color="secondary"
+						variant="outlined"
 						disabled={stepState.activeStep === 0}
 						onClick={handleBack}
 						className={classes.button}
@@ -93,8 +92,13 @@ export default function VerticalLinearStepper({ components }) {
 						Back
 					</Button>
 
-					<Button onClick={handleReset} className={classes.button}>
-						Yay!
+					<Button
+						onClick={handleReset}
+						variant="contained"
+						color="secondary"
+						className={classes.button}
+					>
+						Record another person?
 					</Button>
 				</Paper>
 			)}
