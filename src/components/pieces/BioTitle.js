@@ -33,7 +33,7 @@ const RecTitle = ({ userName }) => {
 				components="div"
 				gutterBottom
 			>
-				{`Biodata for `}
+				{`Biodata `}
 				{bull}
 			</Typography>
 			<Typography

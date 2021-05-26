@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(2),
 		marginRight: theme.spacing(1),
 	},
 	radio: {
@@ -62,9 +63,8 @@ const Survey = () => {
 		stepPreviousAction,
 		stepSetAction,
 	} = React.useContext(StepContext);
-	const { state: surveyState, surveyLoadQuestionsAction } = React.useContext(
-		SurveyContext
-	);
+	const { state: surveyState, surveyLoadQuestionsAction } =
+		React.useContext(SurveyContext);
 	const {
 		state: userState,
 		userUpdateAction,
@@ -110,17 +110,7 @@ const Survey = () => {
 							<CircularProgress color="secondary" size={28} />
 						</div>
 					)}
-				</CardContent>
-			</Card>
-			<div className={classes.actionsContainer}>
-				<div>
-					<Button
-						disabled={stepState.activeStep === 0}
-						onClick={handleBack}
-						className={classes.button}
-					>
-						Back
-					</Button>
+
 					{surveyState.surveyDone && (
 						<Button
 							variant="contained"
@@ -133,6 +123,17 @@ const Survey = () => {
 								: "Next"}
 						</Button>
 					)}
+				</CardContent>
+			</Card>
+			<div className={classes.actionsContainer}>
+				<div>
+					<Button
+						disabled={stepState.activeStep === 0}
+						onClick={handleBack}
+						className={classes.button}
+					>
+						Back
+					</Button>
 				</div>
 			</div>
 		</>

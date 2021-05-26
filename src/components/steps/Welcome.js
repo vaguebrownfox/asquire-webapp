@@ -121,11 +121,15 @@ const AboutProject = () => {
 							paragraph
 						>
 							Asquire data collection application is used to
-							collect data pertaining to sustained phonations,
-							breath and cough sounds. The voice data will be
-							utilised to analyze the sound characteristics using
-							data-driven and signal processing methods for
-							diagnosis and monitoring of asthmatic patients.
+							collect data pertaining to{" "}
+							<b>sustained phonations, breath and cough sounds</b>
+							. The voice data will be utilised to analyze the
+							sound characteristics using data-driven and signal
+							processing methods for{" "}
+							<b>
+								diagnosis and monitoring of asthmatic patients
+							</b>
+							.
 						</Typography>
 					</div>
 					<div className={classes.subtitleDiv}>
@@ -146,10 +150,13 @@ const AboutProject = () => {
 						>
 							Current clinical methods of diagnosis for asthma are
 							evidently tedious, expensive and time-consuming. The
-							motivation behind Asquire comes from developing a
-							diagnosis method that is easy, yet effective and
-							fast, using vocal sounds powered by machine learning
-							and signal processing techniques.
+							motivation behind Asquire comes from{" "}
+							<b>
+								developing a diagnosis method that is easy, yet
+								effective and fast
+							</b>
+							, using vocal sounds powered by Machine Learning
+							(ML) and signal processing techniques.
 						</Typography>
 					</div>
 					<div className={classes.subtitleDiv}>
@@ -171,8 +178,8 @@ const AboutProject = () => {
 							The performance of the said Machine learning tool is
 							proportional to the amount of voice data it is
 							trained on. Your voice will have a significant
-							impact on efficiency of the model and hence,
-							accuracy of the diagnosis.
+							impact on efficiency of the ML model and hence,{" "}
+							<b>accuracy of the diagnosis</b>.
 						</Typography>
 					</div>
 					<div className={classes.terms}>
@@ -181,8 +188,8 @@ const AboutProject = () => {
 							variant="body2"
 							component="div"
 						>
-							*By clicking NEXT, you are agreeing to the consent
-							form.
+							*By clicking NEXT, you are <b>agreeing</b> to the
+							consent form.
 						</Typography>
 						<Button
 							className={classes.consentbutton}

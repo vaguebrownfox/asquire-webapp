@@ -186,30 +186,11 @@ const BioData = () => {
 							InputProps={{
 								endAdornment: (
 									<InputAdornment position="start">
-										years
+										yrs
 									</InputAdornment>
 								),
 							}}
 						/>
-						<TextField
-							id="bio-input-gender"
-							select
-							label="Gender"
-							color="secondary"
-							value={bio.gender || ""}
-							onChange={(e) => handleInputs(fields[1], e)}
-							variant="outlined"
-							helperText="Select your gender"
-						>
-							{genders.map((option) => (
-								<MenuItem
-									key={option.value}
-									value={option.value}
-								>
-									{option.label}
-								</MenuItem>
-							))}
-						</TextField>
 						<TextField
 							id="bio-input-height"
 							label="Height"
@@ -242,6 +223,26 @@ const BioData = () => {
 								),
 							}}
 						/>
+
+						<TextField
+							id="bio-input-gender"
+							select
+							label="Gender"
+							color="secondary"
+							value={bio.gender || ""}
+							onChange={(e) => handleInputs(fields[1], e)}
+							variant="outlined"
+							helperText="Select your gender"
+						>
+							{genders.map((option) => (
+								<MenuItem
+									key={option.value}
+									value={option.value}
+								>
+									{option.label}
+								</MenuItem>
+							))}
+						</TextField>
 					</form>
 				</CardContent>
 				{error.isErr && (

@@ -118,7 +118,7 @@ const AddUserComponent = () => {
 						{bull} <b>Username</b> will be used to save your
 						progress. <br />
 						{bull} You can record for your <b>family and friends</b>{" "}
-						the same app.
+						in the same app.
 						<br />
 					</Typography>
 				</CardContent>
