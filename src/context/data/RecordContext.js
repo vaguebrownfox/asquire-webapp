@@ -1,6 +1,7 @@
 // record context
 import createDataContext from "../createDataContext";
 import { firebaseStims } from "../../functions/firestore";
+import { batch } from "react-redux";
 
 // functions
 import {
@@ -13,7 +14,6 @@ import {
 } from "../../functions/recorder";
 import { firebaseUserAudio } from "../../functions/storage";
 
-import { batch } from "react-redux";
 // Initial State
 const recordInitialState = {
 	loading: false,
@@ -30,6 +30,7 @@ const recordInitialState = {
 	stims: {},
 	currentStim: {},
 	totalStimCount: 0,
+	stimAnim: true,
 
 	seconds: 0,
 };
@@ -58,6 +59,11 @@ const recordReducer = (state, action) => {
 				...state,
 				currentStim: state.stims[(csno1 + 1) % state.totalStimCount],
 				// stimCount: state.stimCount + 1,
+			};
+		case "STIM_ANIM":
+			return {
+				...state,
+				stimAnim: action.payload,
 			};
 		case "GET_DEVICES":
 			return {
@@ -145,8 +151,13 @@ const recordNextStimAction = (dispatch) => {
 	return () => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		dispatch({ type: "NEXT_STIM", payload: null });
-		dispatch({ type: "SECONDS", payload: "reset" });
+		dispatch({ type: "STIM_ANIM", payload: false });
+
+		setTimeout(() => {
+			dispatch({ type: "NEXT_STIM", payload: null });
+			dispatch({ type: "SECONDS", payload: "reset" });
+			dispatch({ type: "STIM_ANIM", payload: true });
+		}, 500);
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};

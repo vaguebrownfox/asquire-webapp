@@ -1,6 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CardMedia, CircularProgress, Typography } from "@material-ui/core";
+import {
+	CardMedia,
+	CircularProgress,
+	Collapse,
+	Fade,
+	Grow,
+	Slide,
+	Typography,
+	Zoom,
+} from "@material-ui/core";
 
 import { stim_image_url } from "../../functions/firebaseConfig";
 
@@ -14,24 +23,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const StimContent = ({ stim }) => {
+const StimContent = ({ stim, anim }) => {
 	const classes = useStyles();
 
 	return (
 		<>
-			<CardMedia
-				className={classes.media}
-				image={stim_image_url}
-				title="Stimulus image"
-			/>
+			<Fade in={anim}>
+				<CardMedia
+					className={classes.media}
+					image={stim_image_url}
+					title="Stimulus image"
+				/>
+			</Fade>
 			{!stim?.description && (
 				<div className={classes.progress}>
 					<CircularProgress color="secondary" size={28} />
 				</div>
 			)}
-			<Typography variant="h6" color="textPrimary" gutterBottom>
-				<b>{stim?.description}</b>
-			</Typography>
+			<Grow in={anim}>
+				<Typography variant="h6" color="textPrimary" gutterBottom>
+					<b>{stim?.description}</b>
+				</Typography>
+			</Grow>
 		</>
 	);
 };

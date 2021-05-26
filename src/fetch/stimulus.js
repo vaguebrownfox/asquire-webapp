@@ -88,7 +88,7 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fbreath.WAV?alt=media&token=c607da11-1ead-4cd7-9d64-42a85a356cf2",
 
-		description: "Record your breath",
+		description: "Record your breath (Breathe through your mouth)",
 	},
 	{
 		tag: "cough",

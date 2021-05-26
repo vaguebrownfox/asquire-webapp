@@ -22,7 +22,7 @@ import Worm from "../pieces/Worm";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
-import { Typography } from "@material-ui/core";
+import { Collapse, Typography } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
 export default function Record() {
@@ -158,38 +158,39 @@ export default function Record() {
 					)}
 
 					<div className={classes.cardaction}>
-						<StimContent stim={recordState.currentStim} />
-
+						<StimContent
+							stim={recordState.currentStim}
+							anim={recordState.stimAnim}
+						/>
 						<Timer seconds={recordState.seconds} />
-
 						<Typography className={classes.inshelp}>
 							*Please listen to instructions before recording.
 						</Typography>
-
 						<RecControl
 							isRecording={recordState.isRecording}
 							recDone={recordState.recDone}
 							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
-						/>
+						/>{" "}
 						<div className={classes.playerDiv}>
-							{recordState.recDone && (
-								<>
-									<Typography
-										variant="body2"
-										color="textPrimary"
-										component="p"
-									>
-										<b>Play recorded audio</b>
-									</Typography>
-									<audio
-										id="stim-player"
-										className={classes.player}
-										src={recordState.playUrl}
-										controls
-									/>
-								</>
-							)}
+							<Collapse in={recordState.recDone}>
+								<Typography
+									variant="body2"
+									color="textPrimary"
+									component="p"
+									gutterBottom
+								>
+									<b>Play recorded audio</b>
+								</Typography>
+							</Collapse>
+							<Collapse in={recordState.recDone}>
+								<audio
+									id="stim-player"
+									className={classes.player}
+									src={recordState.playUrl}
+									controls
+								/>
+							</Collapse>{" "}
 						</div>
 					</div>
 

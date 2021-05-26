@@ -1,6 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton, Tooltip, Typography } from "@material-ui/core";
+import {
+	Collapse,
+	Fade,
+	IconButton,
+	Slide,
+	Tooltip,
+	Typography,
+	Zoom,
+} from "@material-ui/core";
 
 // import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
@@ -119,17 +127,26 @@ const RecControl = ({
 					</Tooltip>
 				</IconButton>
 			</div>
-			{play && (
-				<Typography variant="body2" color="textPrimary" component="p">
-					<b>Listen to the instructions</b>
-				</Typography>
-			)}
-			<audio
-				ref={infoRef}
-				className={classes.playerShow}
-				src={stim?.audioDescriptionLink}
-				controls={play}
-			/>
+
+			<Collapse in={play}>
+				{true && (
+					<Typography
+						variant="body2"
+						color="textPrimary"
+						component="p"
+					>
+						<b>Listen to the instructions</b>
+					</Typography>
+				)}
+			</Collapse>
+			<Collapse in={play}>
+				<audio
+					ref={infoRef}
+					className={classes.playerShow}
+					src={stim?.audioDescriptionLink}
+					controls
+				/>
+			</Collapse>
 		</div>
 	);
 };
@@ -152,7 +169,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	recIcon: {
 		background: theme.palette.primary,
-		boxShadow: "0 0 7px 3px rgba(255, 0, 0, .5)",
+		boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
 		borderRadius: "50%",
 		// color: red[900],
 	},
