@@ -13,6 +13,7 @@ import {
 	audioBufferToWaveBlob,
 } from "../../functions/recorder";
 import { firebaseUserAudio } from "../../functions/storage";
+import { startVibrate } from "../../functions/vibrate";
 
 // Initial State
 const recordInitialState = {
@@ -228,10 +229,16 @@ const recordStartAction = (dispatch) => {
 		if (!recorder) {
 			return null;
 		}
-		const isRecStart = await recorder.startRecord().catch((e) => {
-			console.log("audioRecord start error", e);
-			return null;
-		});
+		const isRecStart = await recorder
+			.startRecord()
+			.then((e) => {
+				startVibrate(200);
+				return e;
+			})
+			.catch((e) => {
+				console.log("audioRecord start error", e);
+				return null;
+			});
 		console.log("record action log:: start record", isRecStart);
 
 		if (isRecStart) {
@@ -265,7 +272,13 @@ const recordStopAction = (dispatch) => {
 			return null;
 		}
 
-		audio = await recorder.stopRecord().catch(() => null);
+		audio = await recorder
+			.stopRecord()
+			.then((e) => {
+				startVibrate(100);
+				return e;
+			})
+			.catch(() => null);
 
 		if (audio) {
 			batch(() => {

@@ -3,12 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
 	CardMedia,
 	CircularProgress,
-	Collapse,
-	Fade,
 	Grow,
-	Slide,
 	Typography,
-	Zoom,
 } from "@material-ui/core";
 
 import { stim_image_url } from "../../functions/firebaseConfig";

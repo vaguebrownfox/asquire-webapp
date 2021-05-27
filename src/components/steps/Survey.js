@@ -14,7 +14,6 @@ import { Context as SurveyContext } from "../../context/data/SurveyContext";
 
 // Pieces
 import Question from "../pieces/Question";
-import { Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
