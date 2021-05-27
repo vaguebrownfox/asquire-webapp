@@ -1,27 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-	Collapse,
-	Fade,
-	IconButton,
-	Slide,
-	Tooltip,
-	Typography,
-	Zoom,
-} from "@material-ui/core";
+import { Collapse, IconButton, Tooltip, Typography } from "@material-ui/core";
 
 // import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
-import { red } from "@material-ui/core/colors";
 
 const RecControl = ({
 	handleRecord,
 	handleDone,
 	isRecording,
 	recDone,
+	playRec,
 	stim,
 }) => {
 	const classes = useStyles();
@@ -65,7 +57,8 @@ const RecControl = ({
 				<IconButton
 					aria-label="info"
 					onClick={handlePlay}
-					disabled={isRecording}
+					color={play ? "secondary" : ""}
+					disabled={isRecording || playRec}
 				>
 					<Tooltip
 						title={instip}
@@ -81,7 +74,7 @@ const RecControl = ({
 						aria-label="record"
 						onClick={handleRecord}
 						color="secondary"
-						disabled={play}
+						disabled={play || playRec}
 					>
 						<Tooltip
 							title={`${
@@ -120,7 +113,7 @@ const RecControl = ({
 				<IconButton
 					aria-label="next"
 					onClick={handleDone}
-					disabled={!recDone || play}
+					disabled={!recDone || play || playRec}
 				>
 					<Tooltip open={recDone} arrow title="Done? Next task >>">
 						<DoneIcon className={classes.controlIcon} />
@@ -170,8 +163,8 @@ const useStyles = makeStyles((theme) => ({
 	recIcon: {
 		background: theme.palette.primary,
 		boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
+		animation: `$glowee 3000ms ${theme.transitions.easing.easeInOut} 400ms infinite`,
 		borderRadius: "50%",
-		// color: red[900],
 	},
 	controlIcon: {
 		height: 38,
@@ -209,6 +202,17 @@ const useStyles = makeStyles((theme) => ({
 		},
 		"100%": {
 			transform: "scale(1)",
+		},
+	},
+	"@keyframes glowee": {
+		"0%": {
+			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
+		},
+		"50%": {
+			boxShadow: `0 0 7px 4px ${theme.palette.secondary.main}`,
+		},
+		"100%": {
+			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
 		},
 	},
 	playerShow: {

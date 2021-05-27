@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-import { components } from "../../App";
 import { firebaseSetActive } from "../../functions/firestore";
 
 // Context
@@ -27,6 +26,9 @@ import { green } from "@material-ui/core/colors";
 
 export default function Record() {
 	const classes = useStyles();
+	const playRef = React.useRef();
+
+	const [play, setPlay] = React.useState(false);
 
 	const {
 		state: stepState,
@@ -58,7 +60,17 @@ export default function Record() {
 		recordLoadStimsAction(userState.selectedUser);
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
+
+		const playRefE = playRef.current;
+		playRefE && playRefE?.addEventListener("play", () => setPlay(true));
+		playRefE && playRefE?.addEventListener("pause", () => setPlay(false));
+
 		return () => {
+			playRefE &&
+				playRefE?.removeEventListener("play", () => setPlay(false));
+			playRefE &&
+				playRefE?.removeEventListener("pause", () => setPlay(false));
+
 			const finishedStim = { ...recordState.currentStim };
 			recordUploadAction({
 				...userState.selectedUser,
@@ -153,7 +165,7 @@ export default function Record() {
 							style={{ color: green[900] }}
 							gutterBottom
 						>
-							{`Done! You have finished all the tasks.`}
+							{`Yay! You have completed all the tasks...`}
 						</Typography>
 					)}
 
@@ -169,6 +181,7 @@ export default function Record() {
 						<RecControl
 							isRecording={recordState.isRecording}
 							recDone={recordState.recDone}
+							playRec={play}
 							stim={recordState.currentStim}
 							{...{ handleRecord, handleDone }}
 						/>{" "}
@@ -185,6 +198,7 @@ export default function Record() {
 							</Collapse>
 							<Collapse in={recordState.recDone}>
 								<audio
+									ref={playRef}
 									id="stim-player"
 									className={classes.player}
 									src={recordState.playUrl}

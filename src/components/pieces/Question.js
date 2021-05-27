@@ -17,7 +17,7 @@ import SkipNextIcon from "@material-ui/icons/ArrowForwardRounded";
 
 // Context
 import { Context as SurveyContext } from "../../context/data/SurveyContext";
-import { Grow, Slide, Zoom } from "@material-ui/core";
+import { Grow, Slide } from "@material-ui/core";
 
 const Question = ({ anim }) => {
 	const classes = questionStyles();
