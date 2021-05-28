@@ -17,6 +17,7 @@ import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
 import Worm from "../pieces/Worm";
+// import Wave from "../pieces/Wave";
 // import RecDevices from "../pieces/RecDevices";
 
 // Hooks
@@ -26,9 +27,6 @@ import { green } from "@material-ui/core/colors";
 
 export default function Record() {
 	const classes = useStyles();
-	const playRef = React.useRef();
-
-	const [play, setPlay] = React.useState(false);
 
 	const {
 		state: stepState,
@@ -42,16 +40,22 @@ export default function Record() {
 		recordGetDevicesAction,
 		recordStartAction,
 		recordStopAction,
+		recordPlayAction,
+		recordPlayInstAction,
 		recordUploadAction,
 		recordResetAction,
 	} = React.useContext(RecordContext);
 
-	const timeoutRef = React.useRef();
-	const vizRef = React.useRef();
 	const { state: userState, userUpdateAction } =
 		React.useContext(UserContext);
 
+	const playRef = React.useRef();
+	const timeoutRef = React.useRef();
+	const vizRef = React.useRef();
+	const [plytip, setPlytip] = React.useState("Play");
+
 	const [shape, setShape] = React.useState(false);
+
 	const handleShape = () => {
 		setShape((preshape) => !preshape);
 	};
@@ -62,14 +66,20 @@ export default function Record() {
 		firebaseSetActive(userState.selectedUser, "true");
 
 		const playRefE = playRef.current;
-		playRefE && playRefE?.addEventListener("play", () => setPlay(true));
-		playRefE && playRefE?.addEventListener("pause", () => setPlay(false));
+		const stopPlay = () => {
+			recordPlayAction(false);
+			setPlytip("Play");
+		};
+		playRefE &&
+			playRefE?.addEventListener("play", () => recordPlayAction(true));
+		playRefE && playRefE?.addEventListener("pause", () => stopPlay);
 
 		return () => {
 			playRefE &&
-				playRefE?.removeEventListener("play", () => setPlay(false));
-			playRefE &&
-				playRefE?.removeEventListener("pause", () => setPlay(false));
+				playRefE?.removeEventListener("play", () =>
+					recordPlayAction(false)
+				);
+			playRefE && playRefE?.removeEventListener("pause", stopPlay);
 
 			const finishedStim = { ...recordState.currentStim };
 			recordUploadAction({
@@ -101,6 +111,16 @@ export default function Record() {
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
 			}, 61000);
+		}
+	};
+
+	const handlePlay = () => {
+		if (recordState.isPlaying) {
+			playRef.current.pause();
+			setPlytip("Play");
+		} else {
+			setPlytip("Pause");
+			playRef.current.play();
 		}
 	};
 
@@ -140,6 +160,15 @@ export default function Record() {
 						}}
 					/>
 				)}
+				{/* {recordState.recDone && (
+					<Wave
+						{...{
+							width,
+							height,
+							audioBuffer: recordState.audioBuffer,
+						}}
+					/>
+				)} */}
 
 				<CardContent>
 					<RecTitle
@@ -173,20 +202,30 @@ export default function Record() {
 						<StimContent
 							stim={recordState.currentStim}
 							anim={recordState.stimAnim}
+							isRecording={recordState.isRecording}
+							isPlaying={recordState.isPlayingInst}
+							{...{ playRec: recordPlayInstAction }}
 						/>
+
 						<Timer seconds={recordState.seconds} />
-						<Typography className={classes.inshelp}>
+						{/* <Typography className={classes.inshelp}>
 							*Please listen to instructions before recording.
-						</Typography>
+						</Typography> */}
 						<RecControl
 							isRecording={recordState.isRecording}
+							isPlaying={recordState.isPlaying}
+							isPlayingInst={recordState.isPlayingInst}
 							recDone={recordState.recDone}
-							playRec={play}
-							stim={recordState.currentStim}
-							{...{ handleRecord, handleDone }}
-						/>{" "}
+							playTip={plytip}
+							{...{ handleRecord, handleDone, handlePlay }}
+						/>
 						<div className={classes.playerDiv}>
-							<Collapse in={recordState.recDone}>
+							<Collapse
+								in={
+									recordState.recDone &&
+									!recordState.isPlayingInst
+								}
+							>
 								<Typography
 									variant="body2"
 									color="textPrimary"
@@ -196,7 +235,12 @@ export default function Record() {
 									<b>Play recorded audio</b>
 								</Typography>
 							</Collapse>
-							<Collapse in={recordState.recDone}>
+							<Collapse
+								in={
+									recordState.recDone &&
+									!recordState.isPlayingInst
+								}
+							>
 								<audio
 									ref={playRef}
 									id="stim-player"
@@ -204,7 +248,7 @@ export default function Record() {
 									src={recordState.playUrl}
 									controls
 								/>
-							</Collapse>{" "}
+							</Collapse>
 						</div>
 					</div>
 

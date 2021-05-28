@@ -25,8 +25,10 @@ const recordInitialState = {
 
 	isRecording: false,
 	isPlaying: false,
+	isPlayingInst: false,
 	recDone: false,
 	playUrl: "",
+	audioBuffer: [],
 
 	stims: {},
 	currentStim: {},
@@ -94,10 +96,17 @@ const recordReducer = (state, action) => {
 			return { ...state, isRecording: action.payload };
 		case "SET_PLY_STATE":
 			return { ...state, isPlaying: action.payload };
+		case "SET_PLYINST_STATE":
+			return { ...state, isPlayingInst: action.payload };
 		case "SET_REC_DONE":
 			return { ...state, recDone: action.payload };
 		case "SET_PLY_URL":
 			return { ...state, playUrl: action.payload };
+		case "SET_AUD_BUF":
+			return {
+				...state,
+				audioBuffer: action.payload,
+			};
 		case "SECONDS":
 			let secs = state.seconds;
 			switch (action.payload) {
@@ -281,16 +290,34 @@ const recordStopAction = (dispatch) => {
 			.catch(() => null);
 
 		if (audio) {
+			const audioBuffer = await createAudioBuffer(audio.audioUrl);
+			const audioData = audioBuffer.getChannelData(0);
+			const skip = Math.floor(audioData.length / (256 * 4));
+			const audioDataF = audioData.filter((e, i) => i % skip === 0);
+
 			batch(() => {
 				dispatch({ type: "SET_REC_STATE", payload: false });
 				dispatch({ type: "SET_REC_DONE", payload: true });
 				dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
 			});
 
+			dispatch({ type: "SET_AUD_BUF", payload: audioDataF });
 			clearInterval(interval);
 		}
 
 		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
+const recordPlayAction = (dispatch) => {
+	return (isPly) => {
+		dispatch({ type: "SET_PLY_STATE", payload: isPly });
+	};
+};
+
+const recordPlayInstAction = (dispatch) => {
+	return (isPly) => {
+		dispatch({ type: "SET_PLYINST_STATE", payload: isPly });
 	};
 };
 
@@ -344,6 +371,8 @@ export const { Context, Provider } = createDataContext(
 
 		recordStartAction,
 		recordStopAction,
+		recordPlayAction,
+		recordPlayInstAction,
 
 		recordUploadAction,
 

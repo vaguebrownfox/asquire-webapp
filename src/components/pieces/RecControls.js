@@ -1,80 +1,50 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Collapse, IconButton, Tooltip, Typography } from "@material-ui/core";
+import { IconButton, Tooltip, Typography } from "@material-ui/core";
 
 // import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
-import InfoIcon from "@material-ui/icons/InfoOutlined";
+import PlayIcon from "@material-ui/icons/PlayArrowRounded";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
 
 const RecControl = ({
 	handleRecord,
 	handleDone,
+	handlePlay,
 	isRecording,
+	isPlaying,
+	isPlayingInst,
 	recDone,
-	playRec,
-	stim,
+	playTip,
 }) => {
 	const classes = useStyles();
-	const infoRef = React.useRef();
-
-	const [play, setPlay] = React.useState(false);
-	const [instip, setInstip] = React.useState("Click! Listen to instruction");
-
-	const handlePlay = () => {
-		if (play) {
-			infoRef.current.pause();
-			setPlay(false);
-			setInstip("Paused");
-		} else {
-			setInstip("Click to pause..");
-			infoRef.current.play();
-			setPlay(true);
-		}
-	};
-
-	React.useEffect(() => {
-		setInstip("Click! Listen to instruction");
-		const stopPlay = () => {
-			setPlay(false);
-			setInstip("Play again...");
-		};
-		const infoRefE = infoRef.current;
-		infoRefE && infoRefE?.addEventListener("ended", stopPlay);
-		infoRefE && infoRefE?.addEventListener("pause", stopPlay);
-		infoRefE && infoRefE?.addEventListener("seeking", () => setPlay(true));
-
-		return () => {
-			infoRefE && infoRefE?.removeEventListener("ended", stopPlay);
-			infoRefE && infoRefE?.removeEventListener("pause", stopPlay);
-		};
-	}, [stim]);
 
 	return (
 		<div className={classes.root}>
 			<div className={classes.controls}>
-				<IconButton
-					aria-label="info"
-					onClick={handlePlay}
-					color={play ? "secondary" : ""}
-					disabled={isRecording || playRec}
-				>
-					<Tooltip
-						title={instip}
-						arrow
-						open={true}
-						placement="bottom"
+				<div className={classes.controlIconRec}>
+					<IconButton
+						aria-label="info"
+						onClick={handlePlay}
+						disabled={isRecording || isPlayingInst || !recDone}
 					>
-						<InfoIcon className={classes.controlIcon} />
-					</Tooltip>
-				</IconButton>
+						<Tooltip title={playTip} placement="bottom" arrow>
+							<PlayIcon className={classes.controlIcon} />
+						</Tooltip>
+					</IconButton>
+					{recDone && !isRecording && (
+						<Typography color="secondary" variant="caption">
+							{playTip}
+						</Typography>
+					)}
+				</div>
 				<div className={classes.controlIconRec}>
 					<IconButton
 						aria-label="record"
 						onClick={handleRecord}
 						color="secondary"
-						disabled={play || playRec}
+						disabled={isPlaying || isPlayingInst}
 					>
 						<Tooltip
 							title={`${
@@ -84,6 +54,7 @@ const RecControl = ({
 									? "Redo recording?"
 									: "Start recording"
 							}`}
+							placement="top"
 							arrow
 						>
 							{isRecording ? (
@@ -104,42 +75,30 @@ const RecControl = ({
 							)}
 						</Tooltip>
 					</IconButton>
+
+					<Typography color="secondary" variant="caption">
+						{`${
+							isRecording ? "Stop" : recDone ? "Redo?" : "Start"
+						}`}
+					</Typography>
+				</div>
+				<div className={classes.controlIconRec}>
+					<IconButton
+						aria-label="next"
+						onClick={handleDone}
+						disabled={!recDone || isPlaying || isPlayingInst}
+					>
+						<Tooltip arrow title="Save and Continue">
+							<DoneIcon className={classes.controlIcon} />
+						</Tooltip>
+					</IconButton>
 					{recDone && (
 						<Typography color="secondary" variant="caption">
-							Redo recording?
+							Continue
 						</Typography>
 					)}
 				</div>
-				<IconButton
-					aria-label="next"
-					onClick={handleDone}
-					disabled={!recDone || play || playRec}
-				>
-					<Tooltip open={recDone} arrow title="Done? Next task >>">
-						<DoneIcon className={classes.controlIcon} />
-					</Tooltip>
-				</IconButton>
 			</div>
-
-			<Collapse in={play}>
-				{true && (
-					<Typography
-						variant="body2"
-						color="textPrimary"
-						component="p"
-					>
-						<b>Listen to the instructions</b>
-					</Typography>
-				)}
-			</Collapse>
-			<Collapse in={play}>
-				<audio
-					ref={infoRef}
-					className={classes.playerShow}
-					src={stim?.audioDescriptionLink}
-					controls
-				/>
-			</Collapse>
 		</div>
 	);
 };
@@ -157,8 +116,6 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		maxWidth: theme.spacing(64),
 		justifyContent: "space-evenly",
-		paddingLeft: theme.spacing(1),
-		paddingBottom: theme.spacing(1),
 	},
 	recIcon: {
 		background: theme.palette.primary,
@@ -167,8 +124,8 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: "50%",
 	},
 	controlIcon: {
-		height: 38,
-		width: 38,
+		height: 32,
+		width: 32,
 
 		"&:hover": {
 			transform: "scale(1.1)",
