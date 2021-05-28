@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		right: 0,
 		bottom: 0,
 		borderRadius: "50%",
-		borderTop: 2,
+		borderTopWidth: 2,
 		borderLeftWidth: 2,
 		borderRightWidth: 0,
 		borderBottomWidth: 0,

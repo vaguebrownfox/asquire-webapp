@@ -6,6 +6,7 @@ import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import PlayIcon from "@material-ui/icons/PlayArrowRounded";
+import PauseIcon from "@material-ui/icons/PauseRounded";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
 
 const RecControl = ({
@@ -30,7 +31,11 @@ const RecControl = ({
 						disabled={isRecording || isPlayingInst || !recDone}
 					>
 						<Tooltip title={playTip} placement="bottom" arrow>
-							<PlayIcon className={classes.controlIcon} />
+							{isPlaying ? (
+								<PauseIcon className={classes.controlIcon} />
+							) : (
+								<PlayIcon className={classes.controlIcon} />
+							)}
 						</Tooltip>
 					</IconButton>
 					{recDone && !isRecording && (

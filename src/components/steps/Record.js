@@ -72,7 +72,7 @@ export default function Record() {
 		};
 		playRefE &&
 			playRefE?.addEventListener("play", () => recordPlayAction(true));
-		playRefE && playRefE?.addEventListener("pause", () => stopPlay);
+		playRefE && playRefE?.addEventListener("pause", stopPlay);
 
 		return () => {
 			playRefE &&
@@ -117,7 +117,6 @@ export default function Record() {
 	const handlePlay = () => {
 		if (recordState.isPlaying) {
 			playRef.current.pause();
-			setPlytip("Play");
 		} else {
 			setPlytip("Pause");
 			playRef.current.play();
