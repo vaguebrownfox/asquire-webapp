@@ -9,7 +9,7 @@ import {
 	Tooltip,
 	Typography,
 } from "@material-ui/core";
-import InfoIcon from "@material-ui/icons/HelpOutline";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
 
 import { stim_image_url } from "../../functions/firebaseConfig";
 

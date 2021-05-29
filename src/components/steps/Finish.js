@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 		height: theme.spacing(8),
 		width: theme.spacing(8),
 		margin: theme.spacing(1),
-		animation: `$spin 2048ms  infinite linear`,
+		animation: `$spin 4096ms  infinite linear`,
 	},
 	"@keyframes zoomies": {
 		"0%": {
@@ -165,25 +165,30 @@ export default function Finish() {
 						size="small"
 						color="secondary"
 						href="/feedback"
+						target="_blank"
 					>
 						Please Give feedback!
 					</Button>
 
 					<span>
-						<IconButton href="/feedback">
+						<IconButton href="/feedback" target="_blank">
 							<BadMoodIcon
 								className={classes.feedback}
 								fontSize="large"
 								style={{ color: red[700] }}
 							/>
 						</IconButton>
-						<IconButton href="/feedback">
+						<IconButton
+							color="secondary"
+							href="/feedback"
+							target="_blank"
+						>
 							<OKMoodIcon
 								className={classes.feedback}
 								fontSize="large"
 							/>
 						</IconButton>
-						<IconButton href="/feedback">
+						<IconButton href="/feedback" target="_blank">
 							<GoodMoodIcon
 								className={classes.feedback}
 								fontSize="large"
