@@ -57,6 +57,18 @@ const useStyles = makeStyles((theme) => ({
 		borderColor: theme.palette.secondary.main,
 		borderStyle: "solid",
 	},
+	tagbox: {
+		position: "absolute",
+		top: theme.spacing(4),
+		left: theme.spacing(6),
+		padding: theme.spacing(1),
+		borderWidth: 4,
+		// borderTopWidth: 2,
+		// borderLeftWidth: 2,
+		// borderRightWidth: 0,
+		// borderBottomWidth: 0,
+		// borderColor: red[900],
+	},
 }));
 
 const StimContent = ({ stim, anim, playRec, isRecording, isPlaying }) => {
@@ -97,6 +109,14 @@ const StimContent = ({ stim, anim, playRec, isRecording, isPlaying }) => {
 	return (
 		<>
 			<div className={classes.mediaDiv}>
+				{/* <Typography
+					variant="caption"
+					color="textSecondary"
+					component="p"
+					className={classes.tagbox}
+				>
+					<b>{stim.tag}</b>
+				</Typography> */}
 				<CardMedia
 					className={classes.media}
 					image={stim_image_url}

@@ -149,23 +149,7 @@ const useStyles = makeStyles((theme) => ({
 	recbutton: {
 		position: "relative",
 	},
-	controlIconAction: {
-		height: 38,
-		width: 38,
 
-		animation: `$zoomies 2000ms ${theme.transitions.easing.easeInOut} 200ms infinite`,
-	},
-	"@keyframes zoomies": {
-		"0%": {
-			transform: "scale(1)",
-		},
-		"50%": {
-			transform: "scale(1.1)",
-		},
-		"100%": {
-			transform: "scale(1)",
-		},
-	},
 	"@keyframes glowee": {
 		"0%": {
 			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,

@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
+
 const RecTitle = ({ userName }) => {
 	const classes = useStyles();
 	const bull = <span className={classes.bullet}>•</span>;
