@@ -50,9 +50,7 @@ const Survey = () => {
 			<CardContent>
 				<Question anim={surveyState.surveyAnim} />
 				{userState.loading && (
-					<div className={classes.progress}>
-						<CircularProgress color="secondary" size={28} />
-					</div>
+					<CircularProgress color="secondary" size={28} />
 				)}
 
 				{surveyState.surveyDone && (

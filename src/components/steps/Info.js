@@ -5,7 +5,7 @@ import Survey from "./Survey";
 
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -51,7 +51,7 @@ const Info = () => {
 				) : !userState?.selectedUser?.surveyDone ? (
 					<Survey />
 				) : (
-					<p>done</p>
+					<CircularProgress color="secondary" size={28} />
 				)}
 			</>
 			<div className={classes.actionsContainer}>
