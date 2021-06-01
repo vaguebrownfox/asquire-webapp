@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		fontSize: 14,
 	},
-
 	bullet: {
 		display: "inline-block",
 		margin: "0 2px",

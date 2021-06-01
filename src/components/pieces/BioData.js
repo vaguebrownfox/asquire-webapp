@@ -9,7 +9,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
-import BioTitle from "../../components/pieces/BioTitle";
+import BioTitle from "./BioTitle";
 
 // Context
 import { Context as UserContext } from "../../context/data/UserContext";

@@ -10,6 +10,7 @@ import { firebaseSetActive } from "../../functions/firestore";
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 import { Context as RecordContext } from "../../context/data/RecordContext";
+import ListIcon from "@material-ui/icons/List";
 
 // Pieces
 import RecTitle from "../pieces/RecTitle";
@@ -22,8 +23,16 @@ import Worm from "../pieces/Worm";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
-import { Collapse, Typography } from "@material-ui/core";
+import {
+	Backdrop,
+	Collapse,
+	Fade,
+	IconButton,
+	Modal,
+	Typography,
+} from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
+import InstructionModal from "../pieces/Instructions";
 
 export default function Record() {
 	const classes = useStyles();
@@ -55,6 +64,16 @@ export default function Record() {
 	const [plytip, setPlytip] = React.useState("Play");
 
 	const [shape, setShape] = React.useState(false);
+
+	const [modalOpen, setOpen] = React.useState(true);
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	const handleShape = () => {
 		setShape((preshape) => !preshape);
@@ -168,7 +187,13 @@ export default function Record() {
 						}}
 					/>
 				)} */}
-
+				<IconButton
+					aria-label="instructions"
+					className={classes.iconButton}
+					onClick={handleOpen}
+				>
+					<ListIcon color="inherit" fontSize="large" />
+				</IconButton>
 				<CardContent>
 					<RecTitle
 						s={handleShape}
@@ -203,7 +228,7 @@ export default function Record() {
 							anim={recordState.stimAnim}
 							isRecording={recordState.isRecording}
 							isPlaying={recordState.isPlayingInst}
-							{...{ playRec: recordPlayInstAction }}
+							{...{ playRec: recordPlayInstAction, modalOpen }}
 						/>
 
 						<Timer seconds={recordState.seconds} />
@@ -250,7 +275,9 @@ export default function Record() {
 							</Collapse>
 						</div>
 					</div>
-
+					<>
+						<InstructionModal {...{ modalOpen, handleClose }} />
+					</>
 					{/* <RecDevices {...{ recordState, handleRefresh }} /> */}
 				</CardContent>
 			</Card>
@@ -311,5 +338,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inshelp: {
 		color: theme.palette.secondary.main,
+	},
+	iconButton: {
+		position: "absolute",
+		top: 0,
+		right: 0,
+		marginTop: theme.spacing(1),
+		marginRight: theme.spacing(2),
 	},
 }));

@@ -71,7 +71,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const StimContent = ({ stim, anim, playRec, isRecording, isPlaying }) => {
+const StimContent = ({
+	stim,
+	anim,
+	playRec,
+	isRecording,
+	isPlaying,
+	modalOpen,
+}) => {
 	const classes = useStyles();
 	const infoRef = React.useRef();
 
@@ -133,7 +140,7 @@ const StimContent = ({ stim, anim, playRec, isRecording, isPlaying }) => {
 						<Tooltip
 							title={instip}
 							placement="left-end"
-							open={true}
+							open={!modalOpen}
 							arrow
 						>
 							<InfoIcon className={classes.helpIcon} />

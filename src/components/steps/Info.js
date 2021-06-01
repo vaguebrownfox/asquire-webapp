@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import BioData from "./BioData";
-import Survey from "./Survey";
+import BioData from "../pieces/BioData";
+import Survey from "../pieces/Survey";
 
 import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";

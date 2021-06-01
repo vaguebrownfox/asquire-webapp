@@ -241,7 +241,7 @@ const recordStartAction = (dispatch) => {
 		const isRecStart = await recorder
 			.startRecord()
 			.then((e) => {
-				startVibrate(200);
+				startVibrate(100);
 				return e;
 			})
 			.catch((e) => {
