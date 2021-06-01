@@ -11,6 +11,10 @@ import PlayIcon from "@material-ui/icons/PlayArrowRounded";
 
 import Timer from "../pieces/Timer";
 
+// Context
+import { Context as VoiceContext } from "../../context/data/VoiceContext";
+import { Context as RecordContext } from "../../context/data/RecordContext";
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		width: "80%",
@@ -99,16 +103,19 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 const sampleAudioPath = "/impulse/breath.wav";
-const Voice = ({
-	recordState,
-	voiceState,
-	userState,
-	recordGetDevicesAction,
-	recordStartAction,
-	recordStopAction,
-	voiceTransformAction,
-}) => {
+const Voice = ({ completed }) => {
 	const classes = useStyles();
+
+	const { state: voiceState, voiceTransformAction } =
+		React.useContext(VoiceContext);
+
+	const {
+		state: recordState,
+		recordGetDevicesAction,
+		recordStartAction,
+		recordStopAction,
+		recordResetAction,
+	} = React.useContext(RecordContext);
 
 	const timeoutRef = React.useRef();
 	const playerRef = React.useRef();
@@ -176,6 +183,13 @@ const Voice = ({
 		}
 	};
 
+	React.useEffect(() => {
+		return () => {
+			console.log("voice cleanup");
+			recordResetAction();
+		};
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
 		<div className={classes.root}>
 			<IconButton
@@ -222,15 +236,14 @@ const Voice = ({
 				{voiceState.txDetes.map((v, i) => {
 					const a = unlock;
 					const b = recordState.isRecording;
-					const c = i >= userState.selectedUser.completed;
+					const c = i >= completed;
 					return (
 						<Tooltip key={i} title={v.description}>
 							<Chip
 								className={classes.chip}
 								disabled={b || (!a && c)}
 								icon={
-									i >= userState.selectedUser.completed &&
-									!unlock ? (
+									i >= completed && !unlock ? (
 										<LockIcon />
 									) : (
 										<BlurOn />

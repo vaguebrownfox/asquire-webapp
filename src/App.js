@@ -18,8 +18,7 @@ import { Provider as VoiceProvider } from "./context/data/VoiceContext";
 // Steps
 const Welcome = React.lazy(() => import("./components/steps/Welcome"));
 const AddUser = React.lazy(() => import("./components/steps/AddUser"));
-const Survey = React.lazy(() => import("./components/steps/Survey"));
-const BioData = React.lazy(() => import("./components/steps/BioData"));
+const Info = React.lazy(() => import("./components/steps/Info"));
 const Record = React.lazy(() => import("./components/steps/Record"));
 
 // Static
@@ -27,6 +26,7 @@ const About = React.lazy(() => import("./components/static/About"));
 const Consent = React.lazy(() => import("./components/static/Consent"));
 const Contact = React.lazy(() => import("./components/static/Contact"));
 const Feedback = React.lazy(() => import("./components/static/Feedback"));
+const NopePage = React.lazy(() => import("./components/static/NopePage"));
 
 export const components = [
 	{
@@ -38,12 +38,8 @@ export const components = [
 		component: <AddUser />,
 	},
 	{
-		title: "Bio Data",
-		component: <BioData />,
-	},
-	{
-		title: "Quick Survey!",
-		component: <Survey />,
+		title: "Survey",
+		component: <Info />,
 	},
 	{
 		title: "Record your voice!",
@@ -56,9 +52,9 @@ const App = () => {
 		<div className="App">
 			<>
 				<Router>
+					<AsqAppBar title="Asquire" />
 					<StepProvider>
 						<UserProvider>
-							<AsqAppBar title="Asquire" />
 							<SurveyProvider>
 								<RecordProvider>
 									<VoiceProvider>
@@ -84,7 +80,6 @@ const App = () => {
 														/>
 													)}
 												/>
-
 												{/* Static Pages */}
 												<Route
 													path="/about"
@@ -105,6 +100,10 @@ const App = () => {
 													path="/feedback"
 													exact
 													component={Feedback}
+												/>{" "}
+												<Route
+													path="/*"
+													component={NopePage}
 												/>
 											</Switch>
 										</React.Suspense>

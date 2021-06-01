@@ -12,7 +12,6 @@ import PagesIcon from "@material-ui/icons/Pages";
 
 // Context
 import { Context as RecordContext } from "../../context/data/RecordContext";
-import { Context as VoiceContext } from "../../context/data/VoiceContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 
 import useContainerDimensions from "../../hooks/useContainerDimensions";
@@ -78,16 +77,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Finish() {
 	const classes = useStyles();
-	const {
-		state: recordState,
-		recordGetDevicesAction,
-		recordStartAction,
-		recordStopAction,
-		recordResetAction,
-	} = React.useContext(RecordContext);
 
-	const { state: voiceState, voiceTransformAction } =
-		React.useContext(VoiceContext);
+	const { state: recordState } = React.useContext(RecordContext);
 
 	const { state: userState } = React.useContext(UserContext);
 
@@ -98,13 +89,6 @@ export default function Finish() {
 	const handleAnim = () => {
 		setAnim(true);
 	};
-
-	React.useEffect(() => {
-		return () => {
-			console.log("voice cleanup");
-			recordResetAction();
-		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const { width, height } = useContainerDimensions(vizRef, recordState);
 
@@ -221,13 +205,8 @@ export default function Finish() {
 					<div className={classes.voice}>
 						<Voice
 							{...{
-								recordState,
-								voiceState,
 								userState,
-								recordGetDevicesAction,
-								recordStartAction,
-								recordStopAction,
-								voiceTransformAction,
+								completed: userState.selectedUser.completed,
 							}}
 						/>
 					</div>

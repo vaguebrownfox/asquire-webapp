@@ -218,15 +218,6 @@ const questionStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(3),
 		marginBottom: theme.spacing(3),
 	},
-	nextButton: {
-		background: "none",
-		color: "inherit",
-		border: "none",
-		padding: 0,
-		font: "inherit",
-		cursor: "pointer",
-		outline: "inherit",
-	},
 }));
 
 export default Question;

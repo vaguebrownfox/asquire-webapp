@@ -2,6 +2,9 @@ import { red, grey } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 // A custom theme for this app
+
+const o = 1;
+
 const theme = createMuiTheme({
 	palette: {
 		primary: {
@@ -12,6 +15,7 @@ const theme = createMuiTheme({
 			main: "#BF4904",
 			// background: `linear-gradient(45deg, #BF4904,  #BF0404)`,
 			background: `linear-gradient(90deg, rgba(191,73,4,1) 0%, rgba(217,61,4,1) 50%, rgba(191,4,4,1) 95%, rgba(191,73,4,1) 100%)`,
+			background_o: `linear-gradient(90deg, rgba(191,73,4,${o}) 0%, rgba(217,61,4,,${o}) 50%, rgba(191,4,4,,${o}) 95%, rgba(191,73,4,,${o}) 100%)`,
 			background_rev: `linear-gradient(45deg, #BF0404 ,  #BF4904)`,
 			card: "#faebd7",
 			// main: "#BF0404",
