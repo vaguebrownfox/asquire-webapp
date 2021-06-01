@@ -8,5 +8,6 @@
 -   codebase version 0x0C - refac - Improve performance and remove possible memory leaks and refac state management
 -   codebase version 0x0C - prod - New Firebase project to release the app!
 -   codebase version 0x0C - final - Making changes after feedback
+-   codebase version 0x0C - reduce - Combine biodata and survey step
 
 ### SPIRE Lab IISc, Banglore
