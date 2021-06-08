@@ -50,10 +50,20 @@ const useStyles = makeStyles((theme) => ({
 	divider: {
 		marginBottom: theme.spacing(2),
 	},
+	"@keyframes glowee": {
+		"0%": {
+			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
+		},
+		"50%": {
+			boxShadow: `0 0 7px 4px ${theme.palette.secondary.main}`,
+		},
+		"100%": {
+			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
+		},
+	},
 }));
 const InstructionModal = ({ modalOpen, handleClose }) => {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
 
 	return (
 		<>
@@ -103,7 +113,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{2}. Click{"   "}
+								{3}. Click{"   "}
 								<RecordStopIcon
 									classes={{ root: classes.recIcon }}
 									fontSize="default"
@@ -116,9 +126,19 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{1}. Click <DoneIcon fontSize="default" /> to
+								{4}. Click <DoneIcon fontSize="default" /> to
 								for next recording Task
 							</Typography>
+							<Divider className={classes.divider} />
+							<Typography
+								variant="body1"
+								component="h6"
+								gutterBottom
+							>
+								{5}. Click <b>EXIT</b> after finishing all the
+								tasks
+							</Typography>{" "}
+							<Divider className={classes.divider} />
 						</div>
 						<Button
 							variant="outlined"

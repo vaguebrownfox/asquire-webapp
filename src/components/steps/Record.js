@@ -23,14 +23,7 @@ import Worm from "../pieces/Worm";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
-import {
-	Backdrop,
-	Collapse,
-	Fade,
-	IconButton,
-	Modal,
-	Typography,
-} from "@material-ui/core";
+import { Chip, Collapse, Typography } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import InstructionModal from "../pieces/Instructions";
 
@@ -187,13 +180,15 @@ export default function Record() {
 						}}
 					/>
 				)} */}
-				<IconButton
-					aria-label="instructions"
-					className={classes.iconButton}
+
+				<Chip
+					className={classes.instChip}
+					avatar={<ListIcon fontSize="large" />}
+					aria-label="Show instructions"
+					label="Show instructions"
 					onClick={handleOpen}
-				>
-					<ListIcon color="inherit" fontSize="large" />
-				</IconButton>
+					variant="outlined"
+				/>
 				<CardContent>
 					<RecTitle
 						s={handleShape}
@@ -339,11 +334,11 @@ const useStyles = makeStyles((theme) => ({
 	inshelp: {
 		color: theme.palette.secondary.main,
 	},
-	iconButton: {
+	instChip: {
 		position: "absolute",
-		top: 0,
+		bottom: 0,
 		right: 0,
-		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(2),
 		marginRight: theme.spacing(2),
 	},
 }));
