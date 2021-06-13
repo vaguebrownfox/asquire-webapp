@@ -60,8 +60,6 @@ const recordReducer = (state, action) => {
 				currentStim: action.payload.stims[csno0 % nostims0],
 			};
 		case "NEXT_STIM":
-			let csno1 = state.currentStim.sno;
-
 			return {
 				...state,
 				currentStim:
