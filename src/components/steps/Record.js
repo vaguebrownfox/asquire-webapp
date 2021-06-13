@@ -73,7 +73,9 @@ export default function Record() {
 	};
 
 	React.useEffect(() => {
-		recordLoadStimsAction(userState.selectedUser);
+		recordLoadStimsAction(userState.selectedUser).then((user) => {
+			user && userUpdateAction(user);
+		});
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
 
@@ -152,7 +154,7 @@ export default function Record() {
 				completed: completed,
 			};
 			userUpdateAction(user);
-			recordNextStimAction();
+			recordNextStimAction(completed);
 		});
 	};
 
@@ -220,6 +222,8 @@ export default function Record() {
 					<div className={classes.cardaction}>
 						<StimContent
 							stim={recordState.currentStim}
+							labels={recordState.stimLabels}
+							activeStim={userState.selectedUser?.completed || 0}
 							anim={recordState.stimAnim}
 							isRecording={recordState.isRecording}
 							isPlaying={recordState.isPlayingInst}

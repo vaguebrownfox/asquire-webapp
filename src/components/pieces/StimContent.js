@@ -12,6 +12,8 @@ import {
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 
 import { stim_image_url } from "../../functions/firebaseConfig";
+import StimList from "./StimList";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
 	mediaDiv: {
@@ -60,19 +62,20 @@ const useStyles = makeStyles((theme) => ({
 	tagbox: {
 		position: "absolute",
 		top: theme.spacing(4),
-		left: theme.spacing(6),
+		left: theme.spacing(4),
 		padding: theme.spacing(1),
-		borderWidth: 4,
-		// borderTopWidth: 2,
-		// borderLeftWidth: 2,
-		// borderRightWidth: 0,
-		// borderBottomWidth: 0,
-		// borderColor: red[900],
+		borderStyle: "solid",
+		borderRadius: theme.spacing(1),
+		borderEndEndRadius: 0,
+		borderWidth: 1,
+		borderColor: red[900],
 	},
 }));
 
 const StimContent = ({
 	stim,
+	labels,
+	activeStim,
 	anim,
 	playRec,
 	isRecording,
@@ -116,14 +119,14 @@ const StimContent = ({
 	return (
 		<>
 			<div className={classes.mediaDiv}>
-				{/* <Typography
+				<Typography
 					variant="caption"
 					color="textSecondary"
 					component="p"
 					className={classes.tagbox}
 				>
-					<b>{stim.tag}</b>
-				</Typography> */}
+					<b>{stim.label}</b>
+				</Typography>
 				<CardMedia
 					className={classes.media}
 					image={stim_image_url}
@@ -134,7 +137,7 @@ const StimContent = ({
 						aria-label="info"
 						className={classes.iconButton}
 						onClick={handlePlay}
-						color={isPlaying ? "secondary" : ""}
+						color={isPlaying ? "secondary" : "default"}
 						disabled={isRecording}
 					>
 						<Tooltip
@@ -169,7 +172,7 @@ const StimContent = ({
 					/>
 				</Collapse>
 			</>
-
+			<StimList {...{ labels, activeStim }} />
 			<Grow in={anim}>
 				{stim?.description ? (
 					<Typography

@@ -31,8 +31,10 @@ const recordInitialState = {
 	audioBuffer: [],
 
 	stims: {},
+	stimLabels: [],
 	currentStim: {},
 	totalStimCount: 0,
+	stimOrder: [],
 	stimAnim: true,
 
 	seconds: 0,
@@ -46,12 +48,14 @@ const recordReducer = (state, action) => {
 		case "REC_RESET":
 			return { ...recordInitialState };
 		case "LOAD_STIMS":
-			let nostims0 = Object.keys(action.payload.stims).length;
+			let keys = Object.keys(action.payload.stims);
+			let nostims0 = keys.length;
 			let csno0 = action.payload.stimCount;
 
 			return {
 				...state,
 				stims: action.payload.stims,
+				stimLabels: action.payload.stimLabels,
 				totalStimCount: nostims0,
 				currentStim: action.payload.stims[csno0 % nostims0],
 			};
@@ -60,7 +64,10 @@ const recordReducer = (state, action) => {
 
 			return {
 				...state,
-				currentStim: state.stims[(csno1 + 1) % state.totalStimCount],
+				currentStim:
+					state.stims[
+						action.payload.completed % state.totalStimCount
+					],
 				// stimCount: state.stimCount + 1,
 			};
 		case "STIM_ANIM":
@@ -128,6 +135,14 @@ const recordReducer = (state, action) => {
 	}
 };
 
+function shuffleArray(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
+
 // Actions
 const recordLoadAction = (dispatch) => {
 	return () => {
@@ -144,27 +159,45 @@ const recordLoadStimsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims().catch(() => {
-			console.log("Failed to load stimuli, refresh page!");
+			alert("Failed to load stimuli, refresh page!");
 			dispatch({ type: "SET_LOADING", payload: false });
+			return null;
 		});
 
-		dispatch({
-			type: "LOAD_STIMS",
-			payload: { stims, stimCount: user.stimCount },
-		});
+		if (stims) {
+			if (user.stimOrder ? user.stimOrder.length === 0 : true) {
+				let keys = [0, 1, ...shuffleArray(Object.keys(stims).slice(2))];
+				user = { ...user, stimOrder: keys };
+			}
+			let ranStims = {};
+			let stimLabels = [];
+			user.stimOrder.forEach((k, i) => {
+				ranStims[i] = stims[k];
+				stimLabels.push(stims[k].label);
+			});
+			dispatch({
+				type: "LOAD_STIMS",
+				payload: {
+					stims: ranStims,
+					stimCount: user.stimCount,
+					stimLabels,
+				},
+			});
+		} else return null;
 
 		dispatch({ type: "SET_LOADING", payload: false });
+		return user;
 	};
 };
 
 const recordNextStimAction = (dispatch) => {
-	return () => {
+	return (completed) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		dispatch({ type: "STIM_ANIM", payload: false });
 
 		setTimeout(() => {
-			dispatch({ type: "NEXT_STIM", payload: null });
+			dispatch({ type: "NEXT_STIM", payload: { completed } });
 			dispatch({ type: "SECONDS", payload: "reset" });
 			dispatch({ type: "STIM_ANIM", payload: true });
 		}, 500);

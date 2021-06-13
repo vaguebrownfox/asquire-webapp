@@ -83,6 +83,7 @@ const getStimObj = (array) => {
 
 const stimArray = [
 	{
+		label: "Breath",
 		tag: "breath",
 		imageLink: "",
 		audioDescriptionLink:
@@ -91,6 +92,7 @@ const stimArray = [
 		description: "Record your breath (Breathe through your mouth)",
 	},
 	{
+		label: "Cough",
 		tag: "cough",
 		imageLink: "",
 		audioDescriptionLink:
@@ -99,6 +101,7 @@ const stimArray = [
 		description: "Record your cough",
 	},
 	{
+		label: "Eee",
 		tag: "ee",
 		imageLink: "",
 		audioDescriptionLink:
@@ -108,6 +111,7 @@ const stimArray = [
 			"Take a deep breath in and say 'Eee' as in 'East'  while breathing out",
 	},
 	{
+		label: "Ooo",
 		tag: "oo",
 		imageLink: "",
 		audioDescriptionLink:
@@ -117,6 +121,7 @@ const stimArray = [
 			"Take a deep breath in and say 'Ooo' as in 'Go'  while breathing out",
 	},
 	{
+		label: "Sss",
 		tag: "ss",
 		imageLink: "",
 		audioDescriptionLink:
@@ -126,6 +131,7 @@ const stimArray = [
 			"Take a deep breath in and say 'Sss' as in 'Snake'  while breathing out",
 	},
 	{
+		label: "Uuu",
 		tag: "uu",
 		imageLink: "",
 		audioDescriptionLink:
@@ -135,6 +141,7 @@ const stimArray = [
 			"Take a deep breath in and say 'Uuu' as in 'You'  while breathing out",
 	},
 	{
+		label: "Yee",
 		tag: "yee",
 		imageLink: "",
 		audioDescriptionLink:
@@ -144,6 +151,7 @@ const stimArray = [
 			"Take a deep breath in and say 'Yee' as in 'Yen'  while breathing out",
 	},
 	{
+		label: "Zzz",
 		tag: "zz",
 		imageLink: "",
 		audioDescriptionLink:

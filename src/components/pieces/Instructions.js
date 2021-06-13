@@ -90,7 +90,16 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{1}. Click <InfoIcon fontSize="default" /> to
+								{1}. Please make sure you are recording in a{" "}
+								<b>Noiseless environment</b>
+							</Typography>
+							<Divider className={classes.divider} />
+							<Typography
+								variant="body1"
+								component="h6"
+								gutterBottom
+							>
+								{2}. Click <InfoIcon fontSize="default" /> to
 								listen to{" "}
 								<b>Audio Instructions after every task</b>
 							</Typography>
@@ -100,7 +109,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{2}. Click{"   "}
+								{3}. Click{"   "}
 								<RecordStartIcon
 									classes={{ root: classes.recIcon }}
 									fontSize="default"
@@ -113,7 +122,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{3}. Click{"   "}
+								{4}. Click{"   "}
 								<RecordStopIcon
 									classes={{ root: classes.recIcon }}
 									fontSize="default"
@@ -126,7 +135,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{4}. Click <DoneIcon fontSize="default" /> to
+								{5}. Click <DoneIcon fontSize="default" /> to
 								for next recording Task
 							</Typography>
 							<Divider className={classes.divider} />
@@ -135,7 +144,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								component="h6"
 								gutterBottom
 							>
-								{5}. Click <b>EXIT</b> after finishing all the
+								{6}. Click <b>EXIT</b> after finishing all the
 								tasks
 							</Typography>{" "}
 							<Divider className={classes.divider} />
