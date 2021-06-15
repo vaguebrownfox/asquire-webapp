@@ -71,6 +71,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"
 				className={classes.modal}
+				style={{ overflow: "scroll" }}
 				open={modalOpen}
 				onClose={handleClose}
 				closeAfterTransition
@@ -85,30 +86,18 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 							Please read the instructions..
 						</Typography>
 						<div>
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{1}. Please make sure you are recording in a{" "}
 								<b>Noiseless environment</b>
 							</Typography>
 							<Divider className={classes.divider} />
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{2}. Click <InfoIcon fontSize="default" /> to
 								listen to{" "}
 								<b>Audio Instructions after every task</b>
 							</Typography>
 							<Divider className={classes.divider} />
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{3}. Click{"   "}
 								<RecordStartIcon
 									classes={{ root: classes.recIcon }}
@@ -117,11 +106,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								to <b>Start</b> recording your voice
 							</Typography>
 							<Divider className={classes.divider} />
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{4}. Click{"   "}
 								<RecordStopIcon
 									classes={{ root: classes.recIcon }}
@@ -130,20 +115,12 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 								to <b>Stop</b> recording your voice
 							</Typography>
 							<Divider className={classes.divider} />
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{5}. Click <DoneIcon fontSize="default" /> to
 								for next recording Task
 							</Typography>
 							<Divider className={classes.divider} />
-							<Typography
-								variant="body1"
-								component="h6"
-								gutterBottom
-							>
+							<Typography variant="body2" gutterBottom>
 								{6}. Click <b>EXIT</b> after finishing all the
 								tasks
 							</Typography>{" "}

@@ -83,7 +83,7 @@ const getStimObj = (array) => {
 
 const stimArray = [
 	{
-		label: "Breath",
+		label: "Breathe",
 		tag: "breath",
 		imageLink: "",
 		audioDescriptionLink:
