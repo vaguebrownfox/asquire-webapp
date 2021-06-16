@@ -27,6 +27,7 @@ const recordInitialState = {
 	isPlaying: false,
 	isPlayingInst: false,
 	recDone: false,
+	plyDone: false,
 	playUrl: "",
 	audioBuffer: [],
 
