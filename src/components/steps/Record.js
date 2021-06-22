@@ -24,7 +24,6 @@ import Worm from "../pieces/Worm";
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 import { Chip, Collapse, Typography } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 import InstructionModal from "../pieces/Instructions";
 
 export default function Record() {
@@ -197,7 +196,7 @@ export default function Record() {
 						userName={userState.selectedUser?.userName}
 					/>
 
-					{userState.selectedUser?.completed <
+					{/* {userState.selectedUser?.completed <
 						recordState.totalStimCount || recordState.loading ? (
 						<Typography
 							variant="caption"
@@ -217,7 +216,7 @@ export default function Record() {
 						>
 							{`Yay! You have completed all the tasks...`}
 						</Typography>
-					)}
+					)} */}
 
 					<div className={classes.cardaction}>
 						<StimContent

@@ -12,8 +12,8 @@ import {
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 
 import { stim_image_url } from "../../functions/firebaseConfig";
-import StimList from "./StimList";
 import { red } from "@material-ui/core/colors";
+import StimProgress from "./StimProgress";
 
 const useStyles = makeStyles((theme) => ({
 	mediaDiv: {
@@ -172,7 +172,8 @@ const StimContent = ({
 					/>
 				</Collapse>
 			</>
-			<StimList {...{ labels, activeStim }} />
+			{/* <StimList {...{ labels, activeStim }} /> */}
+			<StimProgress {...{ labels, activeStim }} />
 			<Grow in={anim}>
 				{stim?.description ? (
 					<Typography

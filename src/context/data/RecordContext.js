@@ -164,6 +164,7 @@ const recordLoadStimsAction = (dispatch) => {
 		});
 
 		if (stims) {
+			console.log(stims);
 			if (user.stimOrder ? user.stimOrder.length === 0 : true) {
 				let keys = [0, 1, ...shuffleArray(Object.keys(stims).slice(2))];
 				user = { ...user, stimOrder: keys };

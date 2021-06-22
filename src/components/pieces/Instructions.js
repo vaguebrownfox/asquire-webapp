@@ -28,6 +28,58 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(2, 4, 3),
 		width: "70%",
 	},
+}));
+
+const InstructionModal = ({ modalOpen, handleClose }) => {
+	const classes = useStyles();
+
+	const [instcount, setinstcount] = React.useState(0);
+
+	const handleContinue = () => {
+		if (instcount < contents.length - 1) {
+			setinstcount((p) => p + 1);
+		} else {
+			handleClose();
+		}
+	};
+
+	React.useEffect(() => {
+		if (modalOpen) {
+			setinstcount(0);
+		}
+	}, [modalOpen]);
+
+	const contents = [
+		<NoiseInst {...{ handleContinue }} />,
+		<ControlInst {...{ handleContinue }} />,
+	];
+
+	return (
+		<>
+			<Modal
+				aria-labelledby="transition-modal-title"
+				aria-describedby="transition-modal-description"
+				className={classes.modal}
+				style={{ overflow: "scroll" }}
+				open={modalOpen}
+				onClose={handleClose}
+				closeAfterTransition
+				BackdropComponent={Backdrop}
+				BackdropProps={{
+					timeout: 500,
+				}}
+			>
+				<Fade in={modalOpen}>
+					<div className={classes.modalContent}>
+						{contents[instcount]}
+					</div>
+				</Fade>
+			</Modal>
+		</>
+	);
+};
+
+const useContStyles = makeStyles((theme) => ({
 	button: {
 		textTransform: "none",
 		marginTop: theme.spacing(4),
@@ -62,81 +114,85 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-const InstructionModal = ({ modalOpen, handleClose }) => {
-	const classes = useStyles();
+const ControlInst = ({ handleContinue }) => {
+	const classes = useContStyles();
 
 	return (
 		<>
-			<Modal
-				aria-labelledby="transition-modal-title"
-				aria-describedby="transition-modal-description"
-				className={classes.modal}
-				style={{ overflow: "scroll" }}
-				open={modalOpen}
-				onClose={handleClose}
-				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{
-					timeout: 500,
-				}}
+			<Typography variant="h6" component="h6" gutterBottom>
+				Please read the instructions..
+			</Typography>
+			<div>
+				{/* <Typography variant="body2" gutterBottom>
+			{1}. Please make sure you are recording in a{" "}
+			<b>Noiseless environment</b>
+		</Typography>
+		<Divider className={classes.divider} /> */}
+				<Typography variant="body2" gutterBottom>
+					{2}. Click <InfoIcon fontSize="default" /> to listen to{" "}
+					<b>Audio Instructions after every task</b>
+				</Typography>
+				<Divider className={classes.divider} />
+				<Typography variant="body2" gutterBottom>
+					{3}. Click{"   "}
+					<RecordStartIcon
+						classes={{ root: classes.recIcon }}
+						fontSize="default"
+					/>{" "}
+					to <b>Start</b> recording your voice
+				</Typography>
+				<Divider className={classes.divider} />
+				<Typography variant="body2" gutterBottom>
+					{4}. Click{"   "}
+					<RecordStopIcon
+						classes={{ root: classes.recIcon }}
+						fontSize="default"
+					/>{" "}
+					to <b>Stop</b> recording your voice
+				</Typography>
+				<Divider className={classes.divider} />
+				<Typography variant="body2" gutterBottom>
+					{5}. Click <DoneIcon fontSize="default" /> to for next
+					recording Task
+				</Typography>
+				<Divider className={classes.divider} />
+				<Typography variant="body2" gutterBottom>
+					{6}. Click <b>EXIT</b> after finishing all the tasks
+				</Typography>{" "}
+				<Divider className={classes.divider} />
+			</div>
+			<Button
+				variant="outlined"
+				color="secondary"
+				onClick={handleContinue}
+				className={classes.button}
 			>
-				<Fade in={modalOpen}>
-					<div className={classes.modalContent}>
-						<Typography variant="h6" component="h6" gutterBottom>
-							Please read the instructions..
-						</Typography>
-						<div>
-							{/* <Typography variant="body2" gutterBottom>
-								{1}. Please make sure you are recording in a{" "}
-								<b>Noiseless environment</b>
-							</Typography>
-							<Divider className={classes.divider} /> */}
-							<Typography variant="body2" gutterBottom>
-								{2}. Click <InfoIcon fontSize="default" /> to
-								listen to{" "}
-								<b>Audio Instructions after every task</b>
-							</Typography>
-							<Divider className={classes.divider} />
-							<Typography variant="body2" gutterBottom>
-								{3}. Click{"   "}
-								<RecordStartIcon
-									classes={{ root: classes.recIcon }}
-									fontSize="default"
-								/>{" "}
-								to <b>Start</b> recording your voice
-							</Typography>
-							<Divider className={classes.divider} />
-							<Typography variant="body2" gutterBottom>
-								{4}. Click{"   "}
-								<RecordStopIcon
-									classes={{ root: classes.recIcon }}
-									fontSize="default"
-								/>{" "}
-								to <b>Stop</b> recording your voice
-							</Typography>
-							<Divider className={classes.divider} />
-							<Typography variant="body2" gutterBottom>
-								{5}. Click <DoneIcon fontSize="default" /> to
-								for next recording Task
-							</Typography>
-							<Divider className={classes.divider} />
-							<Typography variant="body2" gutterBottom>
-								{6}. Click <b>EXIT</b> after finishing all the
-								tasks
-							</Typography>{" "}
-							<Divider className={classes.divider} />
-						</div>
-						<Button
-							variant="outlined"
-							color="secondary"
-							onClick={handleClose}
-							className={classes.button}
-						>
-							Understood, continue...
-						</Button>
-					</div>
-				</Fade>
-			</Modal>
+				Understood, continue...
+			</Button>
+		</>
+	);
+};
+
+const NoiseInst = ({ handleContinue }) => {
+	const classes = useContStyles();
+	return (
+		<>
+			<Typography variant="h5" component="h6" gutterBottom align="center">
+				Record in a Noiseless environment!
+			</Typography>{" "}
+			<Typography variant="body2" align="center" gutterBottom>
+				Make sure your surrounding is absolutely silent and disturbance
+				free!
+			</Typography>
+			<Divider className={classes.divider} />
+			<Button
+				variant="outlined"
+				color="secondary"
+				onClick={handleContinue}
+				className={classes.button}
+			>
+				Understood, continue...
+			</Button>
 		</>
 	);
 };
