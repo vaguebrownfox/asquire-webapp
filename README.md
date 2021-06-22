@@ -9,6 +9,7 @@
 -   codebase version 0x0C - prod - New Firebase project to release the app!
 -   codebase version 0x0C - final - Making changes after feedback
 -   codebase version 0x0C - reduce - Combine biodata and survey step and Recording instructions
--   codebase version 0x0C - ux - Instruction for each stim
+-   codebase version 0x0C - ux - Instruction for each stim, list of tasks
+-   codebase version 0x0C - prog - new task, progress bar
 
 ### SPIRE Lab IISc, Banglore
