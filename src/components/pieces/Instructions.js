@@ -86,11 +86,11 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 							Please read the instructions..
 						</Typography>
 						<div>
-							<Typography variant="body2" gutterBottom>
+							{/* <Typography variant="body2" gutterBottom>
 								{1}. Please make sure you are recording in a{" "}
 								<b>Noiseless environment</b>
 							</Typography>
-							<Divider className={classes.divider} />
+							<Divider className={classes.divider} /> */}
 							<Typography variant="body2" gutterBottom>
 								{2}. Click <InfoIcon fontSize="default" /> to
 								listen to{" "}
