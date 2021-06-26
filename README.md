@@ -11,5 +11,6 @@
 -   codebase version 0x0C - reduce - Combine biodata and survey step and Recording instructions
 -   codebase version 0x0C - ux - Instruction for each stim, list of tasks
 -   codebase version 0x0C - prog - new task, progress bar
+-   codebase version 0x0C - rem - include remuneration action after task completion
 
 ### SPIRE Lab IISc, Banglore
