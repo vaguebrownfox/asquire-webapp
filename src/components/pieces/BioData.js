@@ -87,8 +87,10 @@ const BioData = () => {
 					}}
 				>
 					<TextField
+						className={classes.textbox}
 						id="bio-input-age"
 						label="Age"
+						fullWidth
 						placeholder="12 to 99"
 						variant="standard"
 						color="secondary"
@@ -103,8 +105,10 @@ const BioData = () => {
 						}}
 					/>
 					<TextField
+						className={classes.textbox}
 						id="bio-input-height"
 						label="Height"
+						fullWidth
 						placeholder=" 62 cm  to  272 cm"
 						variant="standard"
 						color="secondary"
@@ -119,8 +123,10 @@ const BioData = () => {
 						}}
 					/>
 					<TextField
+						className={classes.textbox}
 						id="bio-input-weight"
 						label="Weight"
+						fullWidth
 						placeholder=""
 						variant="standard"
 						color="secondary"
@@ -136,8 +142,10 @@ const BioData = () => {
 					/>
 
 					<TextField
+						className={classes.textbox}
 						id="bio-input-gender"
 						select
+						fullWidth
 						label="Gender"
 						color="secondary"
 						value={bio.gender || ""}
@@ -187,11 +195,17 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		alignContent: "center",
+		justifyContent: "space-between",
+		maxWidth: theme.spacing(32),
+		margin: "auto",
+		paddingLeft: theme.spacing(2),
+		paddingRight: theme.spacing(2),
 		"& > *": {
-			margin: theme.spacing(1),
-			minWidth: "20ch",
+			minWidth: "10ch",
 		},
+	},
+	textbox: {
+		marginBottom: theme.spacing(3),
 	},
 	button: {
 		marginTop: theme.spacing(1),

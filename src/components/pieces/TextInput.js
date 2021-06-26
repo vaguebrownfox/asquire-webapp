@@ -57,7 +57,7 @@ const TextInput = ({
 						<TextField
 							id="outlined-basic"
 							label="Enter New Username"
-							placeholder="only characters a-z"
+							placeholder={`Eg. "cooldude" (a to z only)`}
 							variant="standard"
 							color="secondary"
 							value={userName}
