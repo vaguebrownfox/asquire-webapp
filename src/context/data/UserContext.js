@@ -103,7 +103,7 @@ const userAddAction = (dispatch) => {
 			dispatch({ type: "ADD_USER", payload: user });
 
 			dispatch({ type: "ERROR", payload: "" });
-			res = true;
+			res = user;
 		} else {
 			dispatch({
 				type: "ERROR",
