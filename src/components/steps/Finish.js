@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(1),
 		animation: `$spin 4096ms  infinite linear`,
 	},
+	button: {
+		margin: theme.spacing(2),
+		textTransform: "none",
+	},
 	"@keyframes zoomies": {
 		"0%": {
 			transform: "scale(1)",
@@ -85,6 +89,13 @@ export default function Finish() {
 	const vizRef = React.useRef();
 
 	const [anim, setAnim] = React.useState(false);
+	const [done, setDone] = React.useState(false);
+
+	React.useEffect(() => {
+		let d =
+			userState.selectedUser.completed >= recordState.stimLabels.length;
+		setDone(d);
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleAnim = () => {
 		setAnim(true);
@@ -139,12 +150,13 @@ export default function Finish() {
 						variant="body1"
 						gutterBottom
 					>
-						Your data is saved
-						<br /> You may close this application
+						Your data is saved,
+						<br /> You may close this application.
 						<br />
 					</Typography>
 
 					<Button
+						className={classes.button}
 						variant="outlined"
 						size="small"
 						color="secondary"
@@ -153,6 +165,19 @@ export default function Finish() {
 					>
 						Please Give feedback!
 					</Button>
+
+					{done && (
+						<Button
+							className={classes.button}
+							variant="contained"
+							size="small"
+							color="secondary"
+							href={`https://spire-remuneration.web.app/?userid=${userState.selectedUser.userId}`}
+							target="_blank"
+						>
+							Register for compensation
+						</Button>
+					)}
 
 					<span>
 						<IconButton href="/feedback" target="_blank">
