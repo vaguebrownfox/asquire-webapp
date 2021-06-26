@@ -71,6 +71,8 @@ const AddUserComponent = () => {
 			userAddAction(userName).then((res) => {
 				if (!res) {
 					setAdded(false);
+				} else {
+					handleUserSelect(res);
 				}
 			});
 		setUserName("");
