@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import { Button, Collapse, IconButton } from "@material-ui/core";
+import { Button, Collapse, Divider, IconButton } from "@material-ui/core";
 
 import GoodMoodIcon from "@material-ui/icons/Mood";
 import BadMoodIcon from "@material-ui/icons/MoodBad";
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 		animation: `$spin 4096ms  infinite linear`,
 	},
 	button: {
+		maxWidth: theme.spacing(32),
 		margin: theme.spacing(2),
 		textTransform: "none",
 	},
@@ -155,22 +156,12 @@ export default function Finish() {
 						<br />
 					</Typography>
 
-					<Button
-						className={classes.button}
-						variant="outlined"
-						size="small"
-						color="secondary"
-						href="/feedback"
-						target="_blank"
-					>
-						Please Give feedback!
-					</Button>
-
 					{done && (
 						<Button
 							className={classes.button}
+							fullWidth
 							variant="contained"
-							size="small"
+							size="large"
 							color="secondary"
 							href={`https://spire-remuneration.web.app/?userid=${userState.selectedUser.userId}`}
 							target="_blank"
@@ -178,6 +169,18 @@ export default function Finish() {
 							Register for compensation
 						</Button>
 					)}
+
+					<Button
+						className={classes.button}
+						fullWidth
+						variant="outlined"
+						size="large"
+						color="secondary"
+						href="/feedback"
+						target="_blank"
+					>
+						Please Give feedback!
+					</Button>
 
 					<span>
 						<IconButton href="/feedback" target="_blank">
