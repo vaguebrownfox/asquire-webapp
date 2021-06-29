@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
 	Backdrop,
 	Button,
+	CardMedia,
 	Divider,
 	Fade,
 	Modal,
@@ -12,6 +13,7 @@ import InfoIcon from "@material-ui/icons/InfoOutlined";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
+import { kitty_imgage_url } from "../../functions/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -20,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 	},
 	modalContent: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
 		backgroundColor: "rgb(255, 255, 255, 0.9)",
 		border: "2px solid",
 		borderColor: theme.palette.secondary.main,
@@ -27,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 		width: "70%",
+	},
+	button: {
+		textTransform: "none",
+		marginTop: theme.spacing(4),
+		alignSelf: "flex-end",
 	},
 }));
 
@@ -49,10 +60,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 		}
 	}, [modalOpen]);
 
-	const contents = [
-		<NoiseInst {...{ handleContinue }} />,
-		<ControlInst {...{ handleContinue }} />,
-	];
+	const contents = [<NoiseInst />, <ControlInst />];
 
 	return (
 		<>
@@ -72,6 +80,14 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 				<Fade in={modalOpen}>
 					<div className={classes.modalContent}>
 						{contents[instcount]}
+						<Button
+							variant="outlined"
+							color="secondary"
+							onClick={handleContinue}
+							className={classes.button}
+						>
+							Understood, continue...
+						</Button>
 					</div>
 				</Fade>
 			</Modal>
@@ -80,10 +96,6 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 };
 
 const useContStyles = makeStyles((theme) => ({
-	button: {
-		textTransform: "none",
-		marginTop: theme.spacing(4),
-	},
 	bullet: {
 		display: "inline-block",
 		margin: "0 2px",
@@ -102,6 +114,12 @@ const useContStyles = makeStyles((theme) => ({
 	divider: {
 		marginBottom: theme.spacing(2),
 	},
+	media: {
+		height: 200,
+		width: 200,
+		margin: "auto",
+		borderRadius: theme.spacing(1),
+	},
 	"@keyframes glowee": {
 		"0%": {
 			boxShadow: `0 0 7px 3px ${theme.palette.secondary.main}`,
@@ -114,7 +132,7 @@ const useContStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-const ControlInst = ({ handleContinue }) => {
+const ControlInst = () => {
 	const classes = useContStyles();
 
 	return (
@@ -161,39 +179,31 @@ const ControlInst = ({ handleContinue }) => {
 				</Typography>{" "}
 				<Divider className={classes.divider} />
 			</div>
-			<Button
-				variant="outlined"
-				color="secondary"
-				onClick={handleContinue}
-				className={classes.button}
-			>
-				Understood, continue...
-			</Button>
 		</>
 	);
 };
 
-const NoiseInst = ({ handleContinue }) => {
+const NoiseInst = () => {
 	const classes = useContStyles();
 	return (
-		<>
+		<div>
 			<Typography variant="h5" component="h6" gutterBottom align="center">
-				Record in a Noiseless environment!
-			</Typography>{" "}
-			<Typography variant="body2" align="center" gutterBottom>
+				Record in a quite environment!
+			</Typography>
+			<Divider className={classes.divider} />
+			<CardMedia
+				className={classes.media}
+				image={kitty_imgage_url}
+				title="kitty image"
+			/>
+			<Typography variant="h4" component="h6" gutterBottom align="center">
+				Shush!
+			</Typography>
+			<Typography variant="body1" align="center" gutterBottom>
 				Make sure your surrounding is absolutely silent and disturbance
 				free!
 			</Typography>
-			<Divider className={classes.divider} />
-			<Button
-				variant="outlined"
-				color="secondary"
-				onClick={handleContinue}
-				className={classes.button}
-			>
-				Understood, continue...
-			</Button>
-		</>
+		</div>
 	);
 };
 
