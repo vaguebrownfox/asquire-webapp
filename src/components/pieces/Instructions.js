@@ -193,7 +193,7 @@ const NoiseInst = () => {
 			<Divider className={classes.divider} />
 			<CardMedia
 				className={classes.media}
-				image={kitty_imgage_url}
+				image="/image/kitty.png"
 				title="kitty image"
 			/>
 			<Typography variant="h4" component="h6" gutterBottom align="center">
