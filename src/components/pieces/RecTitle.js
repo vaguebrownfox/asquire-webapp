@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		justifyContent: "center",
 		cursor: "none",
-		marginBottom: theme.spacing(2),
+		marginBottom: theme.spacing(1),
 	},
 	title: {
 		fontSize: 14,
@@ -31,7 +31,6 @@ const RecTitle = ({ userName, s }) => {
 				className={classes.title}
 				color="textSecondary"
 				components="div"
-				gutterBottom
 				onClick={() => s()}
 			>
 				{`Recording for `}
@@ -41,7 +40,6 @@ const RecTitle = ({ userName, s }) => {
 				className={classes.title}
 				color="textSecondary"
 				components="div"
-				gutterBottom
 				onClick={() => s()}
 			>
 				{bull}
@@ -50,7 +48,6 @@ const RecTitle = ({ userName, s }) => {
 				className={classes.title}
 				color="secondary"
 				components="div"
-				gutterBottom
 				onClick={() => s()}
 			>
 				{bull}
