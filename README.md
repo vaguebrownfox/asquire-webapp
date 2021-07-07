@@ -12,5 +12,6 @@
 -   codebase version 0x0C - ux - Instruction for each stim, list of tasks
 -   codebase version 0x0C - prog - new task, progress bar
 -   codebase version 0x0C - rem - include remuneration action after task completion
+-   codebase version 0x0C - vid - add video instructions, audio/video tabs
 
 ### SPIRE Lab IISc, Banglore
