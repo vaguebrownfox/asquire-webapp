@@ -5,7 +5,6 @@ import {
 	CircularProgress,
 	Collapse,
 	Grow,
-	Hidden,
 	IconButton,
 	Tooltip,
 	Typography,
@@ -16,7 +15,6 @@ import Tab from "@material-ui/core/Tab";
 import AudioIcon from "@material-ui/icons/VolumeUp";
 import VidIcon from "@material-ui/icons/YouTube";
 
-import { stim_image_url } from "../../functions/firebaseConfig";
 import { grey, red } from "@material-ui/core/colors";
 import StimProgress from "./StimProgress";
 
