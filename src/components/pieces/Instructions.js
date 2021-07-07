@@ -13,7 +13,6 @@ import InfoIcon from "@material-ui/icons/InfoOutlined";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
-import { kitty_imgage_url } from "../../functions/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
