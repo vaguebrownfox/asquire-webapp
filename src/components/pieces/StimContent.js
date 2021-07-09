@@ -162,21 +162,16 @@ const StimContent = ({
 
 	return (
 		<>
-			<Grid
-				component="label"
-				container
-				alignItems="center"
-				justify="center"
-				spacing={1}
-			>
+			<Grid container alignItems="center" justify="center" spacing={1}>
 				<Grid item>
 					<AudioIcon />
 				</Grid>
 				<Grid item>
 					<Toggle
+						name="instruction mode"
 						checked={value}
 						onChange={handleChange}
-						name="checkedB"
+						disabled={isRecording}
 					/>
 				</Grid>
 				<Grid item>
