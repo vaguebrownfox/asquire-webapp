@@ -93,13 +93,10 @@ const StimContent = ({
 }) => {
 	const classes = useStyles();
 	const infoRef = React.useRef();
+	const infoRefVid = React.useRef();
 
 	const [instip, setInstip] = React.useState("Click! Listen to instruction");
 	const [value, setValue] = React.useState("audio");
-
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
 
 	const handlePlay = () => {
 		if (isPlaying) {
@@ -113,6 +110,26 @@ const StimContent = ({
 		}
 	};
 
+	const handlePlayVid = (play) => {
+		if (!play) {
+			infoRefVid.current.pause();
+			playRec(false);
+		} else {
+			infoRefVid.current.play();
+			playRec(true);
+		}
+	};
+
+	const handleChange = (event, newValue) => {
+		playRec(false);
+		if (newValue === "video") {
+			handlePlayVid(true);
+		} else {
+			handlePlayVid(false);
+		}
+		setValue(newValue);
+	};
+
 	React.useEffect(() => {
 		setInstip("Click! Please listen to instruction >>");
 		const stopPlay = () => {
@@ -120,13 +137,32 @@ const StimContent = ({
 			setInstip("Play again...");
 		};
 		const infoRefE = infoRef.current;
-		infoRefE && infoRefE?.addEventListener("ended", stopPlay);
-		infoRefE && infoRefE?.addEventListener("pause", stopPlay);
-		infoRefE && infoRefE?.addEventListener("seeking", () => playRec(true));
+		if (infoRefE) {
+			infoRefE?.addEventListener("ended", stopPlay);
+			infoRefE?.addEventListener("pause", stopPlay);
+			infoRefE?.addEventListener("seeking", () => playRec(true));
+		}
+
+		const infoRefEVid = infoRefVid.current;
+		if (infoRefEVid) {
+			infoRefEVid?.addEventListener("ended", stopPlay);
+			infoRefEVid?.addEventListener("pause", stopPlay);
+			infoRefEVid?.addEventListener("seeking", () => playRec(true));
+			infoRefEVid?.addEventListener("playing", () => playRec(true));
+		}
 
 		return () => {
-			infoRefE && infoRefE?.removeEventListener("ended", stopPlay);
-			infoRefE && infoRefE?.removeEventListener("pause", stopPlay);
+			if (infoRefE) {
+				infoRefE?.removeEventListener("ended", stopPlay);
+				infoRefE?.removeEventListener("pause", stopPlay);
+				infoRefE?.removeEventListener("seeking", stopPlay);
+			}
+			if (infoRefEVid) {
+				infoRefEVid?.removeEventListener("ended", stopPlay);
+				infoRefEVid?.removeEventListener("pause", stopPlay);
+				infoRefEVid?.removeEventListener("seeking", stopPlay);
+				infoRefEVid?.removeEventListener("playing", stopPlay);
+			}
 		};
 	}, [stim]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,7 +195,7 @@ const StimContent = ({
 				/>
 			)}
 			<Collapse in={value === "video"}>
-				<VideoInst />
+				<VideoInst {...{ infoRefVid }} />
 			</Collapse>
 
 			{/* <StimList {...{ labels, activeStim }} /> */}
@@ -255,21 +291,20 @@ const AudioInst = ({
 	);
 };
 
-const VideoInst = () => {
+const VideoInst = ({ infoRefVid }) => {
 	const classes = useStyles();
 	return (
 		<>
 			<div className={classes.mediaDiv}>
 				<video
-					maxWidth="480"
+					ref={infoRefVid}
 					width="100%"
 					height="240"
-					autoplay
+					autoPlay
 					muted
 					src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Fwalk%20on%20girl%20-%20everybody%20starts%20somewhere.webm?alt=media&token=f82a0833-c982-48c1-b203-f0db889db7df"
 					type="video/webm"
 					controls
-					loop
 				/>
 			</div>
 		</>
