@@ -54,6 +54,13 @@ const theme = createMuiTheme({
 				color: grey[800],
 			},
 		},
+		MuiStepContent: {
+			last: {
+				margin: 0,
+				marginTop: 16,
+				padding: 8,
+			},
+		},
 	},
 });
 
