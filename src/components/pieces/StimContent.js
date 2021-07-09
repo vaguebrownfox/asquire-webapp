@@ -1,23 +1,21 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-	CardMedia,
-	CircularProgress,
-	Collapse,
-	Grow,
-	IconButton,
-	Tooltip,
-	Typography,
-} from "@material-ui/core";
+import CardMedia from "@material-ui/core/CardMedia";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Collapse from "@material-ui/core/Collapse";
+import Grid from "@material-ui/core/Grid";
+import Grow from "@material-ui/core/Grow";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import AudioIcon from "@material-ui/icons/VolumeUp";
 import VidIcon from "@material-ui/icons/YouTube";
-
 import { grey, red } from "@material-ui/core/colors";
+
 import StimProgress from "./StimProgress";
-import ReactMarkdown from "react-markdown";
+import Toggle from "./Toggle";
 
 const useStyles = makeStyles((theme) => ({
 	tabs: {
@@ -59,24 +57,20 @@ const useStyles = makeStyles((theme) => ({
 		transform: "scale(0.8)",
 	},
 	stimtypo: {
-		marginTop: theme.spacing(1),
-		padding: theme.spacing(1),
-		paddingRight: theme.spacing(2),
-		paddingLeft: theme.spacing(2),
-		borderWidth: 2,
+		marginTop: theme.spacing(1, 0, 0, 0),
+		padding: theme.spacing(1, 2),
+		border: "2px solid",
 		borderRadius: 8,
 		borderColor: theme.palette.secondary.main,
-		borderStyle: "solid",
 	},
 	tagbox: {
 		position: "absolute",
 		top: theme.spacing(4),
 		left: theme.spacing(4),
 		padding: theme.spacing(1),
-		borderStyle: "solid",
+		borderWidth: "1px solid",
 		borderRadius: theme.spacing(1),
 		borderEndEndRadius: 0,
-		borderWidth: 1,
 		borderColor: red[900],
 	},
 }));
@@ -96,7 +90,7 @@ const StimContent = ({
 	const infoRefVid = React.useRef();
 
 	const [instip, setInstip] = React.useState("Click! Listen to instruction");
-	const [value, setValue] = React.useState("audio");
+	const [value, setValue] = React.useState(false);
 
 	const handlePlay = () => {
 		if (isPlaying) {
@@ -120,9 +114,9 @@ const StimContent = ({
 		}
 	};
 
-	const handleChange = (event, newValue) => {
+	const handleChange = (_, newValue) => {
 		playRec(false);
-		if (newValue === "video") {
+		if (newValue) {
 			handlePlayVid(true);
 		} else {
 			handlePlayVid(false);
@@ -168,19 +162,29 @@ const StimContent = ({
 
 	return (
 		<>
-			<Tabs
-				className={classes.tabs}
-				value={value}
-				onChange={handleChange}
-				indicatorColor="secondary"
-				textColor="secondary"
-				aria-label="instruction mode"
+			<Grid
+				component="label"
+				container
+				alignItems="center"
+				justify="center"
+				spacing={1}
 			>
-				<Tab icon={<AudioIcon fontSize="small" />} value="audio"></Tab>
-				<Tab icon={<VidIcon fontSize="small" />} value="video" />
-			</Tabs>
+				<Grid item>
+					<AudioIcon />
+				</Grid>
+				<Grid item>
+					<Toggle
+						checked={value}
+						onChange={handleChange}
+						name="checkedB"
+					/>
+				</Grid>
+				<Grid item>
+					<VidIcon />
+				</Grid>
+			</Grid>
 
-			{value === "audio" && (
+			{!value && (
 				<AudioInst
 					{...{
 						stim,
@@ -194,7 +198,7 @@ const StimContent = ({
 					}}
 				/>
 			)}
-			<Collapse in={value === "video"}>
+			<Collapse in={value}>
 				<VideoInst {...{ infoRefVid }} />
 			</Collapse>
 
