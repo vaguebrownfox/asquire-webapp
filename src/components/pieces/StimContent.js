@@ -17,6 +17,7 @@ import VidIcon from "@material-ui/icons/YouTube";
 
 import { grey, red } from "@material-ui/core/colors";
 import StimProgress from "./StimProgress";
+import ReactMarkdown from "react-markdown";
 
 const useStyles = makeStyles((theme) => ({
 	tabs: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	mediaDiv: {
 		position: "relative",
+		maxWidth: theme.spacing(64),
 	},
 	helpIconDiv: {
 		position: "absolute",
@@ -170,7 +172,7 @@ const StimContent = ({
 						color="textPrimary"
 						gutterBottom
 					>
-						<b>{stim?.description}</b>
+						<ReactMarkdown>{stim?.description}</ReactMarkdown>
 					</Typography>
 				) : (
 					<div className={classes.progress}>
@@ -259,6 +261,7 @@ const VideoInst = () => {
 		<>
 			<div className={classes.mediaDiv}>
 				<video
+					maxWidth="480"
 					width="100%"
 					height="240"
 					autoplay

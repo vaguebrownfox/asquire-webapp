@@ -90,7 +90,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fbreath.WAV?alt=media&token=c607da11-1ead-4cd7-9d64-42a85a356cf2",
 
 		description:
-			"Start record and breathe 5 times (Breathe through your mouth)",
+			"Start record and **breathe** in and out through your mouth",
 	},
 	{
 		label: "cough",
@@ -99,7 +99,16 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
 
-		description: "Start record your cough 5 times",
+		description: "Start record your **cough** 3 times",
+	},
+	{
+		label: "Aaa",
+		tag: "aa",
+		imageLink: "",
+		audioDescriptionLink:
+			"https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_audio%2Faa.mp3?alt=media&token=4da621d0-fbab-460c-a14e-679e32b537b9",
+		description:
+			"Take a deep breath in and say '**Aaaaaaa**' as in '**Hu**t' until you're out of breath",
 	},
 	{
 		label: "Eee",
@@ -109,7 +118,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fee.WAV?alt=media&token=f81b1d40-bd0d-44a7-a2eb-259a1679dcce",
 
 		description:
-			"Take a deep breath in and say 'Eeeeeee' as in 'East'  while breathing out",
+			"Take a deep breath in and say '**Eeeeeee**' as in 'H**e**at'  until you're out of breath",
 	},
 	{
 		label: "Ooo",
@@ -119,7 +128,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Foo.WAV?alt=media&token=08b46138-d744-48ac-87ae-314d6ba89f99",
 
 		description:
-			"Take a deep breath in and say 'Ooooooo' as in 'Go'  while breathing out",
+			"Take a deep breath in and say '**Ooooooo**' as in 'G**o**'  until you're out of breath",
 	},
 	{
 		label: "Sss",
@@ -129,7 +138,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fss.WAV?alt=media&token=2515b11e-ccd4-49a9-a33a-9fa77cebeb2d",
 
 		description:
-			"Take a deep breath in and say 'Sssssss' as in 'Snake'  while breathing out",
+			"Take a deep breath in and say '**Sssssss**' as in '**S**at'  until you're out of breath",
 	},
 	{
 		label: "Uuu",
@@ -139,7 +148,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fuu.WAV?alt=media&token=6e09159b-4ba0-4d71-88b5-0031553a1a6d",
 
 		description:
-			"Take a deep breath in and say 'Uuuuuuu' as in 'You'  while breathing out",
+			"Take a deep breath in and say '**Uuuuuuu**' as in 'H**oo**d'  until you're out of breath",
 	},
 	{
 		label: "Yee",
@@ -149,7 +158,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fyee.WAV?alt=media&token=23838e64-171f-4867-b236-108205c18ab8",
 
 		description:
-			"Take a deep breath in and say 'Yeeeeee' as in 'Yen'  while breathing out",
+			"Take a deep breath in and say '**Yeeeeee**' as in 'S**ay**'  until you're out of breath",
 	},
 	{
 		label: "Zzz",
@@ -159,16 +168,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fzz.WAV?alt=media&token=aa8f5434-8879-4410-ade9-c16825ad12f9",
 
 		description:
-			"Take a deep breath in and say 'Zzzzzzz' as in 'Fuzz' while breathing out",
-	},
-	{
-		label: "Aaa",
-		tag: "aa",
-		imageLink: "",
-		audioDescriptionLink:
-			"https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_audio%2Faa.mp3?alt=media&token=4da621d0-fbab-460c-a14e-679e32b537b9",
-		description:
-			"Take a deep breath in and say 'Aaa' as in 'Hut' while breathing out",
+			"Take a deep breath in and say '**Zzzzzzz**' as in 'Pi**zz**a' until you're out of breath",
 	},
 ];
 
