@@ -232,7 +232,6 @@ const AudioInst = ({
 	isPlaying,
 	isRecording,
 	infoRef,
-	value,
 }) => {
 	const classes = useStyles();
 	return (
