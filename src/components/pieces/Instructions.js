@@ -13,6 +13,7 @@ import InfoIcon from "@material-ui/icons/InfoOutlined";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
+import Toggle from "./Toggle";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -69,7 +70,7 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 				className={classes.modal}
 				style={{ overflow: "scroll" }}
 				open={modalOpen}
-				onClose={handleClose}
+				// onClose={handleClose}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{
@@ -139,42 +140,44 @@ const ControlInst = () => {
 			<Typography variant="h6" component="h6" gutterBottom>
 				Please read the instructions..
 			</Typography>
+
 			<div>
+				<Divider className={classes.divider} />
 				{/* <Typography variant="body2" gutterBottom>
 			{1}. Please make sure you are recording in a{" "}
 			<b>Noiseless environment</b>
 		</Typography>
 		<Divider className={classes.divider} /> */}
 				<Typography variant="body2" gutterBottom>
-					{2}. Click <InfoIcon fontSize="default" /> to listen to{" "}
-					<b>Audio Instructions after every task</b>
+					{1}. Click <Toggle fontSize="default" /> to toggle between{" "}
+					<b>Audio and Video Instructions</b> for recording.
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography variant="body2" gutterBottom>
-					{3}. Click{"   "}
+					{2}. Click{"   "}
 					<RecordStartIcon
 						classes={{ root: classes.recIcon }}
 						fontSize="default"
 					/>{" "}
-					to <b>Start</b> recording your voice
+					to <b>Start</b> recording your voice.
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography variant="body2" gutterBottom>
-					{4}. Click{"   "}
+					{3}. Click{"   "}
 					<RecordStopIcon
 						classes={{ root: classes.recIcon }}
 						fontSize="default"
 					/>{" "}
-					to <b>Stop</b> recording your voice
+					to <b>Stop</b> recording your voice.
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography variant="body2" gutterBottom>
-					{5}. Click <DoneIcon fontSize="default" /> to for next
-					recording Task
+					{4}. Click <DoneIcon fontSize="default" /> to for recording{" "}
+					<b>next Task</b>.
 				</Typography>
 				<Divider className={classes.divider} />
 				<Typography variant="body2" gutterBottom>
-					{6}. Click <b>EXIT</b> after finishing all the tasks
+					{5}. Click <b>EXIT</b> after finishing all the tasks.
 				</Typography>{" "}
 				<Divider className={classes.divider} />
 			</div>
