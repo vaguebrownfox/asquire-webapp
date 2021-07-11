@@ -65,6 +65,7 @@ export default function Record() {
 
 	const handleClose = () => {
 		setOpen(false);
+		window.scrollTo({ top: vizRef.current.offsetTop, behavior: "smooth" });
 	};
 
 	const handleShape = () => {
@@ -98,7 +99,7 @@ export default function Record() {
 			recordUploadAction({
 				...userState.selectedUser,
 				stimTag: finishedStim.tag,
-			}).catch((e) => console.log("upload failed"));
+			}).catch((e) => console.log("upload failed", e));
 			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
