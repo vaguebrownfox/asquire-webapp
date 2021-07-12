@@ -34,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
 		width: "50%",
 		minWidth: theme.spacing(32),
 	},
+	note2: {
+		width: "40%",
+		minWidth: theme.spacing(24),
+		padding: theme.spacing(1),
+		borderRadius: theme.spacing(1),
+		border: `1px solid ${theme.palette.secondary.main}`,
+	},
 	content: {
 		display: "flex",
 		flexDirection: "column",
@@ -152,11 +159,12 @@ export default function Finish() {
 						gutterBottom
 					>
 						Your data is saved,
-						<br /> You may close this application.
+						<br />
+						You may close this application.
 						<br />
 					</Typography>
 
-					{done && (
+					{done ? (
 						<Button
 							className={classes.button}
 							fullWidth
@@ -168,6 +176,19 @@ export default function Finish() {
 						>
 							Register for compensation
 						</Button>
+					) : (
+						<Typography
+							className={classes.note2}
+							color="textPrimary"
+							variant="body2"
+							gutterBottom
+						>
+							<b>Note: </b>
+							<u>
+								Please complete all the tasks to register for
+								compensation
+							</u>
+						</Typography>
 					)}
 
 					<Button
