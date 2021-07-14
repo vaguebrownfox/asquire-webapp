@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import AudioIcon from "@material-ui/icons/VolumeUp";
 import VidIcon from "@material-ui/icons/YouTube";
-import { grey, red } from "@material-ui/core/colors";
+import { grey } from "@material-ui/core/colors";
 
 import StimProgress from "./StimProgress";
 import Toggle from "./Toggle";
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	mediaDiv: {
 		position: "relative",
-		maxWidth: theme.spacing(64),
+		maxWidth: theme.spacing(96),
 	},
 	helpIconDiv: {
 		position: "absolute",
@@ -47,18 +47,16 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: theme.spacing(4),
 	},
 	media: {
-		height: 200,
-		width: 200,
-		margin: theme.spacing(2),
-		marginTop: theme.spacing(0),
+		height: 196,
+		width: 196,
+		margin: theme.spacing(0, 2, 2, 2),
 		borderRadius: theme.spacing(1),
 	},
 	playerShow: {
 		transform: "scale(0.8)",
 	},
 	stimtypo: {
-		marginTop: theme.spacing(1, 0, 0, 0),
-		padding: theme.spacing(1, 2),
+		padding: theme.spacing(0, 1),
 		border: "2px solid",
 		borderRadius: 8,
 		borderColor: theme.palette.secondary.main,
@@ -69,9 +67,8 @@ const useStyles = makeStyles((theme) => ({
 		left: theme.spacing(4),
 		padding: theme.spacing(1),
 		border: "1px solid",
-		borderRadius: theme.spacing(1),
-		borderEndEndRadius: 0,
-		borderColor: red[900],
+		borderRadius: theme.spacing(1, 1, 0, 1),
+		borderColor: theme.palette.secondary.main,
 	},
 }));
 
@@ -106,21 +103,21 @@ const StimContent = ({
 
 	const handlePlayVid = (play) => {
 		if (!play) {
-			infoRefVid.current.pause();
-			playRec(false);
+			// infoRefVid.current.stopVideo();
+			// playRec(false);
 		} else {
-			infoRefVid.current.play();
+			// infoRefVid.current.play();
 			playRec(true);
 		}
 	};
 
 	const handleChange = (_, newValue) => {
 		playRec(false);
-		if (newValue) {
-			handlePlayVid(true);
-		} else {
-			handlePlayVid(false);
-		}
+		// if (newValue) {
+		// 	handlePlayVid(true);
+		// } else {
+		// 	handlePlayVid(false);
+		// }
 		setValue(newValue);
 	};
 
@@ -137,13 +134,13 @@ const StimContent = ({
 			infoRefE?.addEventListener("seeking", () => playRec(true));
 		}
 
-		const infoRefEVid = infoRefVid.current;
-		if (infoRefEVid) {
-			infoRefEVid?.addEventListener("ended", stopPlay);
-			infoRefEVid?.addEventListener("pause", stopPlay);
-			infoRefEVid?.addEventListener("seeking", () => playRec(true));
-			infoRefEVid?.addEventListener("playing", () => playRec(true));
-		}
+		// const infoRefEVid = infoRefVid.current;
+		// if (infoRefEVid) {
+		// 	infoRefEVid?.addEventListener("ended", stopPlay);
+		// 	infoRefEVid?.addEventListener("pause", stopPlay);
+		// 	infoRefEVid?.addEventListener("seeking", () => playRec(true));
+		// 	infoRefEVid?.addEventListener("playing", () => playRec(true));
+		// }
 
 		return () => {
 			if (infoRefE) {
@@ -151,12 +148,12 @@ const StimContent = ({
 				infoRefE?.removeEventListener("pause", stopPlay);
 				infoRefE?.removeEventListener("seeking", stopPlay);
 			}
-			if (infoRefEVid) {
-				infoRefEVid?.removeEventListener("ended", stopPlay);
-				infoRefEVid?.removeEventListener("pause", stopPlay);
-				infoRefEVid?.removeEventListener("seeking", stopPlay);
-				infoRefEVid?.removeEventListener("playing", stopPlay);
-			}
+			// if (infoRefEVid) {
+			// 	infoRefEVid?.removeEventListener("ended", stopPlay);
+			// 	infoRefEVid?.removeEventListener("pause", stopPlay);
+			// 	infoRefEVid?.removeEventListener("seeking", stopPlay);
+			// 	infoRefEVid?.removeEventListener("playing", stopPlay);
+			// }
 		};
 	}, [stim]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -179,7 +176,7 @@ const StimContent = ({
 				</Grid>
 			</Grid>
 
-			{!value && (
+			{!value ? (
 				<AudioInst
 					{...{
 						stim,
@@ -192,10 +189,11 @@ const StimContent = ({
 						value,
 					}}
 				/>
+			) : (
+				<Collapse in={value}>
+					<VideoInst {...{ infoRefVid }} />
+				</Collapse>
 			)}
-			<Collapse in={value}>
-				<VideoInst {...{ infoRefVid }} />
-			</Collapse>
 
 			{/* <StimList {...{ labels, activeStim }} /> */}
 			<StimProgress {...{ labels, activeStim }} />
@@ -204,6 +202,7 @@ const StimContent = ({
 					<Typography
 						className={classes.stimtypo}
 						variant="h6"
+						component="div"
 						color="textPrimary"
 						gutterBottom
 					>
@@ -278,12 +277,14 @@ const AudioInst = ({
 				)}
 			</Collapse>
 			<Collapse in={isPlaying}>
-				<audio
-					ref={infoRef}
-					className={classes.playerShow}
-					src={stim?.audioDescriptionLink}
-					controls
-				/>
+				{stim?.audioDescriptionLink !== "" && (
+					<audio
+						ref={infoRef}
+						className={classes.playerShow}
+						src={stim?.audioDescriptionLink}
+						controls
+					/>
+				)}
 			</Collapse>
 		</>
 	);
@@ -294,15 +295,27 @@ const VideoInst = ({ infoRefVid }) => {
 	return (
 		<>
 			<div className={classes.mediaDiv}>
-				<video
+				{/* <video
 					ref={infoRefVid}
 					width="100%"
 					height="240"
 					autoPlay
 					muted
-					src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Fwalk%20on%20girl%20-%20everybody%20starts%20somewhere.webm?alt=media&token=f82a0833-c982-48c1-b203-f0db889db7df"
-					type="video/webm"
+					// src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Fwalk%20on%20girl%20-%20everybody%20starts%20somewhere.webm?alt=media&token=f82a0833-c982-48c1-b203-f0db889db7df"
+					src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Ffinal.MP4?alt=media&token=a97c4710-5ee8-4dfc-9e24-08eebb8639bf"
+					type="video/mp4"
 					controls
+				/> */}
+				<iframe
+					id="player"
+					ref={infoRefVid}
+					width="100%"
+					height="200"
+					src={`https://www.youtube.com/embed/AWMUhRCMXt8?enablejsapi=1`}
+					title="YouTube video player"
+					frameborder="4"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
 				/>
 			</div>
 		</>
