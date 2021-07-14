@@ -25,6 +25,8 @@ import Worm from "../pieces/Worm";
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
 
+const MAX_REC_DURATION = 121000;
+
 export default function Record() {
 	const classes = useStyles();
 
@@ -56,10 +58,7 @@ export default function Record() {
 
 	const [modalOpen, setOpen] = React.useState(true);
 
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
+	const handleOpen = () => setOpen(true);
 	const handleClose = () => {
 		setOpen(false);
 		window.scrollTo({ top: vizRef.current.offsetTop, behavior: "smooth" });
@@ -94,12 +93,6 @@ export default function Record() {
 				playRefE?.removeEventListener("pause", stopPlay);
 			}
 
-			// const finishedStim = { ...recordState.currentStim };
-			// recordUploadAction({
-			// 	...userState.selectedUser,
-			// 	stimTag: finishedStim.tag,
-			// }).catch((e) => console.log("upload failed", e));
-
 			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
@@ -121,10 +114,11 @@ export default function Record() {
 				recordStopAction();
 			}, 250);
 		} else {
+			vizRef.current.scrollIntoView(false);
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
-			}, 121000);
+			}, MAX_REC_DURATION);
 		}
 	};
 
@@ -136,10 +130,6 @@ export default function Record() {
 			playRef.current.play();
 		}
 	};
-
-	// const handleRefresh = () => {
-	// 	recordGetDevicesAction();
-	// };
 
 	const handleDone = () => {
 		const finishedStim = { ...recordState.currentStim };
