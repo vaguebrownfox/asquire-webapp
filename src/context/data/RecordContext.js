@@ -158,7 +158,7 @@ const recordLoadStimsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims().catch(() => {
-			alert("Failed to load stimuli, refresh page!");
+			alert("Failed to load stimuli, please refresh page!");
 			dispatch({ type: "SET_LOADING", payload: false });
 			return null;
 		});
@@ -179,7 +179,7 @@ const recordLoadStimsAction = (dispatch) => {
 				type: "LOAD_STIMS",
 				payload: {
 					stims: ranStims,
-					stimCount: user.stimCount,
+					stimCount: user.completed,
 					stimLabels,
 				},
 			});
