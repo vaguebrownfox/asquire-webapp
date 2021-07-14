@@ -87,7 +87,7 @@ const StimContent = ({
 	const infoRefVid = React.useRef();
 
 	const [instip, setInstip] = React.useState("Click! Listen to instruction");
-	const [value, setValue] = React.useState(false);
+	const [isVidInst, setVidInst] = React.useState(false);
 
 	const handlePlay = () => {
 		if (isPlaying) {
@@ -101,24 +101,9 @@ const StimContent = ({
 		}
 	};
 
-	const handlePlayVid = (play) => {
-		if (!play) {
-			// infoRefVid.current.stopVideo();
-			// playRec(false);
-		} else {
-			// infoRefVid.current.play();
-			playRec(true);
-		}
-	};
-
 	const handleChange = (_, newValue) => {
 		playRec(false);
-		// if (newValue) {
-		// 	handlePlayVid(true);
-		// } else {
-		// 	handlePlayVid(false);
-		// }
-		setValue(newValue);
+		setVidInst(newValue);
 	};
 
 	React.useEffect(() => {
@@ -134,26 +119,12 @@ const StimContent = ({
 			infoRefE?.addEventListener("seeking", () => playRec(true));
 		}
 
-		// const infoRefEVid = infoRefVid.current;
-		// if (infoRefEVid) {
-		// 	infoRefEVid?.addEventListener("ended", stopPlay);
-		// 	infoRefEVid?.addEventListener("pause", stopPlay);
-		// 	infoRefEVid?.addEventListener("seeking", () => playRec(true));
-		// 	infoRefEVid?.addEventListener("playing", () => playRec(true));
-		// }
-
 		return () => {
 			if (infoRefE) {
 				infoRefE?.removeEventListener("ended", stopPlay);
 				infoRefE?.removeEventListener("pause", stopPlay);
 				infoRefE?.removeEventListener("seeking", stopPlay);
 			}
-			// if (infoRefEVid) {
-			// 	infoRefEVid?.removeEventListener("ended", stopPlay);
-			// 	infoRefEVid?.removeEventListener("pause", stopPlay);
-			// 	infoRefEVid?.removeEventListener("seeking", stopPlay);
-			// 	infoRefEVid?.removeEventListener("playing", stopPlay);
-			// }
 		};
 	}, [stim]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -166,7 +137,7 @@ const StimContent = ({
 				<Grid item>
 					<Toggle
 						name="instruction mode"
-						checked={value}
+						checked={isVidInst}
 						onChange={handleChange}
 						disabled={isRecording}
 					/>
@@ -176,7 +147,7 @@ const StimContent = ({
 				</Grid>
 			</Grid>
 
-			{!value ? (
+			{!isVidInst ? (
 				<AudioInst
 					{...{
 						stim,
@@ -186,16 +157,14 @@ const StimContent = ({
 						isPlaying,
 						isRecording,
 						infoRef,
-						value,
 					}}
 				/>
 			) : (
-				<Collapse in={value}>
+				<Collapse in={isVidInst}>
 					<VideoInst {...{ infoRefVid }} />
 				</Collapse>
 			)}
 
-			{/* <StimList {...{ labels, activeStim }} /> */}
 			<StimProgress {...{ labels, activeStim }} />
 			<Grow in={anim}>
 				{stim?.description ? (
@@ -266,15 +235,9 @@ const AudioInst = ({
 			</div>
 
 			<Collapse in={isPlaying}>
-				{true && (
-					<Typography
-						variant="body2"
-						color="textPrimary"
-						component="p"
-					>
-						<b>Listen to the instructions</b>
-					</Typography>
-				)}
+				<Typography variant="body2" color="textPrimary" component="p">
+					<b>Listen to the instructions</b>
+				</Typography>
 			</Collapse>
 			<Collapse in={isPlaying}>
 				{stim?.audioDescriptionLink !== "" && (
@@ -295,27 +258,17 @@ const VideoInst = ({ infoRefVid }) => {
 	return (
 		<>
 			<div className={classes.mediaDiv}>
-				{/* <video
-					ref={infoRefVid}
-					width="100%"
-					height="240"
-					autoPlay
-					muted
-					// src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Fwalk%20on%20girl%20-%20everybody%20starts%20somewhere.webm?alt=media&token=f82a0833-c982-48c1-b203-f0db889db7df"
-					src="https://firebasestorage.googleapis.com/v0/b/asquire-mox.appspot.com/o/instructions_video%2Ffinal.MP4?alt=media&token=a97c4710-5ee8-4dfc-9e24-08eebb8639bf"
-					type="video/mp4"
-					controls
-				/> */}
 				<iframe
 					id="player"
 					ref={infoRefVid}
 					width="100%"
 					height="200"
-					src={`https://www.youtube.com/embed/AWMUhRCMXt8?enablejsapi=1`}
+					src={`https://www.youtube-nocookie.com/embed/AWMUhRCMXt8?loop=1`}
 					title="YouTube video player"
 					frameborder="4"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowfullscreen
+					loading="eager"
 				/>
 			</div>
 		</>
