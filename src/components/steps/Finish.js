@@ -101,7 +101,8 @@ export default function Finish() {
 
 	React.useEffect(() => {
 		let d =
-			userState.selectedUser.completed >= recordState.stimLabels.length;
+			userState.selectedUser.completed >=
+			userState.selectedUser.stimOrder;
 		setDone(d);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
