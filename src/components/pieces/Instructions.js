@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 		borderColor: theme.palette.secondary.main,
 		borderRadius: 8,
 		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: "70%",
+		padding: theme.spacing(2, 2, 3),
+		margin: theme.spacing(1),
 	},
 	button: {
 		textTransform: "none",
@@ -59,50 +59,37 @@ const InstructionModal = ({ modalOpen, handleClose }) => {
 		}
 	}, [modalOpen]);
 
-	const contents = [<NoiseInst />, <ControlInst />];
+	const contents = [<NoiseInst />, <VideoInst />, <ControlInst />];
 
 	return (
-		<>
-			<Modal
-				aria-labelledby="transition-modal-title"
-				aria-describedby="transition-modal-description"
-				className={classes.modal}
-				style={{ overflow: "scroll" }}
-				open={modalOpen}
-				// onClose={handleClose}
-				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{
-					timeout: 500,
-				}}
-			>
-				<Fade in={modalOpen}>
-					<div className={classes.modalContent}>
-						{contents[instcount]}
-						<Button
-							variant="outlined"
-							color="secondary"
-							onClick={handleContinue}
-							className={classes.button}
-						>
-							Understood, continue...
-						</Button>
-					</div>
-				</Fade>
-			</Modal>
-		</>
+		<Modal
+			className={classes.modal}
+			style={{ overflow: "scroll" }}
+			open={modalOpen}
+			closeAfterTransition
+			BackdropComponent={Backdrop}
+			BackdropProps={{
+				timeout: 500,
+			}}
+		>
+			<Fade in={modalOpen}>
+				<div className={classes.modalContent}>
+					{contents[instcount]}
+					<Button
+						variant="outlined"
+						color="secondary"
+						onClick={handleContinue}
+						className={classes.button}
+					>
+						Understood, continue...
+					</Button>
+				</div>
+			</Fade>
+		</Modal>
 	);
 };
 
 const useContStyles = makeStyles((theme) => ({
-	bullet: {
-		display: "inline-block",
-		margin: "0 2px",
-		transform: "scale(1.25)",
-		"&:hover": {
-			transform: "scale(2)",
-		},
-	},
 	recIcon: {
 		color: theme.palette.secondary.main,
 		background: theme.palette.primary,
@@ -118,6 +105,10 @@ const useContStyles = makeStyles((theme) => ({
 		width: 200,
 		margin: "auto",
 		borderRadius: theme.spacing(1),
+	},
+	mediaDiv: {
+		position: "relative",
+		maxWidth: theme.spacing(96),
 	},
 	"@keyframes glowee": {
 		"0%": {
@@ -142,11 +133,6 @@ const ControlInst = () => {
 
 			<div>
 				<Divider className={classes.divider} />
-				{/* <Typography variant="body2" gutterBottom>
-			{1}. Please make sure you are recording in a{" "}
-			<b>Noiseless environment</b>
-		</Typography>
-		<Divider className={classes.divider} /> */}
 				<Typography variant="body2" gutterBottom>
 					{1}. Click <Toggle fontSize="default" /> to toggle between{" "}
 					<b>Audio and Video Instructions</b> for recording.
@@ -203,6 +189,33 @@ const NoiseInst = () => {
 			<Typography variant="body1" align="center" gutterBottom>
 				Make sure your surrounding is absolutely silent and disturbance
 				free!
+			</Typography>
+		</div>
+	);
+};
+
+const VideoInst = () => {
+	const classes = useContStyles();
+	return (
+		<div>
+			<Typography variant="h5" component="h6" gutterBottom align="center">
+				Demo video
+			</Typography>
+			<Divider className={classes.divider} />
+			<iframe
+				id="player"
+				width="100%"
+				height="300"
+				src={`https://www.youtube-nocookie.com/embed/AWMUhRCMXt8?loop=1`}
+				title="YouTube video player"
+				frameborder="4"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen
+			/>
+			<Divider className={classes.divider} />
+			<Typography variant="body1" align="center" gutterBottom>
+				Please <b>watch the video</b> to make sure you understand the
+				procedure before recording.
 			</Typography>
 		</div>
 	);
