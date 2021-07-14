@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import InstructionModal from "../pieces/Instructions";
+import { green } from "@material-ui/core/colors";
 
 import { firebaseSetActive } from "../../functions/firestore";
 
@@ -11,6 +13,7 @@ import { Context as StepContext } from "../../context/data/StepContext";
 import { Context as UserContext } from "../../context/data/UserContext";
 import { Context as RecordContext } from "../../context/data/RecordContext";
 import ListIcon from "@material-ui/icons/List";
+import { Chip, Collapse, Typography } from "@material-ui/core";
 
 // Pieces
 import RecTitle from "../pieces/RecTitle";
@@ -18,22 +21,16 @@ import StimContent from "../pieces/StimContent";
 import Timer from "../pieces/Timer";
 import RecControl from "../pieces/RecControls";
 import Worm from "../pieces/Worm";
-// import Wave from "../pieces/Wave";
-// import RecDevices from "../pieces/RecDevices";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
-import { Chip, Collapse, Typography } from "@material-ui/core";
-import InstructionModal from "../pieces/Instructions";
 
 export default function Record() {
 	const classes = useStyles();
 
-	const {
-		state: stepState,
-		stepNextAction,
-		stepPreviousAction,
-	} = React.useContext(StepContext);
+	const { stepNextAction, stepPreviousAction } =
+		React.useContext(StepContext);
+
 	const {
 		state: recordState,
 		recordLoadStimsAction,
@@ -84,22 +81,25 @@ export default function Record() {
 			recordPlayAction(false);
 			setPlytip("Play");
 		};
-		playRefE &&
+		if (playRefE) {
 			playRefE?.addEventListener("play", () => recordPlayAction(true));
-		playRefE && playRefE?.addEventListener("pause", stopPlay);
+			playRefE?.addEventListener("pause", stopPlay);
+		}
 
 		return () => {
-			playRefE &&
+			if (playRefE) {
 				playRefE?.removeEventListener("play", () =>
 					recordPlayAction(false)
 				);
-			playRefE && playRefE?.removeEventListener("pause", stopPlay);
+				playRefE?.removeEventListener("pause", stopPlay);
+			}
 
-			const finishedStim = { ...recordState.currentStim };
-			recordUploadAction({
-				...userState.selectedUser,
-				stimTag: finishedStim.tag,
-			}).catch((e) => console.log("upload failed", e));
+			// const finishedStim = { ...recordState.currentStim };
+			// recordUploadAction({
+			// 	...userState.selectedUser,
+			// 	stimTag: finishedStim.tag,
+			// }).catch((e) => console.log("upload failed", e));
+
 			recordState.analyserNode?.disconnect();
 			recordResetAction();
 			firebaseSetActive(userState.selectedUser, "false");
@@ -124,7 +124,7 @@ export default function Record() {
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
 				recordStopAction();
-			}, 61000);
+			}, 121000);
 		}
 	};
 
@@ -173,16 +173,6 @@ export default function Record() {
 						}}
 					/>
 				)}
-				{/* {recordState.recDone && (
-					<Wave
-						{...{
-							width,
-							height,
-							audioBuffer: recordState.audioBuffer,
-						}}
-					/>
-				)} */}
-
 				<Chip
 					className={classes.instChip}
 					avatar={<ListIcon fontSize="large" />}
@@ -197,28 +187,6 @@ export default function Record() {
 						userName={userState.selectedUser?.userName}
 					/>
 
-					{/* {userState.selectedUser?.completed <
-						recordState.totalStimCount || recordState.loading ? (
-						<Typography
-							variant="caption"
-							component="p"
-							gutterBottom
-						>
-							{`Completed: ${
-								userState.selectedUser?.completed || 0
-							}/${recordState.totalStimCount}`}
-						</Typography>
-					) : (
-						<Typography
-							variant="caption"
-							component="p"
-							style={{ color: green[900] }}
-							gutterBottom
-						>
-							{`Yay! You have completed all the tasks...`}
-						</Typography>
-					)} */}
-
 					<div className={classes.cardaction}>
 						<StimContent
 							stim={recordState.currentStim}
@@ -230,10 +198,31 @@ export default function Record() {
 							{...{ playRec: recordPlayInstAction, modalOpen }}
 						/>
 
+						{userState.selectedUser?.completed <
+							recordState.totalStimCount ||
+						recordState.loading ? (
+							<Typography
+								variant="caption"
+								component="p"
+								gutterBottom
+							>
+								{`Completed: ${
+									userState.selectedUser?.completed || 0
+								}/${recordState.totalStimCount}`}
+							</Typography>
+						) : (
+							<Typography
+								variant="caption"
+								component="p"
+								style={{ color: green[900] }}
+								gutterBottom
+							>
+								{`Yay! You have completed all the tasks...`}
+							</Typography>
+						)}
+
 						<Timer seconds={recordState.seconds} />
-						{/* <Typography className={classes.inshelp}>
-							*Please listen to instructions before recording.
-						</Typography> */}
+
 						<RecControl
 							isRecording={recordState.isRecording}
 							isPlaying={recordState.isPlaying}
@@ -242,6 +231,7 @@ export default function Record() {
 							playTip={plytip}
 							{...{ handleRecord, handleDone, handlePlay }}
 						/>
+
 						<div className={classes.playerDiv}>
 							<Collapse
 								in={
@@ -264,37 +254,34 @@ export default function Record() {
 									!recordState.isPlayingInst
 								}
 							>
-								<audio
-									ref={playRef}
-									id="stim-player"
-									className={classes.player}
-									src={recordState.playUrl}
-									controls
-								/>
+								{recordState.playUrl !== "" && (
+									<audio
+										ref={playRef}
+										id="stim-player"
+										className={classes.player}
+										src={recordState.playUrl}
+										controls
+									/>
+								)}
 							</Collapse>
 						</div>
 					</div>
 					<>
 						<InstructionModal {...{ modalOpen, handleClose }} />
 					</>
-					{/* <RecDevices {...{ recordState, handleRefresh }} /> */}
 				</CardContent>
 			</Card>
 
 			<div className={classes.actionsContainer}>
 				<div>
-					<Button
-						disabled={stepState.activeStep === 0}
-						onClick={handleBack}
-						className={classes.button}
-					>
+					<Button onClick={handleBack} className={classes.button}>
 						Back
 					</Button>
 					<Button
+						className={classes.button}
 						variant="contained"
 						color="secondary"
 						onClick={handleNext}
-						className={classes.button}
 					>
 						Exit
 					</Button>
@@ -317,8 +304,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 	},
 	button: {
-		marginTop: theme.spacing(1),
-		marginRight: theme.spacing(1),
+		margin: theme.spacing(1, 1, 0, 0),
 	},
 	actionsContainer: {
 		marginTop: theme.spacing(2),
@@ -332,8 +318,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		alignItems: "center",
 		height: theme.spacing(10),
-		paddingBottom: theme.spacing(2),
-		paddingTop: theme.spacing(2),
+		padding: theme.spacing(2, 0),
 	},
 	inshelp: {
 		color: theme.palette.secondary.main,
@@ -342,7 +327,6 @@ const useStyles = makeStyles((theme) => ({
 		position: "absolute",
 		bottom: 0,
 		right: 0,
-		marginBottom: theme.spacing(2),
-		marginRight: theme.spacing(2),
+		margin: theme.spacing(0, 2, 2, 0),
 	},
 }));
