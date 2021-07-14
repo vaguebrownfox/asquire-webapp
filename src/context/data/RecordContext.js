@@ -47,7 +47,10 @@ const recordReducer = (state, action) => {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
 		case "REC_RESET":
-			return { ...recordInitialState };
+			// let newState = { ...state };
+			// let resetState = Object.assign(newState, action.payload);
+			// console.log("rec contect reducer", resetState);
+			return { ...action.payload };
 		case "LOAD_STIMS":
 			let keys = Object.keys(action.payload.stims);
 			let nostims0 = keys.length;
@@ -323,10 +326,10 @@ const recordStopAction = (dispatch) => {
 			.catch(() => null);
 
 		if (audio) {
-			const audioBuffer = await createAudioBuffer(audio.audioUrl);
-			const audioData = audioBuffer.getChannelData(0);
-			const skip = Math.floor(audioData.length / (256 * 4));
-			const audioDataF = audioData.filter((e, i) => i % skip === 0);
+			// const audioBuffer = await createAudioBuffer(audio.audioUrl);
+			// const audioData = audioBuffer.getChannelData(0);
+			// const skip = Math.floor(audioData.length / (256 * 4));
+			// const audioDataF = audioData.filter((e, i) => i % skip === 0);
 
 			batch(() => {
 				dispatch({ type: "SET_REC_STATE", payload: false });
@@ -334,7 +337,7 @@ const recordStopAction = (dispatch) => {
 				dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
 			});
 
-			dispatch({ type: "SET_AUD_BUF", payload: audioDataF });
+			// dispatch({ type: "SET_AUD_BUF", payload: audioDataF });
 			clearInterval(interval);
 		}
 
@@ -358,10 +361,11 @@ const recordResetAction = (dispatch) => {
 	return async () => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
-		console.log("record reset log");
+		dispatch({ type: "REC_RESET", payload: { ...recordInitialState } });
+
+		console.log("record reset log", recordInitialState);
 		if (recorder) {
-			audio = await recorder.stopRecord().catch(() => null);
-			dispatch({ type: "REC_RESET", payload: null });
+			recorder.stopRecord().catch(() => null);
 			clearInterval(interval);
 			recorder = null;
 		}
