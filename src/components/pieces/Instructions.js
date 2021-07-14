@@ -210,7 +210,7 @@ const VideoInst = () => {
 				title="YouTube video player"
 				frameborder="4"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-				allowfullscreen
+				allowFullScreen
 			/>
 			<Divider className={classes.divider} />
 			<Typography variant="body1" align="center" gutterBottom>

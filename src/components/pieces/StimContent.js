@@ -266,7 +266,7 @@ const VideoInst = () => {
 					title="YouTube video player"
 					frameborder="4"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowfullscreen
+					allowFullScreen
 					loading="eager"
 				/>
 			</div>
