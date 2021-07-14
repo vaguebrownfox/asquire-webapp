@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		justifyContent: "center",
 		cursor: "none",
-		marginBottom: theme.spacing(1),
 	},
 	title: {
 		fontSize: 14,
