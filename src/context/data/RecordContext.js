@@ -47,9 +47,6 @@ const recordReducer = (state, action) => {
 		case "SET_LOADING":
 			return { ...state, loading: action.payload };
 		case "REC_RESET":
-			// let newState = { ...state };
-			// let resetState = Object.assign(newState, action.payload);
-			// console.log("rec contect reducer", resetState);
 			return { ...action.payload };
 		case "LOAD_STIMS":
 			let keys = Object.keys(action.payload.stims);
