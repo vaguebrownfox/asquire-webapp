@@ -99,7 +99,7 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
 
-		description: "Start record your **cough** 3 times",
+		description: "Start record and **cough** 3 times",
 	},
 	{
 		label: "Aaa",
@@ -169,6 +169,15 @@ const stimArray = [
 
 		description:
 			"Take a deep breath in and say '**Zzzzzzz**' as in 'Pi**zz**a' until you're out of breath",
+	},
+	{
+		label: "cough",
+		tag: "cough",
+		imageLink: "",
+		audioDescriptionLink:
+			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
+
+		description: "Record your **cough** 3 times again",
 	},
 ];
 
