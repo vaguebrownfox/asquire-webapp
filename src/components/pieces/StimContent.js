@@ -84,7 +84,6 @@ const StimContent = ({
 }) => {
 	const classes = useStyles();
 	const infoRef = React.useRef();
-	const infoRefVid = React.useRef();
 
 	const [instip, setInstip] = React.useState("Click! Listen to instruction");
 	const [isVidInst, setVidInst] = React.useState(false);
@@ -161,7 +160,7 @@ const StimContent = ({
 				/>
 			) : (
 				<Collapse in={isVidInst}>
-					<VideoInst {...{ infoRefVid }} />
+					<VideoInst />
 				</Collapse>
 			)}
 
@@ -243,6 +242,7 @@ const AudioInst = ({
 				{stim?.audioDescriptionLink !== "" && (
 					<audio
 						ref={infoRef}
+						id="inst-player"
 						className={classes.playerShow}
 						src={stim?.audioDescriptionLink}
 						controls
@@ -253,14 +253,13 @@ const AudioInst = ({
 	);
 };
 
-const VideoInst = ({ infoRefVid }) => {
+const VideoInst = () => {
 	const classes = useStyles();
 	return (
 		<>
 			<div className={classes.mediaDiv}>
 				<iframe
-					id="player"
-					ref={infoRefVid}
+					id="vid-player"
 					width="100%"
 					height="200"
 					src={`https://www.youtube-nocookie.com/embed/AWMUhRCMXt8?loop=1`}
