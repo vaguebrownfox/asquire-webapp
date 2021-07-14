@@ -94,12 +94,13 @@ export default function Record() {
 			}
 
 			recordState.analyserNode?.disconnect();
-			recordResetAction();
+
 			firebaseSetActive(userState.selectedUser, "false");
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = () => {
+		recordResetAction();
 		stepNextAction();
 	};
 
