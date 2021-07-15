@@ -1,9 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import {
+	Card,
+	CardContent,
+	Avatar,
+	Tooltip,
+	ListItemText,
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { Avatar, Tooltip } from "@material-ui/core";
+import { List, ListItem, ListItemAvatar } from "@material-ui/core";
+import MailIcon from "@material-ui/icons/Mail";
+import { spire_logo_url } from "../../functions/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -16,33 +23,40 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 		alignItems: "center",
 	},
-	bullet: {
-		display: "inline-block",
-		margin: "0 2px",
-		transform: "scale(0.8)",
-	},
 	title: {
 		fontSize: 16,
 	},
-	pos: {
-		marginBottom: 12,
-	},
 	avatar: {
-		width: theme.spacing(32),
-		height: theme.spacing(32),
-		background: theme.palette.background.default,
+		width: theme.spacing(24),
+		height: theme.spacing(24),
 		borderWidth: 1,
+		background: theme.palette.background.default,
 		borderColor: theme.palette.primary.contrastText,
+	},
+	listroot: {
+		width: "100%",
+		maxWidth: 360,
+		backgroundColor: theme.palette.background.paper,
+	},
+	listitem: {
+		cursor: "pointer",
+		margin: theme.spacing(0, 0, 1, 0),
+	},
+	link: {
+		color: theme.palette.secondary.main,
+	},
+	note2: {
+		width: "40%",
+		minWidth: theme.spacing(24),
+		padding: theme.spacing(1),
+		margin: theme.spacing(1),
+		borderRadius: theme.spacing(1),
+		border: `1px solid ${theme.palette.secondary.main}`,
 	},
 }));
 
 export default function Contact() {
 	const classes = useStyles();
-	const bull = <span className={classes.bullet}>•</span>;
-
-	const copyToClipboard = (e, text) => {
-		navigator.clipboard.writeText(text);
-	};
 
 	return (
 		<Card className={classes.root}>
@@ -58,56 +72,84 @@ export default function Contact() {
 				<Avatar
 					alt="Spire lab logo"
 					variant="circular"
-					src="https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/logos%2Fspire_logo_sq.png?alt=media&token=ea586ef3-d9ea-420c-8c1b-db3130855672"
+					src={spire_logo_url}
 					className={classes.avatar}
 				/>
-				<Typography
-					// className={classes.title}
-					color="secondary"
-					variant="h6"
-					gutterBottom
-				>
-					SPIRE Lab
-				</Typography>
-				<Tooltip title="Click to copy email" placement="right">
-					<span>
-						<Typography
-							// className={classes.title}
-							color="textPrimary"
-							variant="caption"
-							gutterBottom
-						>
-							{bull}Email:&nbsp;&nbsp;&nbsp;&nbsp;
-						</Typography>
-						<Typography
-							// className={classes.title}
-							color="textPrimary"
-							variant="caption"
-							gutterBottom
-							onClick={(e) =>
-								copyToClipboard(e, "spirelab.ee@iisc.ac.in")
-							}
-						>
-							spirelab.ee@iisc.ac.in
-						</Typography>
-					</span>
-				</Tooltip>
-				<br />
-				<br />
-				<span>
-					<Typography
-						// className={classes.title}
-						color="textPrimary"
-						variant="caption"
-						gutterBottom
+				<Typography color="secondary" variant="h6" gutterBottom>
+					SPIRE Lab |&nbsp;
+					<a
+						className={classes.link}
+						href="https://spire.ee.iisc.ac.in/spire/"
 					>
-						{bull}Visit:&nbsp;&nbsp;&nbsp;&nbsp;
-					</Typography>
-					<a href="https://spire.ee.iisc.ac.in/spire/">
 						spire.ee.iisc.ac.in/spire
 					</a>
-				</span>
+				</Typography>
+
+				<ContactList />
+				<Typography
+					className={classes.note2}
+					color="textPrimary"
+					variant="body1"
+				>
+					<b>
+						Please let us know if you are facing any problem in the
+						application! <br />
+						Thank you.
+					</b>
+				</Typography>
 			</CardContent>
 		</Card>
 	);
 }
+
+const contacts = [
+	{
+		name: "SPIRE Lab",
+		email: "spirelab.ee@iisc.ac.in",
+		pos: "IISc",
+	},
+	{
+		name: "Jeevan K",
+		email: "jeevank@iisc.ac.in",
+		pos: "Research Assistant",
+	},
+	{
+		name: "Shaique Solanki",
+		email: "solankishaique@gmail.com",
+		pos: "Research Assistant",
+	},
+];
+
+const ContactList = () => {
+	const classes = useStyles();
+
+	return (
+		<List className={classes.listroot}>
+			{contacts.map((c, i) => (
+				<div
+					className={classes.listitem}
+					key={i}
+					onClick={(e) => copyToClipboard(e, c.email)}
+				>
+					<Tooltip title="Click to copy email" placement="right">
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>
+									<MailIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={`${c.name}`}
+								secondary={`${c.pos} | ${c.email}`}
+							/>
+						</ListItem>
+					</Tooltip>
+				</div>
+			))}
+		</List>
+	);
+};
+
+const copyToClipboard = (e, text) => {
+	navigator.clipboard.writeText(text);
+};
