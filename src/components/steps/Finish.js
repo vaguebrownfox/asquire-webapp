@@ -185,10 +185,13 @@ export default function Finish() {
 							gutterBottom
 						>
 							<b>Note: </b>
-							<u>
-								Please complete all the tasks to register for
-								compensation
-							</u>
+							Please complete all the tasks to register for
+							compensation. Please{" "}
+							<a href="/contact">
+								{" "}
+								<b>Contact us</b>{" "}
+							</a>{" "}
+							if you have any queries.
 						</Typography>
 					)}
 
