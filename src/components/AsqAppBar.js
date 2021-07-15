@@ -107,10 +107,6 @@ function AsqAppBar({ title, history }) {
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-	// const handleProfileMenuOpen = (event) => {
-	// 	setAnchorEl(event.currentTarget);
-	// };
-
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
 	};
@@ -123,14 +119,6 @@ function AsqAppBar({ title, history }) {
 	const handleMobileMenuOpen = (event) => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
-
-	// const Messages = () => (
-	// 	<IconButton aria-label="show 4 new mails" color="inherit">
-	// 		<Badge badgeContent={4} color="inherit">
-	// 			<MailIcon />
-	// 		</Badge>
-	// 	</IconButton>
-	// );
 
 	const menuId = "primary-search-account-menu";
 	const renderMenu = (
@@ -159,22 +147,6 @@ function AsqAppBar({ title, history }) {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			{/* <MenuItem className={classes.badge}>
-				<Messages />
-				<p>Messages</p>
-			</MenuItem> */}
-
-			{/* <MenuItem onClick={handleProfileMenuOpen}>
-				<IconButton
-					aria-label="account of current user"
-					aria-controls="primary-search-account-menu"
-					aria-haspopup="true"
-					color="inherit"
-				>
-					<AccountCircle />
-				</IconButton>
-				<p>Profile</p>
-			</MenuItem> */}
 			<MenuItem>
 				<IconButton
 					aria-label="about"
