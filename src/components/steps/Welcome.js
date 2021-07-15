@@ -10,6 +10,7 @@ import { Avatar, CardActions, Tooltip } from "@material-ui/core";
 import { components } from "../../App";
 
 import {
+	// brave_logo_url,
 	chrome_logo_url,
 	firefox_logo_url,
 } from "../../functions/firebaseConfig";
@@ -59,11 +60,11 @@ const useStyles = makeStyles((theme) => ({
 		width: theme.spacing(4),
 		height: theme.spacing(4),
 		background: theme.palette.background.default,
-		// borderWidth: 1,
-		// borderColor: theme.palette.primary.contrastText,
 	},
-	avalink: {
-		// borderWidth: 0,
+	avatarDiv: {
+		color: "inherit" /* blue colors for links too */,
+		textDecoration: "none" /* no underline */,
+		borderRadius: "50%",
 	},
 	avagroup: {
 		marginRight: theme.spacing(2),
@@ -179,7 +180,10 @@ const AboutProject = () => {
 							proportional to the amount of voice data it is
 							trained on. Your voice will have a significant
 							impact on efficiency of the ML model and hence,{" "}
-							<b>accuracy of the diagnosis</b>.
+							<b>accuracy of the diagnosis</b>. <br />{" "}
+							<b>
+								You will be compensated for your contribution!
+							</b>
 						</Typography>
 					</div>
 					<div className={classes.terms}>
@@ -204,35 +208,64 @@ const AboutProject = () => {
 				</CardContent>
 				<CardActions className={classes.cardactions}>
 					<AvatarGroup max={4} className={classes.avagroup}>
-						<Tooltip title="Chrome">
-							<Avatar
-								alt="Chrome logo"
-								variant="circular"
-								src={chrome_logo_url}
-								className={classes.avatar}
-							/>
-						</Tooltip>
-						<Tooltip title="Firefox">
-							<Avatar
-								alt="Firefox logo"
-								variant="circular"
-								src={firefox_logo_url}
-								className={classes.avatar}
-								href="https://iisc.ac.in/"
-							/>
-						</Tooltip>
+						<a
+							className={classes.avatarDiv}
+							href="https://www.google.com/chrome/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Tooltip title="Chrome">
+								<Avatar
+									alt="Chrome logo"
+									variant="circular"
+									src={chrome_logo_url}
+									className={classes.avatar}
+								/>
+							</Tooltip>
+						</a>
+						<a
+							className={classes.avatarDiv}
+							href="https://www.mozilla.org/en-GB/firefox/new/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Tooltip title="Firefox">
+								<Avatar
+									alt="Firefox logo"
+									variant="circular"
+									src={firefox_logo_url}
+									className={classes.avatar}
+								/>
+							</Tooltip>
+						</a>
+						{/* <a
+							className={classes.avatarDiv}
+							href="https://brave.com/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Tooltip title="Brave">
+								<Avatar
+									alt="Brave logo"
+									variant="circular"
+									src={brave_logo_url}
+									className={classes.avatar}
+								/>
+							</Tooltip>
+						</a> */}
 					</AvatarGroup>
 					<Typography
 						color="textSecondary"
 						variant="caption"
 						component="div"
 					>
-						Use Chrome or Firefox
+						Use Chrome or Firefox or Brave (click on icon)
 					</Typography>
 					<Button
 						className={classes.feedback}
 						variant="outlined"
-						href="feedback"
+						href="/feedback"
+						size="small"
 					>
 						Feedback
 					</Button>
