@@ -80,7 +80,6 @@ export default function Record() {
 			recordPlayAction(false);
 			setPlytip("Play");
 		};
-		console.log("useeff rec step plyref", playRefE);
 		if (playRefE) {
 			playRefE?.addEventListener("play", () => recordPlayAction(true));
 			playRefE?.addEventListener("pause", stopPlay);
