@@ -188,9 +188,13 @@ const NoiseInst = () => {
 			<Typography variant="h4" component="h6" gutterBottom align="center">
 				Shush!
 			</Typography>
+			<Typography variant="body1" align="center">
+				Make sure your surrounding is absolutely{" "}
+				<b>silent and disturbance free!</b>
+			</Typography>
 			<Typography variant="body1" align="center" gutterBottom>
-				Make sure your surrounding is absolutely silent and disturbance
-				free!
+				Also, drink a <b>glass of water</b>! Keep your throat
+				hydrated...
 			</Typography>
 		</div>
 	);
