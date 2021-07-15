@@ -16,6 +16,7 @@ import { grey } from "@material-ui/core/colors";
 
 import StimProgress from "./StimProgress";
 import Toggle from "./Toggle";
+import { INSTRUCTION_VID_URL } from "./Instructions";
 
 const useStyles = makeStyles((theme) => ({
 	tabs: {
@@ -239,15 +240,13 @@ const AudioInst = ({
 				</Typography>
 			</Collapse>
 			<Collapse in={isPlaying}>
-				{stim?.audioDescriptionLink !== "" && (
-					<audio
-						ref={infoRef}
-						id="inst-player"
-						className={classes.playerShow}
-						src={stim?.audioDescriptionLink}
-						controls
-					/>
-				)}
+				<audio
+					ref={infoRef}
+					id="inst-player"
+					className={classes.playerShow}
+					src={stim?.audioDescriptionLink}
+					controls
+				/>
 			</Collapse>
 		</>
 	);
@@ -259,15 +258,14 @@ const VideoInst = () => {
 		<>
 			<div className={classes.mediaDiv}>
 				<iframe
-					id="vid-player"
+					id="vid-player-stimcontent"
 					width="100%"
-					height="200"
-					src={`https://www.youtube-nocookie.com/embed/AWMUhRCMXt8?loop=1`}
-					title="YouTube video player"
+					height="207"
+					src={INSTRUCTION_VID_URL}
+					title="YouTube video player: Asquire Instructions"
 					frameborder="4"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allow="autoplay; encrypted-media; picture-in-picture"
 					allowFullScreen
-					loading="eager"
 				/>
 			</div>
 		</>
