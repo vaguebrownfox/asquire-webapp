@@ -21,6 +21,7 @@ const recordInitialState = {
 	audioDevices: { inputDevices: [], outputDevices: [] },
 	inputDevice: {},
 	outputDevice: {},
+	analyserNode: {},
 	inputStream: null,
 
 	isRecording: false,
