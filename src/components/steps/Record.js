@@ -93,13 +93,12 @@ export default function Record() {
 				playRefE?.removeEventListener("pause", stopPlay);
 			}
 
-			recordState.analyserNode?.disconnect();
-
 			firebaseSetActive(userState.selectedUser, "false");
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleNext = () => {
+		recordState.analyserNode?.disconnect();
 		recordResetAction();
 		stepNextAction();
 	};
