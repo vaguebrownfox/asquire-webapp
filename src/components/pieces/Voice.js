@@ -184,6 +184,7 @@ const Voice = ({ completed }) => {
 	};
 
 	React.useEffect(() => {
+		recordGetDevicesAction();
 		return () => {
 			console.log("voice cleanup");
 			recordResetAction();
