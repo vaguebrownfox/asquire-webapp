@@ -49,9 +49,10 @@ export default function Record() {
 	const { state: userState, userUpdateAction } =
 		React.useContext(UserContext);
 
+	const vizRef = React.useRef();
 	const playRef = React.useRef();
 	const timeoutRef = React.useRef();
-	const vizRef = React.useRef();
+
 	const [plytip, setPlytip] = React.useState("Play");
 
 	const [shape, setShape] = React.useState(false);
@@ -64,14 +65,13 @@ export default function Record() {
 		window.scrollTo({ top: vizRef.current.offsetTop, behavior: "smooth" });
 	};
 
-	const handleShape = () => {
-		setShape((preshape) => !preshape);
-	};
+	const handleShape = () => setShape((preshape) => !preshape);
 
 	React.useEffect(() => {
-		recordLoadStimsAction(userState.selectedUser).then((user) => {
-			user && userUpdateAction(user);
-		});
+		recordLoadStimsAction(userState.selectedUser).then((user) =>
+			user ? userUpdateAction(user) : null
+		);
+
 		recordGetDevicesAction();
 		firebaseSetActive(userState.selectedUser, "true");
 
@@ -80,6 +80,7 @@ export default function Record() {
 			recordPlayAction(false);
 			setPlytip("Play");
 		};
+		console.log("useeff rec step plyref", playRefE);
 		if (playRefE) {
 			playRefE?.addEventListener("play", () => recordPlayAction(true));
 			playRefE?.addEventListener("pause", stopPlay);
@@ -127,8 +128,8 @@ export default function Record() {
 		if (recordState.isPlaying) {
 			playRef.current.pause();
 		} else {
-			setPlytip("Pause");
 			playRef.current.play();
+			setPlytip("Pause");
 		}
 	};
 
@@ -245,15 +246,13 @@ export default function Record() {
 									!recordState.isPlayingInst
 								}
 							>
-								{recordState.playUrl !== "" && (
-									<audio
-										ref={playRef}
-										id="stim-player"
-										className={classes.player}
-										src={recordState.playUrl}
-										controls
-									/>
-								)}
+								<audio
+									ref={playRef}
+									id="stim-player"
+									className={classes.player}
+									src={recordState.playUrl}
+									controls
+								/>
 							</Collapse>
 						</div>
 					</div>
