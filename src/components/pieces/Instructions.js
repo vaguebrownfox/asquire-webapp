@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+export const INSTRUCTION_VID_URL = `https://www.youtube-nocookie.com/embed/AWMUhRCMXt8`;
+
 const InstructionModal = ({ modalOpen, handleClose }) => {
 	const classes = useStyles();
 
@@ -203,13 +205,13 @@ const VideoInst = () => {
 			</Typography>
 			<Divider className={classes.divider} />
 			<iframe
-				id="player"
+				id="vid-player-instruction"
 				width="100%"
 				height="300"
-				src={`https://www.youtube-nocookie.com/embed/AWMUhRCMXt8?loop=1`}
-				title="YouTube video player"
+				src={INSTRUCTION_VID_URL}
+				title="YouTube video player: Asquire Instructions"
 				frameborder="4"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allow="autoplay; encrypted-media; picture-in-picture"
 				allowFullScreen
 			/>
 			<Divider className={classes.divider} />
