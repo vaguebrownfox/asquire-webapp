@@ -186,7 +186,7 @@ export default function Finish() {
 						>
 							<b>Note: </b>
 							Please complete all the tasks to register for
-							compensation. Please{" "}
+							compensation.{" "}
 							<a href="/contact">
 								{" "}
 								<b>Contact us</b>{" "}
