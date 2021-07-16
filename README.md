@@ -13,5 +13,6 @@
 -   codebase version 0x0C - prog - new task, progress bar
 -   codebase version 0x0C - rem - include remuneration action after task completion
 -   codebase version 0x0C - vid - add video instructions, audio/video tabs
+-   codebase version 0x0C - fin - updates after first release, giving it a finishing.
 
 ### SPIRE Lab IISc, Banglore
