@@ -177,7 +177,7 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
 
-		description: "Record your **cough** 3 times again. **Repeat 5 times**",
+		description: "Record your **cough** 3 times again.",
 	},
 ];
 
