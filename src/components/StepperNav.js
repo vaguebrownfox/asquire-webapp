@@ -17,7 +17,7 @@ import Status from "./pieces/Status";
 import Finish from "./steps/Finish";
 // const Finish = React.lazy(() => import("./steps/Finish"));
 
-export default function VerticalLinearStepper({ components }) {
+export default function StepperNav({ components }) {
 	const classes = useStyles();
 	const {
 		state: stepState,
