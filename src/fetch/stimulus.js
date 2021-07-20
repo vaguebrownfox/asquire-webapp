@@ -90,7 +90,7 @@ const stimArray = [
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fbreath.WAV?alt=media&token=c607da11-1ead-4cd7-9d64-42a85a356cf2",
 
 		description:
-			"Start record and **breathe** in and out through your mouth. **Repeat 5 times**",
+			"Start recording and **breathe** in and out through your mouth. **Repeat 5 times**",
 	},
 	{
 		label: "cough",
@@ -99,7 +99,7 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
 
-		description: "Start record and **cough** 3 times.",
+		description: "Start recording and **cough** 3 times.",
 	},
 	{
 		label: "Aaa",
@@ -177,7 +177,7 @@ const stimArray = [
 		audioDescriptionLink:
 			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fcough.WAV?alt=media&token=1bfdc549-bc07-42d9-aa2b-b7e016f541f4",
 
-		description: "Record your **cough** 3 times again.",
+		description: "Record your **cough** again. **Repeat 3 times**",
 	},
 ];
 
