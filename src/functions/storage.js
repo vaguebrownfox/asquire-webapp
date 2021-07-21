@@ -5,7 +5,7 @@ const storageRef = stor.ref();
 
 export const firebaseUserAudio = (user, audio) => {
 	const userAudioRef = storageRef.child(AUDIO_DATA_FOLDER).child(user.userId);
-	const filename = `webapp-${user.userId}-${user.stimTag}-${user.stimCount}-${PROJECT_ID}.wav`;
+	const filename = `webapp-${user.userId}-${user.stimTag}-${user.completed}-${PROJECT_ID}.wav`;
 
 	userAudioRef
 		.child(filename)
