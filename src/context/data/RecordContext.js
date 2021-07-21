@@ -159,8 +159,11 @@ const recordLoadStimsAction = (dispatch) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		const stims = await firebaseStims().catch(() => {
-			alert("Failed to load stimuli, please refresh page!");
+			alert(
+				"Failed to load stimuli! Make sure you have internet connection. Please refresh page!"
+			);
 			dispatch({ type: "SET_LOADING", payload: false });
+			window.location.href = "/";
 			return null;
 		});
 
