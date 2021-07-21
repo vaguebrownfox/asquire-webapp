@@ -210,9 +210,10 @@ export const audioBufferToWaveBlob = async (audioBuffer) => {
 
 		let pcmArrays = [];
 		if (audioBuffer) {
-			for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
-				pcmArrays.push(audioBuffer.getChannelData(i));
-			}
+			// for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+			//
+			// }
+			pcmArrays.push(audioBuffer.getChannelData(0)); // include only one channel
 		} else {
 			return reject({ error: "audio blob not defined" });
 		}
