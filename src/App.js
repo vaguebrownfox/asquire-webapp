@@ -27,6 +27,7 @@ const Consent = React.lazy(() => import("./components/static/Consent"));
 const Contact = React.lazy(() => import("./components/static/Contact"));
 const Feedback = React.lazy(() => import("./components/static/Feedback"));
 const NopePage = React.lazy(() => import("./components/static/NopePage"));
+const Volunteer = React.lazy(() => import("./components/static/Volunteer"));
 
 export const components = [
 	{
@@ -100,7 +101,12 @@ const App = () => {
 													path="/feedback"
 													exact
 													component={Feedback}
-												/>{" "}
+												/>
+												<Route
+													path="/volunteer"
+													exact
+													component={Volunteer}
+												/>
 												<Route
 													path="/*"
 													component={NopePage}
