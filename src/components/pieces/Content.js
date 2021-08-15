@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
 		...theme.typography.body2,
 		textAlign: "start",
 		padding: theme.spacing(3, 0),
-		marginLeft: theme.spacing(2),
+		margin: "auto",
+		maxWidth: theme.spacing(128),
 	},
 }));
 
