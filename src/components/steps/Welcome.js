@@ -18,7 +18,6 @@ import {
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
-import { Scanner } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
