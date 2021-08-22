@@ -13,13 +13,16 @@ import {
 	// brave_logo_url,
 	chrome_logo_url,
 	firefox_logo_url,
+	VERSION,
 } from "../../functions/firebaseSetup";
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
+import { Scanner } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		position: "relative",
 		background: theme.palette.primary.card,
 	},
 	bullet: {
@@ -76,6 +79,13 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(1),
 		textTransform: "none",
 	},
+	version: {
+		position: "absolute",
+		color: "grey",
+		bottom: 0,
+		right: 10,
+		fontSize: 10,
+	},
 }));
 
 const AboutProject = () => {
@@ -97,6 +107,7 @@ const AboutProject = () => {
 	return (
 		<>
 			<Card className={classes.root} elevation={8}>
+				<p className={classes.version}>ver:{VERSION}</p>
 				<CardContent>
 					<Typography
 						className={classes.title}
@@ -180,10 +191,13 @@ const AboutProject = () => {
 							proportional to the amount of voice data it is
 							trained on. Your voice will have a significant
 							impact on efficiency of the ML model and hence,{" "}
-							<b>accuracy of the diagnosis</b>. <br />{" "}
+							<b>accuracy of the diagnosis</b>.
+							<br />{" "}
 							<b>
 								You will be compensated for your contribution!
 							</b>
+							<br /> Hope you have <b>20 minutes</b> of your time
+							to spare!
 						</Typography>
 					</div>
 					<div className={classes.terms}>
@@ -271,6 +285,7 @@ const AboutProject = () => {
 					</Button>
 				</CardActions>
 			</Card>
+
 			<div className={classes.actionsContainer}>
 				<div>
 					<Button

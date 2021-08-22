@@ -1,6 +1,9 @@
 // Firebase
 exports.PROJECT_ID = "asquire-mox";
 
+// Version code
+exports.VERSION = "fly";
+
 // Firestore
 exports.DATABASE_URL = "https://asquire-mox.firebaseio.com";
 exports.ACTIVE_DOCS = "active_fly";
