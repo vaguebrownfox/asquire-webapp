@@ -14,5 +14,6 @@
 -   codebase version 0x0C - rem - include remuneration action after task completion
 -   codebase version 0x0C - vid - add video instructions, audio/video tabs
 -   codebase version 0x0C - fin - updates after first release, giving it a finishing.
+-   codebase version 0x0C - fly - after asquire flyer
 
 ### SPIRE Lab IISc, Banglore
