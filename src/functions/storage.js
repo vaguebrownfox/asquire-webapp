@@ -1,5 +1,5 @@
 import { stor } from "./firebase";
-import { AUDIO_DATA_FOLDER, PROJECT_ID } from "./firebaseConfig";
+import { AUDIO_DATA_FOLDER, PROJECT_ID } from "./firebaseSetup";
 
 const storageRef = stor.ref();
 

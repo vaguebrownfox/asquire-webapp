@@ -6,7 +6,7 @@ const {
 	CONTENT_COLLECTION,
 	STIM_DOC,
 	SURVEY_DOC,
-} = require("./firebaseConfig");
+} = require("./firebaseSetup");
 
 export const firebaseUserData = async (data) => {
 	const userDocRef = db.collection(USERS_COLLECTION).doc(data.userId);
