@@ -8,7 +8,7 @@ const {
 	SURVEY_DOC,
 	STORAGE_BUCKET,
 	INSTRUCTION_AUDIO_FOLDER,
-} = require("./firebaseConfig");
+} = require("./firebaseSetup");
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
