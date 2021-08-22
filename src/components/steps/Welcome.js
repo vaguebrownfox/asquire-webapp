@@ -13,7 +13,7 @@ import {
 	// brave_logo_url,
 	chrome_logo_url,
 	firefox_logo_url,
-} from "../../functions/firebaseConfig";
+} from "../../functions/firebaseSetup";
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";

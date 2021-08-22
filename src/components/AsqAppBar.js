@@ -15,7 +15,7 @@ import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 import { Button, ButtonGroup, Tooltip } from "@material-ui/core";
 
-import { spire_logo_url, iisc_logo_url } from "../functions/firebaseConfig";
+import { spire_logo_url, iisc_logo_url } from "../functions/firebaseSetup";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {

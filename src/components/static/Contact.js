@@ -10,7 +10,7 @@ import {
 import Typography from "@material-ui/core/Typography";
 import { List, ListItem, ListItemAvatar } from "@material-ui/core";
 import MailIcon from "@material-ui/icons/Mail";
-import { spire_logo_url } from "../../functions/firebaseConfig";
+import { spire_logo_url } from "../../functions/firebaseSetup";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
