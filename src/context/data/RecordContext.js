@@ -14,6 +14,7 @@ import {
 } from "../../functions/recorder";
 import { firebaseUserAudio } from "../../functions/storage";
 import { startVibrate } from "../../functions/vibrate";
+import { detectStims } from "../../vad/detect";
 
 // Initial State
 const recordInitialState = {
@@ -278,7 +279,7 @@ const recordStartAction = (dispatch) => {
 		const isRecStart = await recorder
 			.startRecord()
 			.then((e) => {
-				startVibrate(100);
+				startVibrate(70);
 				return e;
 			})
 			.catch((e) => {
@@ -321,7 +322,7 @@ const recordStopAction = (dispatch) => {
 		audio = await recorder
 			.stopRecord()
 			.then((e) => {
-				startVibrate(100);
+				startVibrate(70);
 				return e;
 			})
 			.catch(() => null);
@@ -337,6 +338,9 @@ const recordStopAction = (dispatch) => {
 				dispatch({ type: "SET_REC_DONE", payload: true });
 				dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
 			});
+
+			const res = await detectStims(audio.audioUrl);
+			console.table(res);
 
 			// dispatch({ type: "SET_AUD_BUF", payload: audioDataF });
 			clearInterval(interval);
@@ -395,6 +399,16 @@ const recordUploadAction = (dispatch) => {
 	};
 };
 
+const recordVadAction = (dispatch) => {
+	return (audioUrl) => {
+		dispatch({ type: "SET_LOADING", payload: true });
+
+		// VAD stuff
+
+		dispatch({ type: "SET_LOADING", payload: false });
+	};
+};
+
 // Export
 export const { Context, Provider } = createDataContext(
 	recordReducer,
@@ -415,6 +429,8 @@ export const { Context, Provider } = createDataContext(
 		recordUploadAction,
 
 		recordResetAction,
+
+		recordVadAction,
 	},
 	recordInitialState
 );
