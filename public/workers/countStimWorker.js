@@ -19,7 +19,7 @@ this.addEventListener("message", (e) => {
 		let mean = sum / N;
 		max = mean > max ? mean : max;
 		energy[i] = mean;
-		T[i] = i * N * fs;
+		T[i] = (i * N) / fs;
 	}
 
 	// Calculate threshold
