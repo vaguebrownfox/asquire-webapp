@@ -15,5 +15,6 @@
 -   codebase version 0x0C - vid - add video instructions, audio/video tabs
 -   codebase version 0x0C - fin - updates after first release, giving it a finishing.
 -   codebase version 0x0C - fly - after asquire flyer
+-   codebase version 0x0C - vad - validation of asquire data: implement validation algorithm
 
 ### SPIRE Lab IISc, Banglore
