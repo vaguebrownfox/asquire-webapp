@@ -78,7 +78,7 @@ const EvalRes = ({ vadRes }) => {
 			</Typography>
 			<Divider className={classes.divider} />
 			<Typography variant="body1" align="center">
-				{`Number of phonations detected`}
+				{`Number of repetition detected`}
 			</Typography>
 			<Typography variant="h5" align="center" gutterBottom>
 				<b>{vadRes.count}</b>
