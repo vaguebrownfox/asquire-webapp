@@ -41,6 +41,12 @@ const recordInitialState = {
 	stimAnim: true,
 
 	seconds: 0,
+
+	vadRes: {
+		count: 0,
+		avg: 0,
+		score: 0,
+	},
 };
 
 // Reducer
@@ -131,6 +137,11 @@ const recordReducer = (state, action) => {
 					break;
 			}
 			return { ...state, seconds: secs };
+		case "UPDATE_VAD":
+			return {
+				...state,
+				vadRes: action.payload,
+			};
 		default:
 			return state;
 	}
@@ -339,14 +350,16 @@ const recordStopAction = (dispatch) => {
 				dispatch({ type: "SET_PLY_URL", payload: audio.audioUrl });
 			});
 
-			const res = await detectStims(audio.audioUrl);
-			console.table(res);
+			// const res = await detectStims(audio.audioUrl);
+			// console.table(res);
 
 			// dispatch({ type: "SET_AUD_BUF", payload: audioDataF });
 			clearInterval(interval);
 		}
 
 		dispatch({ type: "SET_LOADING", payload: false });
+
+		return audio;
 	};
 };
 
@@ -400,10 +413,17 @@ const recordUploadAction = (dispatch) => {
 };
 
 const recordVadAction = (dispatch) => {
-	return (audioUrl) => {
+	return async (audioUrl) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		// VAD stuff
+		const res = await detectStims(audioUrl);
+		const vad = {
+			count: res.count,
+			avg: res.avg || ":|",
+			score: 5,
+		};
+		dispatch({ type: "UPDATE_VAD", payload: vad });
 
 		dispatch({ type: "SET_LOADING", payload: false });
 	};
