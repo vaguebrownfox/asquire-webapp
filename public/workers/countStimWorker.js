@@ -41,7 +41,7 @@ this.addEventListener("message", (e) => {
 
 	console.log("count stims worker", count, time);
 
-	postMessage({ count, time, tint, avg });
+	postMessage({ count, time, tint, avg: avg.toFixed(1) });
 
 	this.close();
 });
