@@ -28,9 +28,14 @@ this.addEventListener("message", (e) => {
 	let temp1 = temp.slice(1); // shifted array
 	let temp2 = temp1.map((s, i) => temp[i] * s); // signed points
 
-	let time = temp2.reduce((a, s, i) => (s < 0 ? [...a, T[i]] : a), []);
+	let tint = temp2.reduce((a, s, i) => (s < 0 ? [...a, T[i]] : a), []);
 
-	let count = Math.ceil(time.length / 2);
+	let count = Math.ceil(tint.length / 2);
+
+	let time = (tint.length % 2 ? tint.slice(0, -1) : tint).reduce(
+		(a, t, i, p) => (i % 2 ? [...a, p[i + 1] - t] : a),
+		[]
+	);
 
 	console.log("count stims worker", count, time);
 
