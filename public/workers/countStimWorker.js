@@ -2,7 +2,7 @@ this.addEventListener("message", (e) => {
 	let inputChannel = e.data.channel;
 	let fs = e.data.fs; // sampling frequency
 
-	const engwp = 0.9;
+	const engwp = 0.7;
 	const thrp = 0.2;
 
 	// Calculate energy
@@ -33,13 +33,15 @@ this.addEventListener("message", (e) => {
 	let count = Math.ceil(tint.length / 2);
 
 	let time = (tint.length % 2 ? tint.slice(0, -1) : tint).reduce(
-		(a, t, i, p) => (i % 2 ? [...a, p[i + 1] - t] : a),
+		(a, t, i, p) => (i % 2 ? a : [...a, p[i + 1] - t]),
 		[]
 	);
 
+	let avg = time.reduce((s, t) => s + t, 0) / time.length;
+
 	console.log("count stims worker", count, time);
 
-	postMessage({ count, time });
+	postMessage({ count, time, tint, avg });
 
 	this.close();
 });
