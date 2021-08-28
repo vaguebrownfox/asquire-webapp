@@ -24,6 +24,7 @@ import Worm from "../pieces/Worm";
 
 // Hooks
 import useContainerDimensions from "../../hooks/useContainerDimensions";
+import VadRes from "../pieces/VadRes";
 
 const MAX_REC_DURATION = 121000;
 
@@ -44,6 +45,7 @@ export default function Record() {
 		recordPlayInstAction,
 		recordUploadAction,
 		recordResetAction,
+		recordVadAction,
 	} = React.useContext(RecordContext);
 
 	const { state: userState, userUpdateAction } =
@@ -57,15 +59,18 @@ export default function Record() {
 
 	const [shape, setShape] = React.useState(false);
 
-	const [modalOpen, setOpen] = React.useState(true);
+	const [instModalOpen, setInstOpen] = React.useState(true);
 
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => {
-		setOpen(false);
+	const [vadModalOpen, setVadOpen] = React.useState(false);
+
+	const handleInstOpen = () => setInstOpen(true);
+	const handleInstClose = () => {
+		setInstOpen(false);
 		window.scrollTo({ top: vizRef.current.offsetTop, behavior: "smooth" });
 	};
+	const handleVadClose = () => setVadOpen(false);
 
-	const handleShape = () => setShape((preshape) => !preshape);
+	const handleSpectrumShape = () => setShape((preshape) => !preshape);
 
 	React.useEffect(() => {
 		recordLoadStimsAction(userState.selectedUser).then((user) =>
@@ -97,7 +102,7 @@ export default function Record() {
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const handleNext = () => {
+	const handleNextStep = () => {
 		recordState.analyserNode?.disconnect();
 		recordResetAction();
 		stepNextAction();
@@ -111,15 +116,21 @@ export default function Record() {
 		clearInterval(timeoutRef.current);
 		if (recordState.isRecording) {
 			timeoutRef.current = setTimeout(() => {
-				recordStopAction();
+				handleRecStop();
 			}, 250);
 		} else {
 			vizRef.current.scrollIntoView(false);
 			recordStartAction(recordState.inputStream);
 			timeoutRef.current = setTimeout(() => {
-				recordStopAction();
+				handleRecStop();
 			}, MAX_REC_DURATION);
 		}
+	};
+
+	const handleRecStop = async () => {
+		const res = await recordStopAction();
+		res && (await recordVadAction(res.audioUrl));
+		setVadOpen(true);
 	};
 
 	const handlePlay = () => {
@@ -168,12 +179,12 @@ export default function Record() {
 					avatar={<ListIcon fontSize="large" />}
 					aria-label="Show instructions"
 					label="Show instructions"
-					onClick={handleOpen}
+					onClick={handleInstOpen}
 					variant="outlined"
 				/>
 				<CardContent>
 					<RecTitle
-						s={handleShape}
+						s={handleSpectrumShape}
 						userName={userState.selectedUser?.userName}
 					/>
 
@@ -185,7 +196,10 @@ export default function Record() {
 							anim={recordState.stimAnim}
 							isRecording={recordState.isRecording}
 							isPlaying={recordState.isPlayingInst}
-							{...{ playRec: recordPlayInstAction, modalOpen }}
+							{...{
+								playRec: recordPlayInstAction,
+								modalOpen: instModalOpen || vadModalOpen,
+							}}
 						/>
 
 						{userState.selectedUser?.completed <
@@ -255,7 +269,19 @@ export default function Record() {
 						</div>
 					</div>
 					<>
-						<InstructionModal {...{ modalOpen, handleClose }} />
+						<InstructionModal
+							{...{
+								modalOpen: instModalOpen,
+								handleClose: handleInstClose,
+							}}
+						/>
+						<VadRes
+							{...{
+								modalOpen: vadModalOpen,
+								handleClose: handleVadClose,
+								vadRes: recordState.vadRes,
+							}}
+						/>
 					</>
 				</CardContent>
 			</Card>
@@ -269,7 +295,7 @@ export default function Record() {
 						className={classes.button}
 						variant="contained"
 						color="secondary"
-						onClick={handleNext}
+						onClick={handleNextStep}
 					>
 						Exit
 					</Button>
