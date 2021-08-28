@@ -129,8 +129,17 @@ export default function Record() {
 
 	const handleRecStop = async () => {
 		const res = await recordStopAction();
-		res && (await recordVadAction(res.audioUrl));
-		setVadOpen(true);
+
+		switch (recordState.currentStim.tag) {
+			case "breath":
+				break;
+			case "cough":
+				break;
+			default:
+				res && (await recordVadAction(res.audioUrl));
+				setVadOpen(true);
+				break;
+		}
 	};
 
 	const handlePlay = () => {
