@@ -18,7 +18,7 @@ this.addEventListener("message", (e) => {
 	for (let i = 0; i < n_frames; i++) {
 		let slice = inputChannel.slice(i * N, (i + 1) * N);
 		// let sum = slice.reduce((a, b) => a + Math.abs(b) * 2);
-		let sum = slice.reduce((a, b) => a + Math.pow(Math.abs(b), 2));
+		let sum = slice.reduce((a, b) => a + Math.pow(b, 2));
 		let mean = sum / N;
 		max = mean > max ? mean : max;
 		energy[i] = mean;
