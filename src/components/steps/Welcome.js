@@ -22,10 +22,12 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		position: "relative",
 	},
-	bgimg: {
+	bgimgDiv: {
 		position: "absolute",
-		right: 0,
-		left: 0,
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		height: "100%",
 		width: "100%",
 		opacity: 0.1,
 	},
@@ -113,11 +115,9 @@ const AboutProject = () => {
 			<Card className={classes.root} elevation={8}>
 				<p className={classes.version}>ver:{VERSION}</p>
 				<CardContent className={classes.content}>
-					<img
-						alt="Asquire logo"
-						className={classes.bgimg}
-						src={"/image/asq-logo.png"}
-					/>
+					<div className={classes.bgimgDiv}>
+						<img alt="Asquire logo" src={"/image/asq-logo.png"} />
+					</div>
 					<Typography
 						className={classes.title}
 						color="textPrimary"
