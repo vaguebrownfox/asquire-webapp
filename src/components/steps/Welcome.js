@@ -9,12 +9,7 @@ import { Avatar, CardActions, Tooltip } from "@material-ui/core";
 
 import { components } from "../../App";
 
-import {
-	// brave_logo_url,
-	chrome_logo_url,
-	firefox_logo_url,
-	VERSION,
-} from "../../functions/firebaseSetup";
+import { VERSION } from "../../functions/firebaseSetup";
 
 // Context
 import { Context as StepContext } from "../../context/data/StepContext";
@@ -23,6 +18,16 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		position: "relative",
 		background: theme.palette.primary.card,
+	},
+	content: {
+		position: "relative",
+	},
+	bgimg: {
+		position: "absolute",
+		right: 0,
+		left: 0,
+		width: "100%",
+		opacity: 0.1,
 	},
 	bullet: {
 		display: "inline-block",
@@ -107,7 +112,12 @@ const AboutProject = () => {
 		<>
 			<Card className={classes.root} elevation={8}>
 				<p className={classes.version}>ver:{VERSION}</p>
-				<CardContent>
+				<CardContent className={classes.content}>
+					<img
+						alt="Asquire logo"
+						className={classes.bgimg}
+						src={"/image/asq-logo.png"}
+					/>
 					<Typography
 						className={classes.title}
 						color="textPrimary"
@@ -231,7 +241,7 @@ const AboutProject = () => {
 								<Avatar
 									alt="Chrome logo"
 									variant="circular"
-									src={chrome_logo_url}
+									src="/image/chrome-logo.svg"
 									className={classes.avatar}
 								/>
 							</Tooltip>
@@ -246,7 +256,7 @@ const AboutProject = () => {
 								<Avatar
 									alt="Firefox logo"
 									variant="circular"
-									src={firefox_logo_url}
+									src="/image/firefox-logo.png"
 									className={classes.avatar}
 								/>
 							</Tooltip>
