@@ -95,7 +95,7 @@ const EvalRes = ({ vadRes }) => {
 				{`Score`}
 			</Typography>
 			<Typography variant="h5" align="center" gutterBottom>
-				<b>{`${5}/10`}</b>
+				<b>{`${vadRes.score}/10`}</b>
 			</Typography>
 		</div>
 	);

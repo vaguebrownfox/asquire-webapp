@@ -46,7 +46,7 @@ this.addEventListener("message", (e) => {
 	let scoreDur = avg / minsec;
 	scoreDur = scoreDur > 1 ? 1 : scoreDur;
 
-	let scoreCnt = (count / mincnt) * 1;
+	let scoreCnt = count / mincnt;
 	scoreCnt = scoreCnt > 1 ? 1 : scoreCnt;
 
 	let score = ((scoreDur * scrdp + scoreCnt * (1 - scrdp)) * 10).toFixed(1);
