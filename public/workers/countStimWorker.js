@@ -4,6 +4,9 @@ this.addEventListener("message", (e) => {
 
 	const engwp = 0.7;
 	const thrp = 0.2;
+	const minsec = 12;
+	const mincnt = 4;
+	const scrdp = 0.5;
 
 	// Calculate energy
 	let N = Math.round(engwp * fs);
@@ -38,10 +41,19 @@ this.addEventListener("message", (e) => {
 	);
 
 	let avg = time.reduce((s, t) => s + t, 0) / time.length;
+	avg = isNaN(avg) ? 0 : avg.toFixed(1);
+
+	let scoreDur = avg / minsec;
+	scoreDur = scoreDur > 1 ? 1 : scoreDur;
+
+	let scoreCnt = (count / mincnt) * 1;
+	scoreCnt = scoreCnt > 1 ? 1 : scoreCnt;
+
+	let score = ((scoreDur * scrdp + scoreCnt * (1 - scrdp)) * 10).toFixed(1);
 
 	console.log("count stims worker", count, time);
 
-	postMessage({ count, time, tint, avg: avg.toFixed(1) });
+	postMessage({ count, avg, score });
 
 	this.close();
 });

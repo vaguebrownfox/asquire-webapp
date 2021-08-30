@@ -420,8 +420,8 @@ const recordVadAction = (dispatch) => {
 		const res = await detectStims(audioUrl);
 		const vad = {
 			count: res.count,
-			avg: res.avg || ":|",
-			score: 5,
+			avg: res.avg,
+			score: res.score,
 		};
 		dispatch({ type: "UPDATE_VAD", payload: vad });
 
