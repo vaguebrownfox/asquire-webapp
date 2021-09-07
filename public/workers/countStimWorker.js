@@ -6,7 +6,7 @@ this.addEventListener("message", (e) => {
 	const thrp = 0.2;
 	const minsec = 12;
 	const mincnt = 4;
-	const scrdp = 0.5;
+	const scrdp = 0.7;
 
 	// Calculate energy
 	let N = Math.round(engwp * fs);
@@ -43,11 +43,9 @@ this.addEventListener("message", (e) => {
 	let avg = time.reduce((s, t) => s + t, 0) / time.length;
 	avg = isNaN(avg) ? 0 : avg.toFixed(1);
 
-	let scoreDur = avg / minsec;
-	scoreDur = scoreDur > 1 ? 1 : scoreDur;
+	let scoreDur = avg > minsec ? 1 : avg / minsec;
 
-	let scoreCnt = count / mincnt;
-	scoreCnt = scoreCnt > 1 ? 1 : scoreCnt;
+	let scoreCnt = count > mincnt ? 1 : count / mincnt;
 
 	let score = ((scoreDur * scrdp + scoreCnt * (1 - scrdp)) * 10).toFixed(1);
 
