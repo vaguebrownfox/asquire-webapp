@@ -413,7 +413,7 @@ const recordUploadAction = (dispatch) => {
 };
 
 const recordVadAction = (dispatch) => {
-	return async (audioUrl) => {
+	return async (audioUrl, isPhone) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
 		// VAD stuff
@@ -423,6 +423,10 @@ const recordVadAction = (dispatch) => {
 			avg: res.avg,
 			score: res.score,
 		};
+
+		if (!isPhone)
+			vad.score = (vad.count >= 3 ? 1 : vad.count / 3).toFixed(1) * 10;
+
 		dispatch({ type: "UPDATE_VAD", payload: vad });
 
 		dispatch({ type: "SET_LOADING", payload: false });
