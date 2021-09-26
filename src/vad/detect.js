@@ -4,28 +4,30 @@ const {
 } = require("standardized-audio-context");
 // var toWav = require("audiobuffer-to-wav");
 
-export const detectStims = async (audioUrl) => {
+export const detectStims = async (audioUrl, frequency = 555) => {
 	const audioBuffer = await createAudioBuffer(audioUrl);
 
-	let ctx = new OfflineAudioContext(
-		audioBuffer.numberOfChannels,
-		audioBuffer.length,
-		audioBuffer.sampleRate
-	);
+	let ch, len, fs;
+
+	if (audioBuffer) {
+		ch = audioBuffer.numberOfChannels;
+		len = audioBuffer.length;
+		fs = audioBuffer.sampleRate;
+	} else {
+		return null;
+	}
+
+	let ctx = new OfflineAudioContext(ch, len, fs);
 
 	// Source
 	let source = ctx.createBufferSource();
 	source.buffer = audioBuffer;
 
-	// const gainNode = ctx.createGain();
-	// gainNode.gain.value = 1.2; // setting it to 10%
-	// source.connect(gainNode);
-	// gainNode.connect(ctx.destination);
-
+	// Filter
 	let filterNode = ctx.createBiquadFilter();
 	filterNode.type = "bandpass";
-	filterNode.frequency.value = 555;
-	filterNode.Q.value = 50;
+	filterNode.frequency.value = frequency;
+	filterNode.Q.value = 55;
 
 	source.connect(filterNode);
 	filterNode.connect(ctx.destination);
@@ -45,6 +47,8 @@ export const detectStims = async (audioUrl) => {
 
 const createAudioBuffer = async (audioUrl) => {
 	const arrayBuffer = await (await fetch(audioUrl)).arrayBuffer();
+
+	if (!arrayBuffer) return null;
 
 	let audioBuffer = null;
 
@@ -67,6 +71,8 @@ const countStims = (channel, fs) =>
 		countStims.addEventListener("message", (e) => {
 			resolve(e.data);
 		});
+
+		let options = {};
 
 		countStims.postMessage({ channel, fs });
 	});
