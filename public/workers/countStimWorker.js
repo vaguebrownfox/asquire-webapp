@@ -35,17 +35,6 @@ this.addEventListener("message", (e) => {
 		timeArr[i] = (i * N) / fs;
 	}
 
-	// Calculate threshold
-	// let thr = THRP * max;
-	// let temp = energy.map((e) => (e - thr > 0 ? 1 : -1)); // signed array
-	// let temp1 = temp.slice(1); // shifted array
-	// let temp2 = temp1.map((s, i) => temp[i] * s); // signed points
-
-	// let tint = temp2.reduce((a, s, i) => (s < 0 ? [...a, T[i]] : a), []);
-
-	// Calculate stim count
-	// let count = Math.ceil(tint.length / 2);
-
 	// Calculate threshold: range
 	let countArr = [];
 	let tint = [];
