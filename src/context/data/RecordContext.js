@@ -422,6 +422,7 @@ const recordVadAction = (dispatch) => {
 			count: res.count,
 			avg: res.avg,
 			score: res.score,
+			spectrum: res.spectrum,
 		};
 
 		if (!isPhone)

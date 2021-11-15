@@ -4,6 +4,8 @@ const {
 } = require("standardized-audio-context");
 // var toWav = require("audiobuffer-to-wav");
 
+const { FFT } = require("./dsp/dsp");
+
 export const detectStims = async (audioUrl, frequency = 555) => {
 	const audioBuffer = await createAudioBuffer(audioUrl);
 
@@ -17,13 +19,26 @@ export const detectStims = async (audioUrl, frequency = 555) => {
 		return null;
 	}
 
-	let ctx = new OfflineAudioContext(ch, len, fs);
+	// Setup context
+	const ctx = new OfflineAudioContext(ch, len, fs);
 
 	// Source
+	const audioArr = new Float32Array(audioBuffer.getChannelData(0));
 	let source = ctx.createBufferSource();
 	source.buffer = audioBuffer;
 
 	// Filter
+	const fftBufflen = 1 << (32 - Math.clz32(len));
+	const signal = new Float32Array(fftBufflen);
+	signal.set(audioArr, 0);
+
+	console.log("detect len", { len, fftBufflen });
+	let fft = new FFT(fftBufflen, fs);
+	fft.forward(signal);
+	let spectrum = fft.spectrum;
+
+	console.log("detect | spectrum", spectrum);
+
 	let filterNode = ctx.createBiquadFilter();
 	filterNode.type = "bandpass";
 	filterNode.frequency.value = frequency;
@@ -36,11 +51,9 @@ export const detectStims = async (audioUrl, frequency = 555) => {
 	let outputAudioBuffer = await ctx.startRendering();
 
 	// count stims
-	let channel = new Float32Array(audioBuffer.getChannelData(0));
-
-	const res = await countStims(channel, outputAudioBuffer.sampleRate);
+	const res = await countStims(audioArr, outputAudioBuffer.sampleRate);
 	console.log("filter res count", res);
-
+	res.spectrum = spectrum;
 	// let wavop = toWav(outputAudioBuffer);
 	return res;
 };
@@ -72,7 +85,7 @@ const countStims = (channel, fs) =>
 			resolve(e.data);
 		});
 
-		let options = {};
+		// let options = {};
 
 		countStims.postMessage({ channel, fs });
 	});
