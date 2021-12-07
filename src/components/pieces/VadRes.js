@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
 	Backdrop,
 	Button,
+	CircularProgress,
 	Divider,
 	Fade,
 	Modal,
@@ -20,12 +21,14 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "space-between",
 		backgroundColor: "rgb(255, 255, 255, 0.9)",
 		border: "2px solid",
 		borderColor: theme.palette.secondary.main,
 		borderRadius: 8,
 		boxShadow: theme.shadows[5],
+		minHeight: "20vh",
+		minWidth: "20ch",
 		padding: theme.spacing(2, 2, 3),
 		margin: theme.spacing(1),
 	},
@@ -61,7 +64,21 @@ const VadRes = ({ modalOpen, handleClose, vadRes }) => {
 		>
 			<Fade in={modalOpen}>
 				<div className={classes.modalContent}>
-					<EvalRes vadRes={vadRes} />
+					{!vadRes.calc ? (
+						<EvalRes vadRes={vadRes} />
+					) : (
+						<>
+							<Typography
+								variant="body"
+								color="secondary"
+								align="center"
+								gutterBottom
+							>
+								<b>Evaluating your recording... Please wait!</b>
+							</Typography>
+							<CircularProgress color="secondary" size={28} />
+						</>
+					)}
 					<Button
 						variant="outlined"
 						color="secondary"
@@ -101,7 +118,7 @@ const EvalRes = ({ vadRes }) => {
 			<Typography variant="body1" align="center">
 				{`Score`}
 			</Typography>
-			<Typography variant="h5" align="center" gutterBottom>
+			<Typography variant="h4" align="center" gutterBottom>
 				<b
 					className={
 						vadRes.score > 7 ? classes.scoreOk : classes.scoreBad
@@ -111,8 +128,15 @@ const EvalRes = ({ vadRes }) => {
 			</Typography>
 
 			{vadRes.score < 7 && (
-				<Typography variant="caption" align="center" gutterBottom>
-					<b>*make sure you followed the instruction properly.</b>
+				<Typography
+					variant="caption"
+					style={{ color: red[700] }}
+					align="center"
+					gutterBottom
+				>
+					<b>
+						*Please make sure you followed the instruction properly.
+					</b>
 				</Typography>
 			)}
 		</div>
