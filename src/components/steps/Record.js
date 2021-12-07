@@ -136,12 +136,12 @@ export default function Record() {
 			case "breath":
 				break;
 			case "cough":
-				res && (await recordVadAction(res.audioUrl, false));
 				setVadOpen(true);
+				res && (await recordVadAction(res.audioUrl, false));
 				break;
 			default:
-				res && (await recordVadAction(res.audioUrl, true));
 				setVadOpen(true);
+				res && (await recordVadAction(res.audioUrl, true));
 				break;
 		}
 	};
