@@ -27,7 +27,7 @@ export const detectStims = async (audioUrl, frequency = 555) => {
 	let source = ctx.createBufferSource();
 	source.buffer = audioBuffer;
 
-	// Filter
+	// FFT
 	const fftBufflen = 1 << (32 - Math.clz32(len));
 	const signal = new Float32Array(fftBufflen);
 	signal.set(audioArr, 0);
@@ -39,6 +39,7 @@ export const detectStims = async (audioUrl, frequency = 555) => {
 
 	console.log("detect | spectrum", spectrum);
 
+	// Filter
 	let filterNode = ctx.createBiquadFilter();
 	filterNode.type = "bandpass";
 	filterNode.frequency.value = frequency;
@@ -55,6 +56,7 @@ export const detectStims = async (audioUrl, frequency = 555) => {
 	console.log("filter res count", res);
 	res.spectrum = spectrum;
 	// let wavop = toWav(outputAudioBuffer);
+
 	return res;
 };
 
@@ -68,9 +70,7 @@ const createAudioBuffer = async (audioUrl) => {
 	try {
 		audioBuffer = await new AudioContext().decodeAudioData(arrayBuffer);
 	} catch (e) {
-		alert(
-			`Sorry, your browser doesn't support a crucial feature needed to allow you to record using your device's microphone. You should use Chrome or Firefox if you want the best audio support, and ensure you're using the *latest version* your browser of choice.`
-		);
+		alert(alertMsg);
 	}
 
 	return audioBuffer;
@@ -89,3 +89,8 @@ const countStims = (channel, fs) =>
 
 		countStims.postMessage({ channel, fs });
 	});
+
+export const alertMsg = `Sorry, your browser doesn't support a crucial feature 
+needed to allow you to record using your device's microphone. 
+You should use Chrome or Firefox if you want the best audio support, 
+and ensure you're using the *latest version* your browser of choice.`;
