@@ -1,76 +1,3 @@
-const stimulus = {
-	0: {
-		sno: 0,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description: "Record your breath",
-	},
-	1: {
-		sno: 1,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description: "Record your cough",
-	},
-	2: {
-		sno: 2,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Aaa' as in 'Basket'  while breathing out",
-	},
-	3: {
-		sno: 3,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Ooo' as in 'Horrible'  while breathing out",
-	},
-	4: {
-		sno: 4,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Eee' as in 'peace'  while breathing out",
-	},
-	5: {
-		sno: 5,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Sss' as in 'Shakira'  while breathing out",
-	},
-	6: {
-		sno: 6,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Uuu' as in 'You'  while breathing out",
-	},
-	7: {
-		sno: 7,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Zzz' as in 'Fuzz' while breathing out",
-	},
-	8: {
-		sno: 8,
-		imageLink: "",
-		audioDescriptionLink: "",
-
-		description:
-			"Take a deep breath in and say 'Yee' as in 'Yeah'  while breathing out",
-	},
-};
-
 const getStimObj = (array) => {
 	let obj = {};
 
@@ -121,6 +48,16 @@ const stimArray = [
 			"Take a deep breath in and say '**Eeeeeee**' as in 'H**e**at'  until you're out of breath. **Repeat 3 times**",
 	},
 	{
+		label: "Uuu",
+		tag: "uu",
+		imageLink: "",
+		audioDescriptionLink:
+			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fuu.WAV?alt=media&token=6e09159b-4ba0-4d71-88b5-0031553a1a6d",
+
+		description:
+			"Take a deep breath in and say '**Uuuuuuu**' as in 'H**oo**d'  until you're out of breath. **Repeat 3 times**",
+	},
+	{
 		label: "Ooo",
 		tag: "oo",
 		imageLink: "",
@@ -139,16 +76,6 @@ const stimArray = [
 
 		description:
 			"Take a deep breath in and say '**Sssssss**' as in '**S**at'  until you're out of breath. **Repeat 3 times**",
-	},
-	{
-		label: "Uuu",
-		tag: "uu",
-		imageLink: "",
-		audioDescriptionLink:
-			"https://firebasestorage.googleapis.com/v0/b/asquire-ch3oh.appspot.com/o/instructions_audio%2Fuu.WAV?alt=media&token=6e09159b-4ba0-4d71-88b5-0031553a1a6d",
-
-		description:
-			"Take a deep breath in and say '**Uuuuuuu**' as in 'H**oo**d'  until you're out of breath. **Repeat 3 times**",
 	},
 	{
 		label: "Yee",
