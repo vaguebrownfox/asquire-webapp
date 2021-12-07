@@ -8,6 +8,7 @@ import {
 	Modal,
 	Typography,
 } from "@material-ui/core";
+import { lightGreen, red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -35,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 	divider: {
 		marginBottom: theme.spacing(2),
+	},
+	scoreOk: {
+		color: lightGreen[700],
+	},
+	scoreBad: {
+		color: red[700],
 	},
 }));
 
@@ -95,8 +102,19 @@ const EvalRes = ({ vadRes }) => {
 				{`Score`}
 			</Typography>
 			<Typography variant="h5" align="center" gutterBottom>
-				<b>{`${vadRes.score}/10`}</b>
+				<b
+					className={
+						vadRes.score > 7 ? classes.scoreOk : classes.scoreBad
+					}
+				>{`${vadRes.score}`}</b>
+				<b>/10</b>
 			</Typography>
+
+			{vadRes.score < 7 && (
+				<Typography variant="caption" align="center" gutterBottom>
+					<b>*make sure you followed the instruction properly.</b>
+				</Typography>
+			)}
 		</div>
 	);
 };
