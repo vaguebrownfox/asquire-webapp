@@ -93,7 +93,7 @@ const userAddAction = (dispatch) => {
 		let user = {
 			...typicalUser,
 			userName: userName,
-			userId: `${userName}_${uuid().slice(0, 8)}`,
+			userId: `${userName}-${uuid().slice(0, 8)}`,
 		};
 
 		let uAuth = await firebaseSignUp(user.userId, user.userName); // firebase sign up
