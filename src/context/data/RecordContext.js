@@ -46,6 +46,7 @@ const recordInitialState = {
 		count: 0,
 		avg: 0,
 		score: 0,
+		calc: false,
 	},
 };
 
@@ -181,8 +182,12 @@ const recordLoadStimsAction = (dispatch) => {
 
 		if (stims) {
 			console.log(stims);
+			let fixed = [0, 1, 2, 3, 4];
 			if (user.stimOrder ? user.stimOrder.length === 0 : true) {
-				let keys = [0, 1, ...shuffleArray(Object.keys(stims).slice(2))];
+				let keys = [
+					...fixed,
+					...shuffleArray(Object.keys(stims).slice(fixed.length)),
+				];
 				user = { ...user, stimOrder: keys };
 			}
 			let ranStims = {};
@@ -191,6 +196,8 @@ const recordLoadStimsAction = (dispatch) => {
 				ranStims[i] = stims[k];
 				stimLabels.push(stims[k].label);
 			});
+
+			console.log("record contxt : ", { ranStims });
 			dispatch({
 				type: "LOAD_STIMS",
 				payload: {
@@ -416,13 +423,23 @@ const recordVadAction = (dispatch) => {
 	return async (audioUrl, isPhone) => {
 		dispatch({ type: "SET_LOADING", payload: true });
 
+		let vad = {
+			calc: true,
+		};
+
+		dispatch({ type: "UPDATE_VAD", payload: vad });
+
+		// for test : delay
+		// await new Promise((res) => setTimeout(res, 3000));
+
 		// VAD stuff
 		const res = await detectStims(audioUrl);
-		const vad = {
+		vad = {
 			count: res.count,
 			avg: res.avg,
 			score: res.score,
 			spectrum: res.spectrum,
+			calc: false,
 		};
 
 		if (!isPhone)
